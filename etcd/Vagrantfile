@@ -82,3 +82,5 @@ Vagrant.configure("2") do |config|
     apt-get install -y etcd
   SHELL
 end
+
+# alias etcdctl='ETCDCTL_API=3 etcdctl --endpoints=http://192.168.50.100:2379,http://192.168.50.101:2379,http://192.168.50.102:2379'
