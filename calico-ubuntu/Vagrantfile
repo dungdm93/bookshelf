@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 num_instances=3
+calico_version="3.5.1"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
@@ -13,20 +14,30 @@ Vagrant.configure("2") do |config|
       host.vm.hostname = vm_name
       host.vm.network :private_network, ip: "172.18.18.#{i+100}"
     end
-
-    config.vm.provision "shell", inline: <<-SHELL
-      curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
-
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-      echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-
-      apt update
-      apt install -y kubelet kubeadm kubectl containerd.io
-    SHELL
-
-    config.vm.provision "file", source: "crictl.yaml", destination: "/etc/crictl.yaml"
-    config.vm.provision "file", source: "modules.conf", destination: "/etc/modules-load.d/modules.conf"
-    config.vm.provision "file", source: "99-kubernetes-cri.conf", destination: "/etc/sysctl.d/99-kubernetes-cri.conf"
   end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+
+    apt update
+    apt install -y kubelet kubeadm kubectl containerd.io
+
+    sed -i '/^disabled_plugins/d' /etc/containerd/config.toml
+    cp /vagrant/crictl.yaml             /etc/crictl.yaml
+    cp /vagrant/modules.conf            /etc/modules-load.d/modules.conf
+    cp /vagrant/99-kubernetes-cri.conf  /etc/sysctl.d/99-kubernetes-cri.conf
+
+    service systemd-modules-load restart
+    sysctl --system
+    service containerd restart
+
+    kubeadm config images pull --cri-socket=unix:///run/containerd/containerd.sock
+    crictl pull calico/typha:v3.5.1
+    crictl pull calico/cni:v3.5.1
+    crictl pull calico/node:v3.5.1
+  SHELL
 end
