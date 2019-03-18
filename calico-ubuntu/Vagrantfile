@@ -36,8 +36,10 @@ Vagrant.configure("2") do |config|
     service containerd restart
 
     kubeadm config images pull --cri-socket=unix:///run/containerd/containerd.sock
-    crictl pull calico/typha:v3.5.1
-    crictl pull calico/cni:v3.5.1
-    crictl pull calico/node:v3.5.1
+    crictl pull calico/cni:v3.6.0
+    crictl pull calico/node:v3.6.0
+    crictl pull calico/typha:v3.6.0
+    crictl pull calico/kube-controllers:v3.6.0
+    crictl pull quay.io/coreos/flannel:v0.11.0-amd64
   SHELL
 end
