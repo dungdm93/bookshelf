@@ -12,7 +12,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "centos/7"
+  config.vm.box = "ubuntu/bionic64"
+  # config.vm.box = "centos/7"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -66,17 +67,20 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     APACHE_DIST=https://apache.org/dist
     APACHE_MIRROR=http://mirrors.viethosting.com/apache
-    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
-    HIVE_VERSION=3.1.1
-    HIVE_HOME=/opt/hive
-    SPARK_VERSION=2.4.0
-    SPARK_HOME=/opt/spark
-    HADOOP_VERSION=3.1.2
-    HADOOP_HOME=/opt/hadoop
+    apt update
+    apt install -y openjdk-8-jdk
+    # yum install -y java-1.8.0-openjdk-devel
+    export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 
     cd /opt
-    yum install -y java-1.8.0-openjdk-devel
+    export HIVE_VERSION=3.1.1
+    export HIVE_HOME=/opt/hive
+    export SPARK_VERSION=2.4.0
+    export SPARK_HOME=/opt/spark
+    export HADOOP_VERSION=3.1.2
+    export HADOOP_HOME=/opt/hadoop
+    export PYTHONPATH="${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.7-src.zip"
 
     if [ ! -d "${HADOOP_HOME}" ]; then
       curl -LO "${APACHE_MIRROR}/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz";
@@ -103,10 +107,14 @@ Vagrant.configure("2") do |config|
       ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C "bigdata@teko.vn"
       cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
     fi
+
+    ln -s /usr/bin/python3    /usr/bin/python
+    cp /vagrant/spark-conf/*  /opt/spark/conf/
+    cp /vagrant/hadoop-conf/* /opt/hadoop/etc/hadoop/
   SHELL
 
-  # config.vm.provision "file", source: "spark-conf/*", destination: "/opt/spark/conf"
-  # config.vm.provision "file", source: "hadoop-conf/*", destination: "/opt/hadoop/etc/hadoop"
+  # config.vm.provision "file", source: "spark-conf/*", destination: "/opt/spark/conf/"
+  # config.vm.provision "file", source: "hadoop-conf/*", destination: "/opt/hadoop/etc/hadoop/"
   # export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
   # ./bin/hdfs namenode -format
   # ./sbin/start-dfs.sh
