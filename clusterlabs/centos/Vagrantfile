@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+num_instances=2
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+
+  (1..num_instances).each do |i|
+    hostname = "node-#{i}"
+
+    config.vm.define hostname do |host|
+      host.vm.hostname = hostname
+      host.vm.network :private_network, ip: "172.18.18.#{i+100}"
+    end
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    yum install -y nginx
+    echo "Hello from $(hostname)" | tee /var/www/html/index.html
+
+    yum install -y pacemaker # crosync
+    yum install -y crmsh pcs # install both tools
+  SHELL
+end
