@@ -6,11 +6,19 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     set -eux
 
+    apt-get update
+    apt-get install -y curl apt-transport-https
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+
+    apt-get update
+    apt-get install -y kubectl
+
     APACHE_DIST=https://apache.org/dist
     APACHE_MIRROR=http://mirrors.viethosting.com/apache
 
-    apt update
-    apt install -y openjdk-8-jdk
+    apt-get update
+    apt-get install -y openjdk-8-jdk
     ln -sf /usr/bin/python3   /usr/bin/python
     cp /vagrant/init.sh       /etc/profile.d/
     source /etc/profile.d/init.sh
