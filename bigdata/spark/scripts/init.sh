@@ -11,3 +11,7 @@ alias ..='cd ..'
 if command -v kubectl >/dev/null 2>&1; then
     source <(kubectl completion bash)
 fi
+
+if command -v helm >/dev/null 2>&1; then
+    source <(helm completion bash)
+fi
