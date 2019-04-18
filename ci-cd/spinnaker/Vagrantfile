@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+halyard_script = "https://raw.githubusercontent.com/spinnaker/halyard/master/install/debian/InstallHalyard.sh"
+install_kubectl = true
+install_gcloud = true
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    export HAL_USER=vagrant
+    curl -sSL "#{halyard_script}" | bash
+  SHELL
+
+  if install_kubectl then
+    config.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      apt-get install -y apt-transport-https curl
+
+      curl -sSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+
+      apt-get update
+      apt-get install -y kubectl
+    SHELL
+  end
+
+  if install_gcloud then
+    config.vm.provision "shell", inline: <<-SHELL
+      export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+
+      curl -sSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+      echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list
+
+      apt-get update
+      apt-get install -y google-cloud-sdk
+    SHELL
+  end
+end
