@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    image: odoo:12
+    depends_on:
+    - db
+    ports:
+    - 8069:8069
+    - 8071:8071
+    # environment:
+    # ref: https://hub.docker.com/_/odoo#environment-variables
+    volumes:
+    - data-web:/var/lib/odoo
+    - ./config:/etc/odoo
+    - ./addons:/mnt/extra-addons
+
+  db:
+    image: postgres:${POSTGRES_VERSION:-10.7-alpine}
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_DB: odoo
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+    - data-db:/var/lib/postgresql/data
+
+volumes:
+  data-web:
+  data-db:
