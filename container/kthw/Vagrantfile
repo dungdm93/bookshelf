@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Kubernetes: The Hard Way
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
 
