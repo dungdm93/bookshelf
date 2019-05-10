@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.hostname = "kube-bootstrap"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y apt-transport-https
+
+    if [ ! -x /usr/local/bin/cfssl ]; then
+      curl -sL https://pkg.cfssl.org/R1.2/cfssl_linux-amd64     -o /usr/local/bin/cfssl
+      curl -sL https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 -o /usr/local/bin/cfssljson
+      chmod +x /usr/local/bin/cfssl /usr/local/bin/cfssljson
+    fi
+
+    if [ ! -x /usr/local/bin/kubectl ]; then
+      curl -sL https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
+      chmod +x /usr/local/bin/kubectl
+    fi
+  SHELL
+  config.vm.provision "file", source: "~/.ssh", destination: "$HOME/.ssh"
+end
