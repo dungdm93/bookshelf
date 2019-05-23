@@ -23,3 +23,12 @@ Vagrant.configure("2") do |config|
     apt-get install -y elasticsearch kibana
   SHELL
 end
+
+# ElasticSearch
+# xpack.security.enabled: true
+# discovery.type: single-node
+# bin/elasticsearch-setup-passwords interactive
+
+# Kibana
+# elasticsearch.username: "kiibana"
+# elasticsearch.password: "-------------------------"
