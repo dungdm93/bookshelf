@@ -1,0 +1,20 @@
+version: '3.0'
+
+services:
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER:     exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+
+  wordpress:
+    image: wordpress:5.0-apache
+    ports:
+    - 8080:80
+    environment:
+      WORDPRESS_DB_HOST:     database
+      WORDPRESS_DB_NAME:     exampledb
+      WORDPRESS_DB_USER:     exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
