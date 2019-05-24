@@ -1,0 +1,15 @@
+#!/bin/sh -eux
+
+# python-powerline | python3-powerline
+apt-get install -y powerline
+
+# ~/.bashrc
+if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
+  source /usr/share/powerline/bindings/bash/powerline.sh
+fi
+
+# setup on your local machine
+apt-get install -y fonts-powerline
