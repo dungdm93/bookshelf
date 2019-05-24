@@ -1,0 +1,9 @@
+#!/bin/sh -eux
+
+apt-get update
+apt-get install -y fish
+
+chsh -s "$(which fish)" vagrant
+
+##### Documentation #####
+# https://www.vultr.com/docs/installing-fish-shell-on-ubuntu
