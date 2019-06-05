@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+docker_channel = "nightly" # options: stable | nightly (edge) | test
+
+# plugins
+buildx = true
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y curl
+
+    export CHANNEL=#{docker_channel}
+    echo  "CHANNEL=$CHANNEL"
+    curl -fsSL https://get.docker.com | bash
+    usermod -aG docker vagrant
+  SHELL
+
+  $install_buildx = <<-SCRIPT
+    echo "Install buildx plugin for user '$USER'"
+
+    mkdir -p    "$HOME/.docker/cli-plugins"
+    PLUGIN_PATH="$HOME/.docker/cli-plugins/docker-buildx"
+    if [ ! -x   "${PLUGIN_PATH}" ]; then
+      curl -sSL https://github.com/docker/buildx/releases/download/v0.2.2/buildx-v0.2.2.linux-amd64 -o "${PLUGIN_PATH}"
+      chmod +x "${PLUGIN_PATH}"
+    fi
+  SCRIPT
+
+  if buildx then
+    config.vm.provision "shell" do |s|
+      s.inline = $install_buildx
+      s.privileged = false
+    end
+  end
+end
