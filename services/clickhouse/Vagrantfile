@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Installation tutorial:
+# https://computingforgeeks.com/how-to-install-clickhouse-analytic-dbms-on-ubuntu-18-04-centos-7/
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" > /etc/apt/sources.list.d/clickhouse.list
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E0C56BD4
+
+    apt update
+    export DEBIAN_FRONTEND=noninteractive
+    apt -y install clickhouse-server clickhouse-client
+  SHELL
+end
