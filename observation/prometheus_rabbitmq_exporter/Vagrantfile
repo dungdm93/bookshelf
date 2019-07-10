@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+rabbitmq_exporter_version      = "1.0.0-RC6.1"
+rabbitmq_exporter_artifact     = "rabbitmq_exporter-#{rabbitmq_exporter_version}.linux-amd64"
+rabbitmq_exporter_download_url = "https://github.com/kbudde/rabbitmq_exporter/releases/download/v#{rabbitmq_exporter_version}/#{rabbitmq_exporter_artifact}.tar.gz"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  # If enable grafana + prometheus
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.network "forwarded_port", guest: 9090, host: 9090
+
+  config.vm.provision "shell", inline: <<-SHELL
+    if [ -x /usr/local/bin/prometheus-rabbitmq-exporter ]; then
+      exit 0
+    fi
+
+    if ! id -u prometheus > /dev/null 2>1; then
+      echo "Create user prometheus"
+      useradd --system --no-create-home --shell /usr/sbin/nologin prometheus
+    else
+      echo "User prometheus already existed"
+    fi
+
+    curl -sSL  #{rabbitmq_exporter_download_url} -o #{rabbitmq_exporter_artifact}.tar.gz
+    tar  -xzvf #{rabbitmq_exporter_artifact}.tar.gz
+    cp     #{rabbitmq_exporter_artifact}/rabbitmq_exporter /usr/local/bin/prometheus-rabbitmq-exporter
+    rm -rf #{rabbitmq_exporter_artifact} #{rabbitmq_exporter_artifact}.tar.gz
+
+    cp /vagrant/prometheus-rabbitmq-exporter.env     /etc/default/prometheus-rabbitmq-exporter
+    cp /vagrant/prometheus-rabbitmq-exporter.service /lib/systemd/system/prometheus-rabbitmq-exporter.service
+
+    systemctl daemon-reload
+    systemctl enable prometheus-rabbitmq-exporter.service
+  SHELL
+end
