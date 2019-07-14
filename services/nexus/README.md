@@ -38,6 +38,17 @@ Sonatype Nexus
     ```
 
 ### 2.2 `easy_install` (a.k.a `setuptools`)
+* Installation
+    ```bash
+    pip install setuptools
+
+    # or
+    apt install python3-setuptools
+    ```
+
+* Configuring easy_install
+
+    // TODO
 
 ## 3. Node.js
 [docs](https://help.sonatype.com/repomanager3/formats/npm-registry)
