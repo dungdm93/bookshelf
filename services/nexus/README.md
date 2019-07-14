@@ -83,3 +83,7 @@ Sonatype Nexus
 //TODO
 
 ## 4. apt
+
+## 5. Raw
+### 5.1 Conda
+[tut](https://seenukarthi.com/repository/2018/10/23/conda-repository-in-nexus-oss-3/)
