@@ -2,6 +2,29 @@ Sonatype Nexus
 ==============
 
 ## 1. Java
+### 1.1 `maven`
+* Installation
+    ```bash
+    apt install openjdk-8-jdk maven
+    ```
+
+* Configuring maven
+
+    // TODO
+
+* Testing proxy
+    ```bash
+    # Create sample project
+    # interactive
+    mvn archetype:generate
+
+    # or
+    mvn archetype:generate  \
+        -DgroupId=vn.teko   \
+        -DartifactId=sample \
+        -DarchetypeArtifactId=maven-archetype-quickstart \
+        -DinteractiveMode=false
+    ```
 
 ## 2. Python
 [docs](https://help.sonatype.com/repomanager3/formats/pypi-repositories)
