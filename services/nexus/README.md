@@ -2,6 +2,9 @@ Sonatype Nexus
 ==============
 
 ## 1. Java
+* [docs](https://help.sonatype.com/repomanager3/formats/maven-repositories)
+* [tut](https://blog.sonatype.com/using-nexus-3-as-your-repository-part-1-maven-artifacts)
+
 ### 1.1 `maven`
 * Installation
     ```bash
@@ -9,8 +12,17 @@ Sonatype Nexus
     ```
 
 * Configuring maven
-
-    // TODO
+    ```xml
+    <settings>
+    <mirrors>
+        <mirror>
+        <id>nexus</id>
+        <url>http://nexus:8081/repository/maven-central/</url>
+        <mirrorOf>*</mirrorOf>
+        </mirror>
+    </mirrors>
+    </settings>
+    ```
 
 * Testing proxy
     ```bash
@@ -24,6 +36,11 @@ Sonatype Nexus
         -DartifactId=sample \
         -DarchetypeArtifactId=maven-archetype-quickstart \
         -DinteractiveMode=false
+    ```
+
+    Then, list repository
+    ```bash
+    mvn dependency:list-repositories
     ```
 
 ## 2. Python
