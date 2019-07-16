@@ -38,9 +38,21 @@ Sonatype Nexus
         -DinteractiveMode=false
     ```
 
-    Then, list repository
+    Sone helpful commands:
     ```bash
     mvn dependency:list-repositories
+    mvn dependency:tree
+
+    # help command
+    mvn help:describe -Dcmd=install
+    mvn help:describe -Dcmd=help:describe
+
+    mvn help:describe -Dplugin=help
+    mvn help:describe -Dplugin=org.apache.maven.plugins:maven-help-plugin
+
+    mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-help-plugin
+
+    # Try 'mvn help:help -Ddetail=true' for more information.
     ```
 
 ## 2. Python
