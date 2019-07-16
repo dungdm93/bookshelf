@@ -40,8 +40,14 @@ Sonatype Nexus
 
     Sone helpful commands:
     ```bash
-    mvn dependency:list-repositories
+    mvn dependency:list
     mvn dependency:tree
+    mvn dependency:list-repositories
+
+    # resolve
+    mvn dependency:resolve
+    mvn dependency:resolve-plugins
+    mvn dependency:sources
 
     # help command
     mvn help:describe -Dcmd=install
