@@ -14,13 +14,13 @@ Sonatype Nexus
 * Configuring maven
     ```xml
     <settings>
-    <mirrors>
-        <mirror>
-        <id>nexus</id>
-        <url>http://nexus:8081/repository/maven-central/</url>
-        <mirrorOf>*</mirrorOf>
-        </mirror>
-    </mirrors>
+        <mirrors>
+            <mirror>
+            <id>nexus</id>
+            <url>http://nexus:8081/repository/maven-central/</url>
+            <mirrorOf>*</mirrorOf>
+            </mirror>
+        </mirrors>
     </settings>
     ```
 
