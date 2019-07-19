@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# https://help.sonatype.com/repomanager3/download
+nexus_download_url = "https://download.sonatype.com/nexus/3/latest-unix.tar.gz"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y curl
+    apt-get install -y openjdk-8-jre
+
+    if [ ! -d /opt/sonatype/nexus ]; then
+      mkdir -p /opt/sonatype/
+      curl -L #{nexus_download_url} -o nexus.tar.gz
+      tar -xzvf nexus.tar.gz
+      mv nexus-* /opt/sonatype/nexus
+      rm nexus.tar.gz
+    fi
+  SHELL
+end
