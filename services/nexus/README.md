@@ -62,7 +62,7 @@ Sonatype Nexus
     ```
 
 ## 2. Python
-[docs](https://help.sonatype.com/repomanager3/formats/pypi-repositories)
+* [docs](https://help.sonatype.com/repomanager3/formats/pypi-repositories)
 
 ### 2.1 `pip`
 * Installation
@@ -109,7 +109,7 @@ Sonatype Nexus
     // TODO
 
 ## 3. Node.js
-[docs](https://help.sonatype.com/repomanager3/formats/npm-registry)
+* [docs](https://help.sonatype.com/repomanager3/formats/npm-registry)
 
 ### 3.1 `npm`
 * Configuring npm
@@ -138,7 +138,33 @@ Sonatype Nexus
     ```
 
 ### 3.2 `yarn`
-//TODO
+* Installation
+    ```bash
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+    sudo apt-get update
+    sudo apt-get install yarn
+
+    yarn --version
+    ```
+
+* Configuring yarn
+    ```bash
+    yarn config set registry 'http://nexus:8081/repository/npm-proxy' --global
+    ```
+
+  * Show yarn config & `.yarnrc` file location
+    ```bash
+    yarn config list --verbose
+    ```
+* Testing proxy
+    ```bash
+    yarn add webdriverio --verbose
+    ```
+
+**References**:
+* [Using different registries in yarn and npm](https://medium.com/@crysfel/using-different-registries-in-yarn-and-npm-766541d6f851)
 
 ## 4. apt
 
