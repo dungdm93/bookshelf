@@ -1,11 +1,12 @@
 Sonatype Nexus
 ==============
 
-## 1. Maven
-## 2. pip
+## 1. Java
+
+## 2. Python
 [docs](https://help.sonatype.com/repomanager3/formats/pypi-repositories)
 
-### 2.1 pip
+### 2.1 `pip`
 * Installation
     ```bash
     # sudo
@@ -36,10 +37,12 @@ Sonatype Nexus
     pip install flask
     ```
 
-## 3. npm
+### 2.2 `easy_install` (a.k.a `setuptools`)
+
+## 3. Node.js
 [docs](https://help.sonatype.com/repomanager3/formats/npm-registry)
 
-### 3.1 npm
+### 3.1 `npm`
 * Configuring npm
     ```bash
     # sudo
@@ -65,7 +68,7 @@ Sonatype Nexus
     npm --loglevel info install mocha
     ```
 
-### 3.2 yarn
+### 3.2 `yarn`
 //TODO
 
 ## 4. apt
