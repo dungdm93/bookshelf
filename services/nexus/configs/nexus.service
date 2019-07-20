@@ -1,5 +1,5 @@
 [Unit]
-Description=nexus service
+Description=Sonatype Nexus service
 After=network.target
 
 [Service]

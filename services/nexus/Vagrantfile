@@ -12,12 +12,20 @@ Vagrant.configure("2") do |config|
     apt-get install -y curl
     apt-get install -y openjdk-8-jre
 
+    if ! id nenux 2> /dev/null; then
+      adduser nexus \
+        --system  \
+        --no-create-home \
+        --shell=/usr/sbin/nologin
+    fi
+
     if [ ! -d /opt/sonatype/nexus ]; then
       mkdir -p /opt/sonatype/
       curl -L #{nexus_download_url} -o nexus.tar.gz
       tar -xzvf nexus.tar.gz
       mv nexus-* /opt/sonatype/nexus
       rm nexus.tar.gz
+      chown -R nexus:users /opt/sonatype
     fi
   SHELL
 end
