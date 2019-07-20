@@ -118,6 +118,9 @@ Sonatype Nexus
     npm config --global set registry http://nexus:8081/repository/npm-proxy
 
     # when Anonymous Access is disabled
+    npm login --registry=http://nexus:8081/repository/npm-proxy [--scope=@orgname]
+
+    # or
     echo -n "_auth=$(echo -n 'username:password' | openssl base64)" >> /usr/etc/npmrc
     ```
 
