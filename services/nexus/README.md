@@ -155,6 +155,7 @@ Sonatype Nexus
 * Configuring yarn
     ```bash
     yarn config set registry 'http://nexus:8081/repository/npm-proxy' --global
+    yarn config set disable-self-update-check true --global
     ```
 
   * Show yarn config & `.yarnrc` file location
