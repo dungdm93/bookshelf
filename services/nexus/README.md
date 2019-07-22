@@ -62,13 +62,32 @@ Sonatype Nexus
     # Try 'mvn help:help -Ddetail=true' for more information.
     ```
 
-### 1.1 `gradle`
+### 1.2 `gradle`
 * Installation
     ```bash
     apt install openjdk-8-jdk gradle
     ```
 
 * Configuring gradle
+    ```groovy
+    // $GRADLE_HOME/init.d/mirror.gradle
+    // In Unix, GRADLE_HOME=/usr/share/gradle
+    allprojects {
+      buildscript {
+        repositories {
+        // More repos here, e.g: `mavenLocal()`
+        maven { url "http://nexus:8081/repository/maven-central/" }
+      }
+    }
+      repositories {
+        // More repos here, e.g: `mavenLocal()`
+        maven { url "http://nexus:8081/repository/maven-central/" }
+      }
+    }
+    ```
+
+    ref: [tut](https://rahulsom.github.io/blog/2016/gradle-equivalent-of-maven-mirror.html) | [init_scripts](https://docs.gradle.org/current/userguide/init_scripts.html)
+
 * Testing proxy
     ```bash
     gradle build --debug --no-daemon --no-parallel
