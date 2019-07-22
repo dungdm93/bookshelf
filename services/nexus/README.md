@@ -99,6 +99,52 @@ Sonatype Nexus
     gradle dependencies
     ```
 
+### 1.3 `ivy`
+* Configuring
+    ```xml
+    <!-- ivysettings.xml -->
+    <ivysettings>
+      <settings defaultResolver="nexus"/>
+      <property name="nexus-public" value="http://nexus:8081/repository/maven-central/"/>
+      <resolvers>
+        <ibiblio name="nexus" m2compatible="true" root="${nexus-public}"/>
+      </resolvers>
+    </ivysettings>
+    ```
+
+    Then put `ivysettings.xml` next to `ivy.xml` and `build.xml` files in your project.  
+    In `Spark`, config `spark-defaults.conf` as bellow:
+    ```properties
+    spark.jars.ivySettings   /path/to/your/ivysettings.xml
+    ```
+
+* Testing proxy
+
+    Run `spark-shell`
+    ```bash
+    # --packages        spark.jars.packages
+    # --repositories    spark.jars.repositories
+    $SPARK_HOME/bin/spark-shell \
+        --packages 'com.google.guava:guava:28.0-jre' \
+        --repositories 'http://nexus:8081/repository/maven-central/'
+
+    scala> spark.sparkContext.listJars.foreach(println)
+    scala> spark.sparkContext.getConf.getAll.foreach(println)
+    ```
+
+    Run, `pyspark`
+    ```python
+    from pyspark.sql import SparkSession
+
+    spark = SparkSession \
+        .builder \
+        .appName("PythonPi") \
+        .config("spark.jars.packages", "com.google.guava:guava:28.0-jre") \
+        .getOrCreate()
+
+    # other stuff here
+    ```
+
 ## 2. Python
 * [docs](https://help.sonatype.com/repomanager3/formats/pypi-repositories)
 
