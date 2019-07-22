@@ -250,6 +250,7 @@ Sonatype Nexus
     ```bash
     yarn config list --verbose
     ```
+
 * Testing proxy
     ```bash
     yarn add webdriverio --verbose
@@ -262,4 +263,32 @@ Sonatype Nexus
 
 ## 5. Raw
 ### 5.1 Conda
-[tut](https://seenukarthi.com/repository/2018/10/23/conda-repository-in-nexus-oss-3/)
+
+* Configuring yarn
+
+    Some helpful commands:
+    ```bash
+    # Show all configs
+    conda config --show
+    # Describe all configuration options
+    conda config --describe
+
+    conda config --add channels conda-forge [--system | --env]
+    conda config --remove channels conda-forge [--system | --env]
+    ```
+
+* Additional channels:
+    ```
+    conda-forge:    https://conda.anaconda.org/conda-forge
+    ```
+
+* Testing
+    ```bash
+    conda install bonsu
+    ```
+
+**References**:
+* [tut](https://seenukarthi.com/repository/2018/10/23/conda-repository-in-nexus-oss-3/)
+* [`.condarc`](https://conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html) locations:
+  * `~/.condarc` (user-wide)
+  * `$CONDA_HOME/.condarc` (system-wide)
