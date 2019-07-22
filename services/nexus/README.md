@@ -145,6 +145,10 @@ Sonatype Nexus
     # other stuff here
     ```
 
+**References**:
+* [ivy standalone](https://ant.apache.org/ivy/history/2.4.0/standalone.html)
+* [ivysettings.xml](https://ant.apache.org/ivy/history/2.4.0/settings.html)
+
 ## 2. Python
 * [docs](https://help.sonatype.com/repomanager3/formats/pypi-repositories)
 
