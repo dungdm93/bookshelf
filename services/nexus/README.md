@@ -13,6 +13,7 @@ Sonatype Nexus
 
 * Configuring maven
     ```xml
+    <!-- //usr/share/maven/conf -> /etc/maven -->
     <settings>
         <mirrors>
             <mirror>
@@ -59,6 +60,24 @@ Sonatype Nexus
     mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-help-plugin
 
     # Try 'mvn help:help -Ddetail=true' for more information.
+    ```
+
+### 1.1 `gradle`
+* Installation
+    ```bash
+    apt install openjdk-8-jdk gradle
+    ```
+
+* Configuring gradle
+* Testing proxy
+    ```bash
+    gradle build --debug --no-daemon --no-parallel
+    ```
+
+    Sone helpful commands:
+    ```bash
+    gradle tasks --all --quiet
+    gradle dependencies
     ```
 
 ## 2. Python
