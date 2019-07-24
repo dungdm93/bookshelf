@@ -259,7 +259,7 @@ Sonatype Nexus
 **References**:
 * [Using different registries in yarn and npm](https://medium.com/@crysfel/using-different-registries-in-yarn-and-npm-766541d6f851)
 
-## 4. apt
+## 4. `apt`
 * Configuring apt repo
     ```bash
     sed -i 's|http://original.mirror|http://nexus|g' /etc/apt/sources.list
@@ -276,7 +276,7 @@ Sonatype Nexus
 **References**:
 * [How to select the fastest apt mirror on Ubuntu](https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux)
 
-## 5. Docker
+## 5. `docker`
 * Configuring repo
   * Choose HTTP port: 8080
   * In `#admin/security/realms`, add `Docker Bearer Token Realm`
@@ -302,7 +302,7 @@ Sonatype Nexus
     ```
 
 ## 5. Raw
-### 5.1 Conda
+### 5.1 `conda`
 * Configuring yarn
 
     Some helpful commands:
