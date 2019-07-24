@@ -260,7 +260,6 @@ Sonatype Nexus
 * [Using different registries in yarn and npm](https://medium.com/@crysfel/using-different-registries-in-yarn-and-npm-766541d6f851)
 
 ## 4. apt
-
 * Configuring apt repo
     ```bash
     sed -i 's|http://original.mirror|http://nexus|g' /etc/apt/sources.list
@@ -277,9 +276,33 @@ Sonatype Nexus
 **References**:
 * [How to select the fastest apt mirror on Ubuntu](https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux)
 
+## 5. Docker
+* Configuring repo
+  * Choose HTTP port: 8080
+  * In `#admin/security/realms`, add `Docker Bearer Token Realm`
+
+* Configuring docker
+    ```json
+    # /etc/docker/daemon.json
+    {
+    "insecure-registries": [
+        "nexus:8080",
+        "nexus:8083"
+    ],
+    "registry-mirrors": [
+        "http://nexus:8080"
+    ],
+    "disable-legacy-registry": true
+    }
+    ```
+
+* Testing
+    ```bash
+    docker pull redis:5.0-alpine
+    ```
+
 ## 5. Raw
 ### 5.1 Conda
-
 * Configuring yarn
 
     Some helpful commands:
