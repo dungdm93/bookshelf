@@ -261,6 +261,22 @@ Sonatype Nexus
 
 ## 4. apt
 
+* Configuring apt repo
+    ```bash
+    sed -i 's|http://original.mirror|http://nexus|g' /etc/apt/sources.list
+
+    # Example
+    sed -i 's|http://archive.ubuntu.com/ubuntu/|http://nexus:8081/repository/apt-proxy/|g' /etc/apt/sources.list
+    ```
+
+* Testing
+    ```bash
+    apt update
+    ```
+
+**References**:
+* [How to select the fastest apt mirror on Ubuntu](https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux)
+
 ## 5. Raw
 ### 5.1 Conda
 
