@@ -276,6 +276,9 @@ Sonatype Nexus
     conda config --add channels conda-forge [--system | --env]
     conda config --remove channels conda-forge [--system | --env]
     ```
+* [`.condarc`](https://conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html) file location:
+  * user-wide: `$HOME/.condarc`
+  * system-wide: `$CONDA_HOME/.condarc`
 
 * Additional channels:
     ```
@@ -289,6 +292,3 @@ Sonatype Nexus
 
 **References**:
 * [tut](https://seenukarthi.com/repository/2018/10/23/conda-repository-in-nexus-oss-3/)
-* [`.condarc`](https://conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html) locations:
-  * `~/.condarc` (user-wide)
-  * `$CONDA_HOME/.condarc` (system-wide)
