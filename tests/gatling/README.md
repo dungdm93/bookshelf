@@ -1,7 +1,7 @@
 [`gatling`](https://gatling.io)
 ===============================
 
-1. Setup
+## 1. Setup
 * Install `sdkman`
     ```bash
     ##### USAGE #####
@@ -22,4 +22,26 @@
 * Create new gatling project
     ```bash
     sbt new gatling/gatling.g8
+    ```
+
+## 2. Run test
+Project uses [sbt plugin][sbtplugindoc] of [gatling][gatlingdoc].
+It contains basic simulation from gatling quick start bundle.
+
+[sbtplugindoc]: https://gatling.io/docs/current/extensions/sbt_plugin/
+[gatlingdoc]: https://gatling.io/docs/current/advanced_tutorial/
+
+* All tests:
+    ```bash
+    sbt "gatling:test"
+    ```
+
+* Single test:
+    ```bash
+    sbt "gatling:testOnly computerdatabase.BasicSimulation"
+    ```
+
+* Report:
+    ```bash
+    sbt "gatling:lastReport"
     ```
