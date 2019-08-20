@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  mariadb:
+    image: bitnami/mariadb:10.2
+    environment:
+      MARIADB_USER:     orangehrm
+      MARIADB_DATABASE: talent
+      ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+    - mariadb_data:/bitnami
+
+  orangehrm:
+    image: bitnami/orangehrm:4
+    environment:
+      MARIADB_HOST:         mariadb
+      MARIADB_PORT_NUMBER:  3306
+      ORANGEHRM_DATABASE_USER: orangehrm
+      ORANGEHRM_DATABASE_NAME: talent
+      ALLOW_EMPTY_PASSWORD:   'yes'
+    ports:
+    - 80:80
+    - 443:443
+    volumes:
+    - orangehrm_data:/bitnami
+    depends_on:
+    - mariadb
+
+volumes:
+  mariadb_data:
+  orangehrm_data:
+
+######### REFERENCES #########
+# https://hub.docker.com/r/bitnami/orangehrm#configuration
