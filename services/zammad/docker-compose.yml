@@ -86,8 +86,8 @@ services:
     depends_on:
     - zammad-railsserver
     - zammad-websocket
-    expose:
-    - "80"
+    ports:
+    - 1080:80
     volumes:
     - zammad-data:/opt/zammad
 
