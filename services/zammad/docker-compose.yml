@@ -1,0 +1,87 @@
+version: '3.7'
+
+services:
+  memcached:
+    image: memcached:1.5-alpine
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.1
+    environment:
+    - discovery.type=single-node
+    volumes:
+    - elasticsearch-data:/usr/share/elasticsearch/data
+
+  postgresql:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: zammad
+      POSTGRES_PASSWORD: secr3t
+      POSTGRES_DB: zammad-db
+    volumes:
+    - postgresql-data:/var/lib/postgresql/data
+
+  zammad-init:
+    image: ${ZAMMAD_IMAGE}
+    command: ["zammad-init"]
+    restart: on-failure
+    env_file:
+    - .env
+    depends_on:
+    - elasticsearch
+    - postgresql
+    volumes:
+    - zammad-data:/opt/zammad
+
+  zammad-railsserver:
+    image: ${ZAMMAD_IMAGE}
+    command: ["zammad-railsserver"]
+    env_file:
+    - .env
+    depends_on:
+    - memcached
+    - postgresql
+    volumes:
+    - zammad-data:/opt/zammad
+
+  zammad-websocket:
+    image: ${ZAMMAD_IMAGE}
+    command: ["zammad-websocket"]
+    env_file:
+    - .env
+    depends_on:
+    - memcached
+    - postgresql
+    volumes:
+    - zammad-data:/opt/zammad
+
+  zammad-scheduler:
+    image: ${ZAMMAD_IMAGE}
+    command: ["zammad-scheduler"]
+    env_file:
+    - .env
+    depends_on:
+    - memcached
+    - zammad-railsserver
+    volumes:
+    - zammad-data:/opt/zammad
+
+  zammad-nginx:
+    image: ${ZAMMAD_IMAGE}
+    command: ["zammad-nginx"]
+    env_file:
+    - .env
+    depends_on:
+    - zammad-railsserver
+    - zammad-websocket
+    expose:
+    - "80"
+    volumes:
+    - zammad-data:/opt/zammad
+
+volumes:
+  elasticsearch-data:
+    driver: local
+  postgresql-data:
+    driver: local
+  zammad-data:
+    driver: local
