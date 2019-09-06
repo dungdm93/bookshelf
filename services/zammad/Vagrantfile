@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 4
+  end
+
+  # Install ElasticSearch
+  config.vm.provision "shell", inline: <<-SHELL
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" > /etc/apt/sources.list.d/elastic-7.x.list
+
+    apt-get update
+    apt-get install elasticsearch -y
+
+    systemctl enable elasticsearch
+    systemctl start  elasticsearch
+  SHELL
+
+  # Install Zammad + PostgreSQL + Nginx
+  config.vm.provision "shell", inline: <<-SHELL
+    wget -qO- https://dl.packager.io/srv/zammad/zammad/key | sudo apt-key add -
+    wget -O   /etc/apt/sources.list.d/zammad.list https://dl.packager.io/srv/zammad/zammad/stable/installer/ubuntu/18.04.repo
+
+    apt-get update
+    apt-get install zammad -y
+  SHELL
+end
