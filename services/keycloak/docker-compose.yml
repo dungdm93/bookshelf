@@ -29,3 +29,6 @@ services:
 volumes:
   database_data:
     driver: local
+
+##### References #####
+# https://www.keycloak.org/2019/05/keycloak-cluster-setup.html
