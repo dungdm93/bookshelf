@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  vault:
+    image: vault:1.2.3
+    # command: server -config=/vault/config/vault-config.json
+    ports:
+    - 8200:8200
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: S3cret
+    cap_add:
+    - IPC_LOCK
