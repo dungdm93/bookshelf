@@ -3,11 +3,13 @@ version: '3.6'
 services:
   vault:
     image: vault:1.2.3
-    command: server -config=/vault/config/vault-config.hcl
+    command: server -dev
+    # entrypoint: vault # default entrypoint is for -dev only
+    # command: server -config=/vault/config/vault-config.hcl
     ports:
     - 8200:8200
     volumes:
-    - ./config:/vault/config
+    # - ./config:/vault/config
     - vault_data:/vault/file
     cap_add:
     - IPC_LOCK
