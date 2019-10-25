@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  a:
+    image: nginx:1.15-alpine
+    volumes:
+    - ./index_a.html:/usr/share/nginx/html/index.html
+    network_mode: bridge
+
+  b:
+    image: nginx:1.15-alpine
+    volumes:
+    - ./index_b.html:/usr/share/nginx/html/index.html
+    network_mode: bridge

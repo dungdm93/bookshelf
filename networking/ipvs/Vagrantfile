@@ -1,33 +1,25 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-num_instances=2
-
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
 
-  config.vm.define :master, primary: true do |host|
-    host.vm.hostname = "control"
-    host.vm.network :private_network, ip: "172.18.18.100"
+  config.vm.network :private_network, ip: "172.18.18.100"
 
-    host.vm.provision "shell", inline: <<-SHELL
-      apt update
-      apt install -y ipvsadm
-    SHELL
-  end
+  config.vm.provision "shell", inline: <<-SHELL
+    apt update
+    apt install -y ipvsadm
+    curl -sSL get.docker.io | bash
+    usermod -aG docker vagrant
 
-  (1..num_instances).each do |i|
-    hostname = "node-#{i}"
+    if ! command -v docker-compose >/dev/null 2>&1; then
+      curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
+    fi
+  SHELL
 
-    config.vm.define hostname do |host|
-      host.vm.hostname = hostname
-      host.vm.network :private_network, ip: "172.18.18.#{i+100}"
-
-      host.vm.provision "shell", inline: <<-SHELL
-        apt-get update
-        apt-get install -y nginx
-        echo "Hello from $(hostname)" | tee /var/www/html/index.html
-      SHELL
-    end
-  end
+  config.vm.provision "shell", inline: <<-SHELL
+    cd /vagrant/backends
+    docker-compose up -d
+  SHELL
 end
