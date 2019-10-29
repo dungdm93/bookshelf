@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
   vault:
@@ -13,6 +13,13 @@ services:
     - vault_data:/vault/file
     cap_add:
     - IPC_LOCK
+
+  shell:
+    image: vault:1.2.3
+    init: true
+    entrypoint: sleep 3600
+    environment:
+      VAULT_ADDR:  http://vault:8200
 
   mysql:
     image: mysql:5.7
