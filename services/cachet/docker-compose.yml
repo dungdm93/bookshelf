@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:9.5-alpine
+    environment:
+      POSTGRES_DB:       cachet
+      POSTGRES_USER:     cachet
+      POSTGRES_PASSWORD: secret
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+
+  cachet:
+    image: cachethq/docker:2.3
+    environment:
+      DB_DRIVER:   pgsql
+      DB_HOST:     postgres
+      DB_PORT:     5432
+      DB_DATABASE: cachet
+      DB_USERNAME: cachet
+      DB_PASSWORD: secret
+    ports:
+    - 8000:8000
+    depends_on:
+    - postgres
+    restart: on-failure
+
+volumes:
+  postgres-data:
