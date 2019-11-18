@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+
+  airflow:
+    image: puckel/docker-airflow:1.10.4
+    environment:
+      LOAD_EX: n
+      EXECUTOR: Local
+      FERNET_KEY: jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
+    ports:
+    - "8080:8080"
+    volumes:
+    - ./dags:/usr/local/airflow/dags
+    depends_on:
+    - postgres
