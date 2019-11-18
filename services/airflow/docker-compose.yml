@@ -1,3 +1,7 @@
+# references
+# * https://www.sicara.ai/blog/2019-04-08-apache-airflow-celery-workers
+# * https://medium.com/@dustinstansbury/understanding-apache-airflows-key-concepts-a96efed52b1a
+
 version: "3.7"
 
 services:
@@ -7,16 +11,45 @@ services:
       POSTGRES_DB: airflow
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
+    volumes:
+    - postgresql_data:/var/lib/postgresql/data
 
-  airflow:
+  redis:
+    image: redis:5-alpine
+    volumes:
+    - redis_data:/data
+
+  airflow-webserver:
     image: puckel/docker-airflow:1.10.4
-    environment:
-      LOAD_EX: n
-      EXECUTOR: Local
-      FERNET_KEY: jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
+    command: webserver
+    env_file: envfile
     ports:
     - "8080:8080"
     volumes:
     - ./dags:/usr/local/airflow/dags
     depends_on:
     - postgres
+    - redis
+
+  airflow-scheduler:
+    image: puckel/docker-airflow:1.10.4
+    command: scheduler
+    env_file: envfile
+    volumes:
+    - ./dags:/usr/local/airflow/dags
+    depends_on:
+    - redis
+
+  airflow-worker:
+    image: puckel/docker-airflow:1.10.4
+    command: worker
+    env_file: envfile
+    volumes:
+    - ./dags:/usr/local/airflow/dags
+    depends_on:
+    - airflow-scheduler
+    - redis
+
+volumes:
+  postgresql_data:
+  redis_data:

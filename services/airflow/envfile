@@ -1,0 +1,5 @@
+#!/bin/bash
+
+LOAD_EX=n
+FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+EXECUTOR=Celery
