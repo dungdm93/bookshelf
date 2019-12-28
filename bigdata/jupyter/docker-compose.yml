@@ -11,3 +11,9 @@ services:
     - "8888:8888"
     volumes:
     - ./work:/home/jovyan/work
+
+  statsd:
+    image: prom/statsd-exporter:v0.13.0
+    ports:
+    - 9102:9102
+    - 9125:9125/udp
