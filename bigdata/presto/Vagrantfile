@@ -1,10 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-presto_version = '0.229'
+presto_version = '327'
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
+
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
 
   config.vm.provision "shell", inline: <<-SHELL
     set -eux
@@ -13,8 +15,12 @@ Vagrant.configure("2") do |config|
     apt-get install -y curl apt-transport-https openjdk-8-jdk
     ln -sf /usr/bin/python3 /usr/bin/python
 
+    if [ -d "/opt/presto" ]; then
+      exit 0;
+    fi
+
     cd /opt
-    curl -LO  https://repo1.maven.org/maven2/com/facebook/presto/presto-server/#{presto_version}/presto-server-#{presto_version}.tar.gz
+    curl -LO  https://repo1.maven.org/maven2/io/prestosql/presto-server/#{presto_version}/presto-server-#{presto_version}.tar.gz
     tar -xzvf presto-server-#{presto_version}.tar.gz
     mv        presto-server-#{presto_version} presto
 
@@ -32,7 +38,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     set -eux
 
-    curl -LO https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/#{presto_version}/presto-cli-#{presto_version}-executable.jar
+    if command -v presto; then
+      exit 0;
+    fi
+
+    curl -LO https://repo1.maven.org/maven2/io/prestosql/presto-cli/#{presto_version}/presto-cli-#{presto_version}-executable.jar
     chmod +x presto-cli-#{presto_version}-executable.jar
     mv       presto-cli-#{presto_version}-executable.jar /usr/local/bin/presto
   SHELL
