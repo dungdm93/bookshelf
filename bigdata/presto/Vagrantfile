@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+presto_version = '0.229'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    set -eux
+
+    apt-get update
+    apt-get install -y curl apt-transport-https openjdk-8-jdk
+    ln -sf /usr/bin/python3 /usr/bin/python
+
+    cd /opt
+    curl -LO https://repo1.maven.org/maven2/com/facebook/presto/presto-server/#{presto_version}/presto-server-#{presto_version}.tar.gz
+  SHELL
+end
