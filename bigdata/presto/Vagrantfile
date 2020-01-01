@@ -14,6 +14,18 @@ Vagrant.configure("2") do |config|
     ln -sf /usr/bin/python3 /usr/bin/python
 
     cd /opt
-    curl -LO https://repo1.maven.org/maven2/com/facebook/presto/presto-server/#{presto_version}/presto-server-#{presto_version}.tar.gz
-  SHELL
+    curl -LO  https://repo1.maven.org/maven2/com/facebook/presto/presto-server/#{presto_version}/presto-server-#{presto_version}.tar.gz
+    tar -xzvf presto-server-#{presto_version}.tar.gz
+    mv        presto-server-#{presto_version} presto
+
+    cd presto
+    mkdir etc data
+    # https://prestodb.io/docs/current/installation/deployment.html#configuring-presto
+    cp -r /vagrant/configs/* /opt/presto/etc/
+
+    cp /vagrant/presto.service /lib/systemd/system/
+    systemctl daemon-reload
+    systemctl enable presto
+    systemctl start  presto
+    SHELL
 end
