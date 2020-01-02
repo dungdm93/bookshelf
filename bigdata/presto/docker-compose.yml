@@ -25,7 +25,7 @@ services:
     environment:
       POSTGRES_PASSWORD: Secr3t
     volumes:
-    - ./database/postgres/:/foobar
+    - ./database/postgres/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
 
   minio:
