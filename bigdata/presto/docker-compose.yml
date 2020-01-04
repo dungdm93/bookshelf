@@ -24,9 +24,16 @@ services:
     image: postgres:11-alpine
     environment:
       POSTGRES_PASSWORD: Secr3t
+      POSTGRES_DB:       metastore
     volumes:
     - ./database/postgres/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
+
+  hive-metastore:
+    image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
+    command: [hive, --service, metastore]
+    volumes:
+    - ./configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
 
   minio:
     image: minio/minio

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Documentations:
+  * https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties
+-->
+<configuration>
+  <property>
+    <name>hive.metastore.db.type</name>
+    <value>postgres</value>
+    <!-- Expects one of [derby, oracle, mysql, mssql, postgres]. -->
+  </property>
+
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:postgresql://postgres:5432/metastore</value>
+    <!-- MySQL: jdbc:mysql://mysql:3306/metastore?createDatabaseIfNotExist=true -->
+  </property>
+
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>org.postgresql.Driver</value>
+    <!-- MySQL 5.x: com.mysql.jdbc.Driver -->
+    <!-- MySQL 8+:  com.mysql.cj.jdbc.Driver -->
+  </property>
+
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>postgres</value>
+  </property>
+
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>Secr3t</value>
+  </property>
+
+  <property>
+    <name>hive.metastore.schema.verification</name>
+    <value>true</value>
+  </property>
+
+  <!--
+  <property>
+    <name>datanucleus.schema.autoCreateAll</name>
+    <value>true</value>
+  </property>
+  -->
+</configuration>
