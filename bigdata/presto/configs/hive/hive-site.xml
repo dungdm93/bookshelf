@@ -3,6 +3,8 @@
 <!--
   Documentations:
   * https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties
+  * https://cwiki.apache.org/confluence/display/Hive/AdminManual+Metastore+Administration
+  * https://cwiki.apache.org/confluence/display/Hive/AdminManual+Metastore+3.0+Administration
 -->
 <configuration>
   <property>
@@ -43,6 +45,18 @@
   <property>
     <name>datanucleus.schema.autoCreateAll</name>
     <value>true</value>
+  </property>
+  -->
+
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>s3a://metastore/</value>
+  </property>
+
+  <!--
+  <property>
+    <name>hive.default.fileformat</name>
+    <value>parquet</value>
   </property>
   -->
 </configuration>
