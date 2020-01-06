@@ -45,8 +45,10 @@ services:
     ports:
     - 1433:1433
     volumes:
-    - ./sample/mssql/:/foobar/
+    - ./sample/mssql/:/docker-entrypoint-initdb.d/
+    # - mssql_data:/var/opt/mssql/data
 
 volumes:
   mysql_data:
   postgres_data:
+  # mssql_data:

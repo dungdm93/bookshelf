@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: Secr3t
       POSTGRES_DB:       metastore
     volumes:
-    - ../../database/postgres/:/docker-entrypoint-initdb.d/
+    - ../../database/sample/postgres:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
 
   hive-metastore:
