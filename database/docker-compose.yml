@@ -1,11 +1,15 @@
 version: "3.7"
 
 services:
+  ##### MySQL #####
+  # https://hub.docker.com/_/mysql
+  # Help:
+  # > mysql -u root -p
   mysql:
     image: mysql:8.0
     command: [--default-authentication-plugin=mysql_native_password]
     environment:
-      MYSQL_ROOT_PASSWORD: Secr3t
+      MYSQL_ROOT_PASSWORD: SuperSecr3t
     ports:
     - 3306:3306
     - 33060:33060
@@ -13,13 +17,33 @@ services:
     - ./database/mysql/:/docker-entrypoint-initdb.d/
     - mysql_data:/var/lib/mysql
 
+  ##### PostgreSQL #####
+  # https://hub.docker.com/_/postgres
+  # Help:
+  # > psql -U postgres [-W]
   postgres:
     image: postgres:11-alpine
     environment:
-      POSTGRES_PASSWORD: Secr3t
+      POSTGRES_PASSWORD: SuperSecr3t
+    ports:
+    - 5432:5432
     volumes:
     - ./database/postgres/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
+
+  ##### Microsoft SQL Server #####
+  # https://hub.docker.com/_/microsoft-mssql-server
+  # https://docs.microsoft.com/sql/linux/sql-server-linux-configure-environment-variables
+  # Help:
+  # > /opt/mssql-tools/bin/sqlcmd -?
+  # > /opt/mssql-tools/bin/sqlcmd -U sa [-P <pass>]
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: SuperSecr3t
+    ports:
+    - 1433:1433
 
 volumes:
   mysql_data:
