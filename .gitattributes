@@ -1,2 +1,1 @@
-database/mysql/** filter=lfs diff=lfs merge=lfs -text
-database/postgres/** filter=lfs diff=lfs merge=lfs -text
+database/sample/** filter=lfs diff=lfs merge=lfs -text

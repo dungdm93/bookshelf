@@ -14,7 +14,7 @@ services:
     - 3306:3306
     - 33060:33060
     volumes:
-    - ./database/mysql/:/docker-entrypoint-initdb.d/
+    - ./sample/mysql/:/docker-entrypoint-initdb.d/
     - mysql_data:/var/lib/mysql
 
   ##### PostgreSQL #####
@@ -28,7 +28,7 @@ services:
     ports:
     - 5432:5432
     volumes:
-    - ./database/postgres/:/docker-entrypoint-initdb.d/
+    - ./sample/postgres/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
 
   ##### Microsoft SQL Server #####
@@ -44,6 +44,8 @@ services:
       MSSQL_SA_PASSWORD: SuperSecr3t
     ports:
     - 1433:1433
+    volumes:
+    - ./sample/mssql/:/foobar/
 
 volumes:
   mysql_data:
