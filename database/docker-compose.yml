@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0
+    command: [--default-authentication-plugin=mysql_native_password]
+    environment:
+      MYSQL_ROOT_PASSWORD: Secr3t
+    ports:
+    - 3306:3306
+    - 33060:33060
+    volumes:
+    - ./database/mysql/:/docker-entrypoint-initdb.d/
+    - mysql_data:/var/lib/mysql
+
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: Secr3t
+    volumes:
+    - ./database/postgres/:/docker-entrypoint-initdb.d/
+    - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mysql_data:
+  postgres_data:
