@@ -21,17 +21,28 @@ services:
     volumes:
     - rabbitmq_data:/var/lib/rabbitmq
 
-  airflow:
+  airflow-webserver:
     image: hub.teko.vn/data/airflow:1.10.7-all
-    # command: [server, /data]
-    # environment:
-    #   # $AIRFLOW__{SECTION}__{KEY}
-    #   MINIO_ACCESS_KEY: admin
-    #   MINIO_SECRET_KEY: SuperSecr3t
+    command: [airflow, webserver]
     ports:
     - 8080:8080
     volumes:
-    - ./dag:/opt/dag
+    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
+    - ./dags:/opt/airflow/dags
+
+  airflow-scheduler:
+    image: hub.teko.vn/data/airflow:1.10.7-all
+    command: [airflow, scheduler]
+    volumes:
+    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
+    - ./dags:/opt/airflow/dags
+
+  airflow-worker:
+    image: hub.teko.vn/data/airflow:1.10.7-all
+    command: [airflow, worker]
+    volumes:
+    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
+    - ./dags:/opt/airflow/dags
 
 volumes:
   postgres_data:
