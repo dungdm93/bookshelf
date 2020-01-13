@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB:       airflow
+    ports:
+    - 5432:5432
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: SuperSecr3t
+    ports:
+    - 15672:15672
+    volumes:
+    - rabbitmq_data:/var/lib/rabbitmq
+
+  airflow:
+    image: hub.teko.vn/data/airflow:1.10.7-all
+    # command: [server, /data]
+    # environment:
+    #   # $AIRFLOW__{SECTION}__{KEY}
+    #   MINIO_ACCESS_KEY: admin
+    #   MINIO_SECRET_KEY: SuperSecr3t
+    ports:
+    - 8080:8080
+    volumes:
+    - ./dag:/opt/dag
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
