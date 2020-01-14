@@ -23,7 +23,7 @@ services:
 
   airflow-webserver:
     image: hub.teko.vn/data/airflow:1.10.7-all
-    command: [airflow, webserver]
+    command: [webserver]
     ports:
     - 8080:8080
     volumes:
@@ -32,14 +32,14 @@ services:
 
   airflow-scheduler:
     image: hub.teko.vn/data/airflow:1.10.7-all
-    command: [airflow, scheduler]
+    command: [scheduler]
     volumes:
     - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
     - ./dags:/opt/airflow/dags
 
   airflow-worker:
     image: hub.teko.vn/data/airflow:1.10.7-all
-    command: [airflow, worker]
+    command: [worker]
     volumes:
     - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
     - ./dags:/opt/airflow/dags
