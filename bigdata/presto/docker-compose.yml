@@ -6,7 +6,8 @@ services:
     ports:
     - 8080:8080
     volumes:
-    - ./catalog:/usr/lib/presto/default/etc/catalog
+    - ./catalog:/etc/presto/catalog
+    - ./configs/presto:/etc/presto
 
   postgres:
     image: postgres:11-alpine
