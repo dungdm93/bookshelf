@@ -20,7 +20,7 @@ services:
   hive-metastore:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
     # command: sleep 3600
-    command: [hive, --service, metastore]
+    command: [hive, --service, metastore, --verbose]
     volumes:
     - ./configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
     - ./configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
