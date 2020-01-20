@@ -43,6 +43,7 @@ services:
     volumes:
     - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
     - ./dags:/opt/airflow/dags
+    - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   postgres_data:
