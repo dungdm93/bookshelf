@@ -6,6 +6,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:SuperSecr3t@db:5432/msf
     tty: true
+    stdin_open: true
     ports:
     - 4444:4444
 
