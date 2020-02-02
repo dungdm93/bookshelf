@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  msf:
+    image: metasploitframework/metasploit-framework:latest
+    environment:
+      DATABASE_URL: postgres://postgres:SuperSecr3t@db:5432/msf
+    ports:
+    - 4444:4444
+
+  db:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+    volumes:
+    - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
