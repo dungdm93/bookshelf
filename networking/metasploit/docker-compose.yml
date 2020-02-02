@@ -5,6 +5,7 @@ services:
     image: metasploitframework/metasploit-framework:latest
     environment:
       DATABASE_URL: postgres://postgres:SuperSecr3t@db:5432/msf
+    tty: true
     ports:
     - 4444:4444
 
@@ -17,3 +18,6 @@ services:
 
 volumes:
   pg_data:
+
+
+# docker attach metasploit_msf_1
