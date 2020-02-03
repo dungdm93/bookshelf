@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+sdc_version = "3.13.0"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.provider "virtualbox" do |v|
+    v.cpus = 2
+    v.memory = 2048
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    set -eux
+
+    apt-get update
+    apt-get install -y curl apt-transport-https openjdk-8-jdk
+
+    cd /opt
+    wget http://archives.streamsets.com/datacollector/#{sdc_version}/tarball/streamsets-datacollector-core-#{sdc_version}.tgz
+    tar -xzvf streamsets-datacollector-core-#{sdc_version}.tgz
+    mv streamsets-datacollector-#{sdc_version} streamsets-datacollector
+
+    cd ./streamsets-datacollector
+    groupadd -r sdc
+    useradd  -r sdc -g sdc -d /opt/streamsets-datacollector -s /sbin/nologin
+
+    cp ./systemd/* /etc/systemd/system/
+    systemctl daemon-reload
+
+    mkdir /etc/sdc
+    cp -R etc/* /etc/sdc
+    chown -R sdc:sdc /etc/sdc
+
+    mkdir /var/log/sdc
+    chown sdc:sdc /var/log/sdc
+
+    mkdir /var/lib/sdc
+    chown sdc:sdc /var/lib/sdc
+
+    mkdir /var/lib/sdc-resources
+    chown sdc:sdc /var/lib/sdc-resources
+
+    systemctl start sdc
+    systemctl enable sdc
+  SHELL
+end
