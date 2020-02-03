@@ -25,7 +25,7 @@ services:
 
   sdc:
     # The default login is: admin / admin.
-    image: streamsets/datacollector:3.14.0-latest
+    image: streamsets/datacollector:3.13.0
     ports:
     - 18630:18630
 
