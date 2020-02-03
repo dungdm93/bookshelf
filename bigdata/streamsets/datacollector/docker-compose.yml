@@ -10,7 +10,7 @@ services:
     - 3306:3306
     - 33060:33060
     volumes:
-    - ../../database/sample/mysql/:/docker-entrypoint-initdb.d/
+    - ../../../database/sample/mysql/:/docker-entrypoint-initdb.d/
     - mysql_data:/var/lib/mysql
 
   postgres:
@@ -20,8 +20,14 @@ services:
     ports:
     - 5432:5432
     volumes:
-    - ../../database/sample/postgres/:/docker-entrypoint-initdb.d/
+    - ../../../database/sample/postgres/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
+
+  sdc:
+    # The default login is: admin / admin.
+    image: streamsets/datacollector:3.14.0-latest
+    ports:
+    - 18630:18630
 
 volumes:
   mysql_data:
