@@ -32,3 +32,8 @@ services:
 volumes:
   mysql_data:
   postgres_data:
+
+
+##### References
+# https://github.com/streamsets/datacollector-docker
+# https://github.com/streamsets/tutorials
