@@ -17,32 +17,34 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install -y curl apt-transport-https openjdk-8-jdk
 
-    cd /opt
-    wget http://archives.streamsets.com/datacollector/#{sdc_version}/tarball/streamsets-datacollector-core-#{sdc_version}.tgz
-    tar -xzvf streamsets-datacollector-core-#{sdc_version}.tgz
-    mv streamsets-datacollector-#{sdc_version} streamsets-datacollector
+    if [ ! -d /opt/streamsets-datacollector/ ]; then
+      cd /opt
+      wget http://archives.streamsets.com/datacollector/#{sdc_version}/tarball/streamsets-datacollector-core-#{sdc_version}.tgz
+      tar -xzvf streamsets-datacollector-core-#{sdc_version}.tgz
+      mv streamsets-datacollector-#{sdc_version} streamsets-datacollector
 
-    cd ./streamsets-datacollector
-    groupadd -r sdc
-    useradd  -r sdc -g sdc -d /opt/streamsets-datacollector -s /sbin/nologin
+      cd ./streamsets-datacollector
+      groupadd -r sdc
+      useradd  -r sdc -g sdc -d /opt/streamsets-datacollector -s /sbin/nologin
 
-    cp ./systemd/* /etc/systemd/system/
-    systemctl daemon-reload
+      cp ./systemd/* /etc/systemd/system/
+      systemctl daemon-reload
 
-    mkdir /etc/sdc
-    cp -R etc/* /etc/sdc
-    chown -R sdc:sdc /etc/sdc
+      mkdir /etc/sdc
+      cp -R etc/* /etc/sdc
+      chown -R sdc:sdc /etc/sdc
 
-    mkdir /var/log/sdc
-    chown sdc:sdc /var/log/sdc
+      mkdir /var/log/sdc
+      chown sdc:sdc /var/log/sdc
 
-    mkdir /var/lib/sdc
-    chown sdc:sdc /var/lib/sdc
+      mkdir /var/lib/sdc
+      chown sdc:sdc /var/lib/sdc
 
-    mkdir /var/lib/sdc-resources
-    chown sdc:sdc /var/lib/sdc-resources
+      mkdir /var/lib/sdc-resources
+      chown sdc:sdc /var/lib/sdc-resources
 
-    systemctl start sdc
-    systemctl enable sdc
+      systemctl start sdc
+      systemctl enable sdc
+    fi
   SHELL
 end
