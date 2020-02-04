@@ -23,6 +23,17 @@ services:
     - ../../../database/sample/postgres/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
 
+  minio:
+    image: minio/minio
+    command: [server, /data]
+    environment:
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: SuperSecr3t
+    ports:
+    - 9000:9000
+    volumes:
+    - minio_data:/data
+
   sdc:
     # The default login is: admin / admin.
     image: streamsets/datacollector:3.13.0
@@ -32,7 +43,7 @@ services:
 volumes:
   mysql_data:
   postgres_data:
-
+  minio_data:
 
 ##### References
 # https://github.com/streamsets/datacollector-docker
