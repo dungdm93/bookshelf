@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
       cd ./streamsets-datacollector
       groupadd -r sdc
       useradd  -r sdc -g sdc -d /opt/streamsets-datacollector -s /sbin/nologin
+      chown -R sdc:sdc /opt/streamsets-datacollector/
 
       cp ./systemd/* /etc/systemd/system/
       systemctl daemon-reload
