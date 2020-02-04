@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     set -eux
 
+    export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get install -y curl apt-transport-https openjdk-8-jdk
 
