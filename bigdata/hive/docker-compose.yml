@@ -14,7 +14,7 @@ services:
 
   hive-metastore:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
-    # command: sleep 3600
+    # command: sleep 3600 # schematool -dbType postgres -initSchema
     command: [hive, --service, metastore, --verbose]
     volumes:
     - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
