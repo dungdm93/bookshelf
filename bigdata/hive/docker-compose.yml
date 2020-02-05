@@ -4,8 +4,10 @@ services:
   postgres:
     image: postgres:11-alpine
     environment:
-      POSTGRES_PASSWORD: Secr3t
+      POSTGRES_PASSWORD: SuperSecr3t
       POSTGRES_DB:       metastore
+    ports:
+    - 5432:5432
     volumes:
     - ../../database/sample/postgres:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data

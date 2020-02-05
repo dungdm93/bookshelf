@@ -33,7 +33,7 @@
 
   <property>
     <name>javax.jdo.option.ConnectionPassword</name>
-    <value>Secr3t</value>
+    <value>SuperSecr3t</value>
   </property>
 
   <property>
