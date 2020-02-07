@@ -59,8 +59,20 @@ services:
     - ./sample/mongo/:/docker-entrypoint-initdb.d/
     - mongo_data:/data/db
 
+  clickhouse:
+    image: yandex/clickhouse-server:20.1
+    ports:
+    - 8123:8123  # HTTP interface
+    - 9000:9000  # native TCP interface
+    volumes:
+    - ./sample/clickhouse/:/docker-entrypoint-initdb.d/
+    - clickhouse_data:/var/lib/clickhouse
+    ulimits:
+      nofile: 262144
+
 volumes:
   mysql_data:
   postgres_data:
   # mssql_data:
   mongo_data:
+  clickhouse_data:
