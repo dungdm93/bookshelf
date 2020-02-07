@@ -48,7 +48,19 @@ services:
     - ./sample/mssql/:/docker-entrypoint-initdb.d/
     # - mssql_data:/var/opt/mssql/data
 
+  mongo:
+    image: mongo:4.2
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: SuperSecr3t
+    ports:
+    - 27017:27017
+    volumes:
+    # - ./sample/mongo/:/docker-entrypoint-initdb.d/
+    - mongo_data:/data/db
+
 volumes:
   mysql_data:
   postgres_data:
   # mssql_data:
+  mongo_data:
