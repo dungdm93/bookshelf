@@ -3,6 +3,9 @@ version: '2'
 services:
   zookeeper:
     image: debezium/zookeeper:1.0
+    # Other images:
+    # * zookeeper:3.5
+    # * confluentinc/cp-zookeeper:5.4
     ports:
     - 2181:2181 # client connections
     - 2888:2888 # peers connections
@@ -10,7 +13,14 @@ services:
 
   kafka:
     image: debezium/kafka:1.0
+    # Other images:
+    # * confluentinc/cp-kafka:5.4
+    # * strimzi/kafka:0.16.2-kafka-2.4.0
     ports:
     - 9092:9092
     environment:
       ZOOKEEPER_CONNECT: zookeeper:2181
+
+# TODO
+# linkedin/cruise-control + ui
+# strimzi.io
