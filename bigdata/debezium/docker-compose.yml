@@ -14,3 +14,31 @@ services:
     - 9092:9092
     environment:
       ZOOKEEPER_CONNECT: zookeeper:2181
+
+  mysql:
+    image: mysql:8.0
+    command: [--default-authentication-plugin=mysql_native_password]
+    environment:
+      MYSQL_ROOT_PASSWORD: SuperSecr3t
+      MYSQL_USER:     debezium
+      MYSQL_PASSWORD: dbz
+    ports:
+    - 3306:3306
+    - 33060:33060
+    volumes:
+    - ../../database/sample/mysql/:/docker-entrypoint-initdb.d/
+    - mysql_data:/var/lib/mysql
+
+  connect:
+    image: debezium/connect:1.0
+    ports:
+    - 8083:8083
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: debezium.mysql.configs
+      OFFSET_STORAGE_TOPIC: debezium.mysql.offsets
+      STATUS_STORAGE_TOPIC: debezium.mysql.statuses
+
+volumes:
+  mysql_data:
