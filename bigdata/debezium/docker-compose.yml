@@ -3,13 +3,19 @@ version: '2'
 services:
   zookeeper:
     image: debezium/zookeeper:1.0
+    # Other images:
+    # * zookeeper:3.5
+    # * confluentinc/cp-zookeeper:5.4
     ports:
-    - 2181:2181
-    - 2888:2888
-    - 3888:3888
+    - 2181:2181 # client connections
+    - 2888:2888 # peers connections
+    - 3888:3888 # leader election
 
   kafka:
     image: debezium/kafka:1.0
+    # Other images:
+    # * confluentinc/cp-kafka:5.4
+    # * strimzi/kafka:0.16.2-kafka-2.4.0
     ports:
     - 9092:9092
     environment:
