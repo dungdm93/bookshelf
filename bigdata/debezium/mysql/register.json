@@ -1,5 +1,5 @@
 {
-  "name": "inventory-connector",
+  "name": "sample_mysql",
   "config": {
       "connector.class": "io.debezium.connector.mysql.MySqlConnector",
       "tasks.max": "1",
@@ -8,11 +8,11 @@
       "database.port":     "3306",
       "database.user":     "debezium",
       "database.password": "dbz",
+      "database.dbname":   "sakila",
 
       "database.server.id":   "184054",
-      "database.server.name": "dbserver1",
-      "database.whitelist":   "sakila",
+      "database.server.name": "sample_mysql",
       "database.history.kafka.bootstrap.servers": "kafka:9092",
-      "database.history.kafka.topic": "schema-changes.inventory"
+      "database.history.kafka.topic": "schema-changes"
   }
 }
