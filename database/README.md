@@ -39,3 +39,26 @@ $ mongorestore --db=DATABASE --collection=COLLECTION /path/to/dump/DATABASE/COLL
 $ mongodump    [--db=DATABASE] [--collection=COLLECTION] --gzip --archive=/path/to/DATABASE.gz
 $ mongorestore [--db=DATABASE] [--collection=COLLECTION] --gzip --archive=/path/to/DATABASE.gz
 ```
+
+## 2. MySQL
+### 2.1 `mysql` cli
+```sql
+SHOW DATABASES;
+USE <database>;
+SHOW TABLES; -- tables + views
+SHOW FULL TABLES WHERE table_type != 'VIEW';
+SHOW CREATE TABLE <table>;
+
+-- Note: 'username' is a synonym for 'username'@'%'
+SELECT user, host, plugin, authentication_string FROM mysql.user;
+SHOW GRANTS [FOR <user>];
+
+CREATE USER 'username'@'host' IDENTIFIED BY 'password';
+GRANT ALL ON database.table TO <user>;
+GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO <user>;
+
+
+SHOW VARIABLES [LIKE 'binlog_format'];
+```
+
+### 2.2 
