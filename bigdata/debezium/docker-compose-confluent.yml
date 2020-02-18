@@ -65,6 +65,9 @@ services:
       CONNECT_INTERNAL_KEY_CONVERTER:   org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+
+      AWS_ACCESS_KEY_ID:      admin
+      AWS_SECRET_ACCESS_KEY:  SuperSecr3t
     depends_on:
     - broker
     - schema-registry
@@ -102,5 +105,17 @@ services:
     - ./mysql/user-debezium.sql:/docker-entrypoint-initdb.d/user-debezium.sql
     - mysql_data:/var/lib/mysql
 
+  minio:
+    image: minio/minio
+    command: [server, /data]
+    environment:
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: SuperSecr3t
+    ports:
+    - 9000:9000
+    volumes:
+    - minio_data:/data
+
 volumes:
   mysql_data:
+  minio_data:

@@ -12,7 +12,7 @@
 
       "database.server.id":   "184054",
       "database.server.name": "sample_mysql",
-      "database.history.kafka.bootstrap.servers": "kafka:9092",
+      "database.history.kafka.bootstrap.servers": "broker:9092",
       "database.history.kafka.topic": "schema-changes",
 
       "key.converter": "io.confluent.connect.avro.AvroConverter",
