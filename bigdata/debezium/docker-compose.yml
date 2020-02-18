@@ -8,7 +8,7 @@ services:
     - 2888:2888 # peers connections
     - 3888:3888 # leader election
 
-  kafka:
+  broker:
     image: debezium/kafka:1.0
     environment:
       ZOOKEEPER_CONNECT: zookeeper:2181
@@ -24,7 +24,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
     depends_on:
     - zookeeper
-    - kafka
+    - broker
     ports:
     - 8081:8081
 
@@ -44,13 +44,13 @@ services:
   debezium:
     image: debezium/connect:1.0
     environment:
-      BOOTSTRAP_SERVERS: kafka:9092
+      BOOTSTRAP_SERVERS: broker:9092
       GROUP_ID: 1
       CONFIG_STORAGE_TOPIC: debezium.configs
       OFFSET_STORAGE_TOPIC: debezium.offsets
       STATUS_STORAGE_TOPIC: debezium.statuses
     depends_on:
-    - kafka
+    - broker
     ports:
     - 8083:8083
 

@@ -1,0 +1,17 @@
+{
+  "name": "sample_s3",
+  "config": {
+    "name": "sample_s3",
+    "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+    "topics.regex": "sample_mysql\\.sakila\\..*",
+    "tasks.max": "1",
+    "flush.size": "10",
+    "rotate.interval.ms": "1000",
+
+    "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+    "store.url": "http://minio:9000",
+    "s3.bucket.name": "kafka",
+    "format.class": "io.confluent.connect.s3.format.avro.AvroFormat",
+    "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner"
+  }
+}
