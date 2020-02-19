@@ -76,3 +76,8 @@ volumes:
   # mssql_data:
   mongo_data:
   clickhouse_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf

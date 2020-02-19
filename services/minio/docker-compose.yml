@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  minio:
+    image: minio/minio
+    command: [server, /data]
+    environment:
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: SuperSecr3t
+    ports:
+    - 9000:9000
+    volumes:
+    - minio_data:/data
+
+volumes:
+  minio_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf
