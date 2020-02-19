@@ -42,11 +42,7 @@ services:
     - 8081:8081
 
   connect:
-    image: hub.teko.vn/data/kafka-connect:5.4.0
-    build:
-      context: .
-      args:
-        BASE_IMAGE: confluentinc/cp-kafka-connect:5.4.0
+    image: hub.teko.vn/data/kafka/connector:5.4.0
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:9092
       # CONNECT_ZOOKEEPER_CONNECT: zookeeper:2181
