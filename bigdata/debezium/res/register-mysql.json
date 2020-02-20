@@ -20,6 +20,9 @@
     "internal.key.converter": "org.apache.kafka.connect.json.JsonConverter",
     "internal.value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "key.converter.schema.registry.url": "http://schema-registry:8081",
-    "value.converter.schema.registry.url": "http://schema-registry:8081"
+    "value.converter.schema.registry.url": "http://schema-registry:8081",
+
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.UnwrapFromEnvelope"
   }
 }
