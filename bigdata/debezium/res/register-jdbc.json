@@ -9,9 +9,15 @@
     "connection.user":     "root",
     "connection.password": "SuperSecr3t",
     "catalog.pattern":     "sakila",
-    "table.blacklist":     "film_actor, film_category, film_text",
+    "table.whitelist":     "actor",
 
-    "mode": "incrementing",
+    "transforms": "ValueToKey",
+    "transforms.ValueToKey.type":"org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.ValueToKey.fields":"actor_id",
+
+    "mode": "timestamp+incrementing",
+    "incrementing.column.name": "actor_id",
+    "timestamp.column.name": "last_update",
     "validate.non.null": "true",
     "topic.prefix": "sakila-"
   }

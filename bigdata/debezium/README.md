@@ -10,7 +10,7 @@
     mc mb local/kafka
     ```
 
-3. Create `sample_mysql` kafka connector to stream data change from MySQL
+3. Create `sample_mysql` connector to stream data change from MySQL
     ```bash
     curl -i -X POST http://localhost:8083/connectors/ \
         -H "Accept:application/json" \
@@ -18,10 +18,18 @@
         -d @res/register-mysql.json
     ```
 
-3. Create `sample_s3` kafka connector to stream data change to MinIO
+3. Create `sample_s3` connector to stream data change to MinIO
     ```bash
     curl -i -X POST http://localhost:8083/connectors/ \
         -H "Accept:application/json" \
         -H "Content-Type:application/json" \
         -d @res/register-s3.json
+    ```
+
+4. Create `sample_jdbc` connector to stream from MySQL
+    ```bash
+    curl -i -X POST http://localhost:8083/connectors/ \
+        -H "Accept:application/json" \
+        -H "Content-Type:application/json" \
+        -d @res/register-jdbc.json
     ```
