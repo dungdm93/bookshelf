@@ -5,7 +5,7 @@
     "connector.class": "io.confluent.connect.s3.S3SinkConnector",
     "topics.regex": "sample_mysql\\.sakila\\..*",
     "tasks.max": "1",
-    "flush.size": "10",
+    "flush.size": "100000",
     "rotate.interval.ms": "1000",
 
     "storage.class": "io.confluent.connect.s3.storage.S3Storage",

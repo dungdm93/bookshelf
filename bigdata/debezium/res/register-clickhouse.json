@@ -1,0 +1,14 @@
+{
+  "name": "sample_clickhouse",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "tasks.max": "1",
+    "connection.url": "jdbc:clickhouse://clickhouse:8123",
+    "query": "SELECT * FROM `nyc-taxi`.`trips`",
+
+    "mode": "incrementing",
+    "incrementing.column.name": "trip_id",
+    "validate.non.null": "false",
+    "topic.prefix": "nyc-taxi-trips"
+  }
+}
