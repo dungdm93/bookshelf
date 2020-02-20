@@ -1,0 +1,18 @@
+{
+  "name": "sample_jdbc",
+  "config": {
+    "name": "sample_jdbc",
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "tasks.max": "1",
+
+    "connection.url":      "jdbc:mysql://mysql:3306",
+    "connection.user":     "root",
+    "connection.password": "SuperSecr3t",
+    "catalog.pattern":     "sakila",
+    "table.blacklist":     "film_actor, film_category, film_text",
+
+    "mode": "incrementing",
+    "validate.non.null": "true",
+    "topic.prefix": "sakila-"
+  }
+}
