@@ -25,3 +25,8 @@ services:
     image: prom/pushgateway:v1.0.1
     ports:
     - 9091:9091
+
+networks:
+  default:
+    external:
+      name: bookshelf
