@@ -8,7 +8,7 @@ services:
     - 2888:2888 # peers connections
     - 3888:3888 # leader election
 
-  broker:
+  kafka:
     image: debezium/kafka:1.0
     environment:
       ZOOKEEPER_CONNECT: zookeeper:2181
@@ -17,34 +17,10 @@ services:
     ports:
     - 9092:9092
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:5.4.0
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
-    depends_on:
-    - zookeeper
-    - broker
-    ports:
-    - 8081:8081
-
-  mysql:
-    image: mysql:8.0
-    command: [--default-authentication-plugin=mysql_native_password]
-    environment:
-      MYSQL_ROOT_PASSWORD: SuperSecr3t
-    ports:
-    - 3306:3306
-    - 33060:33060
-    volumes:
-    - ../../database/sample/mysql/:/docker-entrypoint-initdb.d/
-    - ./mysql/user-debezium.sql:/docker-entrypoint-initdb.d/user-debezium.sql
-    - mysql_data:/var/lib/mysql
-
   debezium:
     image: debezium/connect:1.0
     environment:
-      BOOTSTRAP_SERVERS: broker:9092
+      BOOTSTRAP_SERVERS: kafka:9092
       GROUP_ID: 1
       CONFIG_STORAGE_TOPIC: debezium.configs
       OFFSET_STORAGE_TOPIC: debezium.offsets
@@ -56,3 +32,8 @@ services:
 
 volumes:
   mysql_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf
