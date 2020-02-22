@@ -1,5 +1,9 @@
 package vn.teko.data.spark
 
-object AvroExample extends Application {
+//import org.apache.spark.
 
+object AvroExample extends App {
+//    val spark  = SparkSession.builder().master("local[1]")
+//        .appName("SparkByExamples.com")
+//        .getOrCreate()
 }
