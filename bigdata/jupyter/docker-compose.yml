@@ -12,7 +12,7 @@ services:
     - 8888:8888
     - 4040:4040     # spark app
     volumes:
-    - ./work:/home/jovyan/work
+    - ../workspace:/home/jovyan/work
 
   statsd-exporter:
     image: prom/statsd-exporter:v0.13.0

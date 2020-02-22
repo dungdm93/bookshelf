@@ -1,0 +1,165 @@
+{
+  "type" : "record",
+  "name" : "Value",
+  "namespace" : "sample_mysql.ingestion.datatypes",
+  "fields" : [ {
+    "name" : "id",
+    "type" : "long"
+  }, {
+    "name" : "T_BIT",
+    "type" : [ "null", "boolean" ],
+    "default" : null
+  }, {
+    "name" : "T_TINYINT",
+    "type" : [ "null", {
+      "type" : "int",
+      "connect.type" : "int16"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_SMALLINT",
+    "type" : [ "null", {
+      "type" : "int",
+      "connect.type" : "int16"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_MEDIUMINT",
+    "type" : [ "null", "int" ],
+    "default" : null
+  }, {
+    "name" : "T_INT",
+    "type" : [ "null", "int" ],
+    "default" : null
+  }, {
+    "name" : "T_BIGINT",
+    "type" : [ "null", "long" ],
+    "default" : null
+  }, {
+    "name" : "T_BOOL",
+    "type" : [ "null", {
+      "type" : "int",
+      "connect.type" : "int16"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_DECIMAL",
+    "type" : [ "null", {
+      "type" : "bytes",
+      "scale" : 4,
+      "precision" : 19,
+      "connect.version" : 1,
+      "connect.parameters" : {
+        "scale" : "4",
+        "connect.decimal.precision" : "19"
+      },
+      "connect.name" : "org.apache.kafka.connect.data.Decimal",
+      "logicalType" : "decimal"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_FLOAT",
+    "type" : [ "null", "double" ],
+    "default" : null
+  }, {
+    "name" : "T_DOUBLE",
+    "type" : [ "null", "double" ],
+    "default" : null
+  }, {
+    "name" : "T_DATE",
+    "type" : [ "null", {
+      "type" : "int",
+      "connect.version" : 1,
+      "connect.name" : "io.debezium.time.Date"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_TIME",
+    "type" : [ "null", {
+      "type" : "long",
+      "connect.version" : 1,
+      "connect.name" : "io.debezium.time.MicroTime"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_DATETIME",
+    "type" : [ "null", {
+      "type" : "long",
+      "connect.version" : 1,
+      "connect.name" : "io.debezium.time.Timestamp"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_TIMESTAMP",
+    "type" : [ "null", {
+      "type" : "string",
+      "connect.version" : 1,
+      "connect.name" : "io.debezium.time.ZonedTimestamp"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_YEAR",
+    "type" : [ "null", {
+      "type" : "int",
+      "connect.version" : 1,
+      "connect.name" : "io.debezium.time.Year"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_CHAR",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "T_VARCHAR",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "T_BINARY",
+    "type" : [ "null", "bytes" ],
+    "default" : null
+  }, {
+    "name" : "T_VARBINARY",
+    "type" : [ "null", "bytes" ],
+    "default" : null
+  }, {
+    "name" : "T_BLOB",
+    "type" : [ "null", "bytes" ],
+    "default" : null
+  }, {
+    "name" : "T_TEXT",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "T_ENUM",
+    "type" : [ "null", {
+      "type" : "string",
+      "connect.version" : 1,
+      "connect.parameters" : {
+        "allowed" : "SUN,MON,TUE,WED,THU,FRI,SAT"
+      },
+      "connect.name" : "io.debezium.data.Enum"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_SET",
+    "type" : [ "null", {
+      "type" : "string",
+      "connect.version" : 1,
+      "connect.parameters" : {
+        "allowed" : "a,b,c,d"
+      },
+      "connect.name" : "io.debezium.data.EnumSet"
+    } ],
+    "default" : null
+  }, {
+    "name" : "T_JSON",
+    "type" : [ "null", {
+      "type" : "string",
+      "connect.version" : 1,
+      "connect.name" : "io.debezium.data.Json"
+    } ],
+    "default" : null
+  } ],
+  "connect.version" : 1,
+  "connect.name" : "sample_mysql.ingestion.datatypes.Value"
+}
