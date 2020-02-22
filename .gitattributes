@@ -1,1 +1,4 @@
 database/sample/** filter=lfs diff=lfs merge=lfs -text
+*.orc     filter=lfs diff=lfs merge=lfs -text
+*.avro    filter=lfs diff=lfs merge=lfs -text
+*.parquet filter=lfs diff=lfs merge=lfs -text
