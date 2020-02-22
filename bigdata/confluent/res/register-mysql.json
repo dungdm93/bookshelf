@@ -15,6 +15,8 @@
     "database.history.kafka.bootstrap.servers": "broker:9092",
     "database.history.kafka.topic": "schema-changes",
 
+    "time.precision.mode":   "connect",
+    "decimal.handling.mode": "precise",
     "key.converter": "io.confluent.connect.avro.AvroConverter",
     "value.converter": "io.confluent.connect.avro.AvroConverter",
     "internal.key.converter": "org.apache.kafka.connect.json.JsonConverter",
