@@ -15,9 +15,9 @@ CREATE TABLE `datatypes` (
     `T_FLOAT`       float,
     `T_DOUBLE`      double         COMMENT 'alias: REAL',
     `T_DATE`        date,
-    `T_TIME`        time,
-    `T_DATETIME`    datetime,
-    `T_TIMESTAMP`   timestamp,
+    `T_TIME`        time(6)        COMMENT 'Precision: microsecond',
+    `T_DATETIME`    datetime(6)    COMMENT 'Precision: microsecond',
+    `T_TIMESTAMP`   timestamp(6)   COMMENT 'Precision: microsecond',
     `T_YEAR`        year,
     `T_CHAR`        char(7),
     `T_VARCHAR`     varchar(7)     COMMENT 'M is required',
@@ -40,13 +40,13 @@ SET
     `T_INT`         = POWER(2, 31) - 1,
     `T_BIGINT`      = POWER(2, 63) - 1,
     `T_BOOL`        = TRUE,
-    `T_DECIMAL`     = (1 + SQRT(5)) / 2, -- Godern ratio
-    `T_FLOAT`       = EXP(1),            -- Euler's Number
+    `T_DECIMAL`     = (1 + SQRT(5)) / 2,    -- Godern ratio
+    `T_FLOAT`       = EXP(1),               -- Euler's Number
     `T_DOUBLE`      = PI(),
     `T_DATE`        = CURRENT_DATE(),
-    `T_TIME`        = CURRENT_TIME(),
-    `T_DATETIME`    = NOW(),
-    `T_TIMESTAMP`   = CURRENT_TIMESTAMP(),
+    `T_TIME`        = CURRENT_TIME(6),      -- Precision: microsecond
+    `T_DATETIME`    = NOW(6),               -- Precision: microsecond
+    `T_TIMESTAMP`   = CURRENT_TIMESTAMP(6), -- Precision: microsecond
     `T_YEAR`        = YEAR(NOW()),
     `T_CHAR`        = LEFT(MD5(RAND()), 7),
     `T_VARCHAR`     = LEFT(MD5(RAND()), 7),
