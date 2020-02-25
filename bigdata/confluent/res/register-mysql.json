@@ -4,11 +4,11 @@
     "connector.class": "io.debezium.connector.mysql.MySqlConnector",
     "tasks.max": "1",
 
-    "database.hostname": "mysql",
-    "database.port":     "3306",
-    "database.user":     "debezium",
-    "database.password": "dbz",
-    "database.dbname":   "sakila",
+    "database.hostname":  "mysql",
+    "database.port":      "3306",
+    "database.user":      "debezium",
+    "database.password":  "dbz",
+    "database.whitelist": "sakila",
 
     "database.server.id":   "184054",
     "database.server.name": "sample_mysql",
