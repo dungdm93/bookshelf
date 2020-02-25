@@ -15,7 +15,7 @@
     curl -i -X POST http://localhost:8083/connectors/ \
         -H "Accept:application/json" \
         -H "Content-Type:application/json" \
-        -d @res/register-mysql.json
+        -d @res/register-debezium.json
     ```
 
 3. Create `sample_s3` connector to stream data change to MinIO
