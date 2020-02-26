@@ -8,7 +8,7 @@ import org.apache.spark.sql.SparkSession
 object AvroExample extends App {
     val spark = SparkSession.builder()
         .master("local[1]")
-        .appName("SparkExamples")
+        .appName("AvroExamples")
         .getOrCreate()
 
     val schema = new Schema.Parser().parse(new File("src/main/resources/mysql.avsc"))
