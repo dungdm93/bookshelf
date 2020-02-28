@@ -33,3 +33,14 @@
         -H "Content-Type:application/json" \
         -d @res/register-jdbc.json
     ```
+
+5. Kafka commands
+    ```bash
+    # Monitor topic using `kafka-avro-console-consumer`
+    docker-compose exec connect \
+        kafka-avro-console-consumer --bootstrap-server=broker:9092 \
+        --topic=sample_mysql.sakila.actor --property schema.registry.url=http://schema-registry:8081
+
+    # Delete topics
+    kafka-topics --bootstrap-server=broker:9092 --delete --topic=mysql_sample.*
+    ```

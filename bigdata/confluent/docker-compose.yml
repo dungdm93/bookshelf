@@ -3,6 +3,8 @@ version: '3.7'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:5.4.0
+    hostname: zookeeper
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME:   2000
@@ -11,6 +13,8 @@ services:
 
   broker:
     image: confluentinc/cp-server:5.4.0
+    hostname: broker
+    container_name: broker
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -32,6 +36,8 @@ services:
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.4.0
+    hostname: schema-registry
+    container_name: schema-registry
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
@@ -43,6 +49,8 @@ services:
 
   connect:
     image: hub.teko.vn/data/kafka/connector:5.4.0
+    hostname: connect
+    container_name: connect
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:9092
       # CONNECT_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -72,6 +80,8 @@ services:
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:5.4.0
+    hostname: control-center
+    container_name: control-center
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS:   broker:9092
       # CONTROL_CENTER_ZOOKEEPER_CONNECT:   zookeeper:2181
