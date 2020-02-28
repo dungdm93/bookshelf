@@ -10,3 +10,4 @@ libraryDependencies += "org.apache.spark" %% "spark-core" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-avro" % sparkVersion
 libraryDependencies += "io.delta" %% "delta-core" % "0.5.0"
+libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.19"
