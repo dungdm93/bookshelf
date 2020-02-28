@@ -11,11 +11,11 @@ object AvroExample extends App {
         .appName("AvroExamples")
         .getOrCreate()
 
-    val schema = new Schema.Parser().parse(new File("src/main/resources/mysql.avsc"))
+    val schema = new Schema.Parser().parse(new File("src/main/resources/mysql-datatypes.avsc"))
     val df = spark.read
         .format("avro")
         .option("avroSchema", schema.toString)
-        .load("src/main/resources/mysql.avro")
+        .load("src/main/resources/mysql-datatypes.avro")
 
     df.show()
     df.printSchema()
