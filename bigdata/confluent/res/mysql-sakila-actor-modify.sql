@@ -2,46 +2,46 @@ SET autocommit = OFF;
 START TRANSACTION;
 USE sakila;
 
--- Add user #201
+-- 1. Add user #201
 INSERT INTO actor (first_name,last_name)
 	VALUES ('Ace','Portgas D.');
 
--- Modify user #200
+-- 2. Modify user #200
 UPDATE actor
 	SET first_name='Robin',last_name='Nico'
 	WHERE actor_id=200;
 
--- Modify user #199
+-- 3. Modify user #199
 UPDATE actor
 	SET first_name='Sanji',last_name='Vinsmoke'
 	WHERE actor_id=199;
 
--- Add user #202
+-- 4. Add user #202
 INSERT INTO actor (first_name,last_name)
 	VALUES ('Law','Trafalgar D. Water');
 
--- Delete user #199
+-- 5. Delete user #199
 DELETE FROM actor
 	WHERE actor_id=199;
 
--- Modify user #202
+-- 6. Modify user #202
 UPDATE actor
 	SET first_name='Hancock',last_name='Boa'
 	WHERE actor_id=202;
 
--- Delete user #201
+-- 7. Delete user #201
 DELETE FROM actor
 	WHERE actor_id=201;
 
--- Add user #203
+-- 8. Add user #203
 INSERT INTO actor (first_name,last_name)
 	VALUES ('Luffy','Monkey D.');
 
--- Delete user #198
+-- 9. Delete user #198
 DELETE FROM actor
 	WHERE actor_id=198;
 
--- for 10 records change
+-- 10. for 10 records change
 UPDATE actor
 	SET first_name='Dung',last_name='Dang Minh'
 	WHERE actor_id=197;

@@ -11,6 +11,7 @@
     "store.url": "http://minio:9000",
     "s3.bucket.name": "kafka",
     "format.class": "io.confluent.connect.s3.format.avro.AvroFormat",
-    "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner"
+    "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner",
+    "behavior.on.null.values": "ignore"
   }
 }
