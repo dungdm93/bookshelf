@@ -5,8 +5,9 @@ services:
     image: sonatype/nexus3:3.21.1
     ports:
     - "8081:8081"
+    # network_mode: host
     volumes:
-    - nexus-data:/sonatype-work
+    - nexus-data:/nexus-data
 
 volumes:
   nexus-data:
