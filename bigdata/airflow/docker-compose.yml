@@ -22,7 +22,7 @@ services:
     - rabbitmq_data:/var/lib/rabbitmq
 
   airflow-webserver:
-    image: hub.teko.vn/data/airflow:1.10.7-all
+    image: hub.teko.vn/data/airflow:1.10.9
     command: [webserver]
     ports:
     - 8080:8080
@@ -31,14 +31,14 @@ services:
     - ./dags:/opt/airflow/dags
 
   airflow-scheduler:
-    image: hub.teko.vn/data/airflow:1.10.7-all
+    image: hub.teko.vn/data/airflow:1.10.9
     command: [scheduler]
     volumes:
     - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
     - ./dags:/opt/airflow/dags
 
   airflow-worker:
-    image: hub.teko.vn/data/airflow:1.10.7-all
+    image: hub.teko.vn/data/airflow:1.10.9
     command: [worker]
     volumes:
     - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
