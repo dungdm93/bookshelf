@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   jupyter:
-    image: hub.teko.vn/data/pyspark-notebook:2.4.4-hadoop-3.2.1
+    image: hub.teko.vn/data/pyspark-notebook:2.4.5-hadoop-3.2.1
     command: [start-notebook.sh, --NotebookApp.token='']
     environment:
       GRANT_SUDO: "yes"
