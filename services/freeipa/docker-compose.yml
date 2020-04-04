@@ -1,0 +1,5 @@
+version: '3.7'
+
+services:
+  freeipa:
+    image: freeipa/freeipa-server:centos-8
