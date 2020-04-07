@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  grafana:
+    image: grafana/grafana:6.5.0
+    network_mode: host
+    # ports:
+    # - 3000:3000
+    volumes:
+    - ./configs:/etc/grafana
+    - grafana_data:/var/lib/grafana
+
+volumes:
+  grafana_data:
