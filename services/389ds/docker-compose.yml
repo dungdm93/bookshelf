@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  # https://fy.blackhats.net.au/blog/html/2020/03/28/389ds_in_containers.html
+  389ds:
+    image: 389ds/dirsrv:1.4
+    environment:
+      DS_DM_PASSWORD: SuperSecr3t # default random
+    ports:
+    - 3389:3389 # LDAP
+    - 3636:3636 # LDAPS
+    volumes:
+    - 389ds_data:/data
+
+volumes:
+  389ds_data:
