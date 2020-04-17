@@ -41,16 +41,19 @@
     <value>true</value>
   </property>
 
-  <!--
-  <property>
-    <name>datanucleus.schema.autoCreateAll</name>
-    <value>true</value>
-  </property>
-  -->
-
   <property>
     <name>hive.metastore.warehouse.dir</name>
     <value>s3a://metastore/</value>
+  </property>
+
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://hive-metastore:9083</value>
+  </property>
+
+  <property>
+    <name>hive.metastore.event.db.notification.api.auth</name>
+    <value>false</value>
   </property>
 
   <!--

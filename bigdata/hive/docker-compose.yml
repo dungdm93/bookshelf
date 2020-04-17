@@ -14,36 +14,25 @@ services:
 
   hive-metastore:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+    command: [hive, --service, metastore, --verbose]
+    volumes:
+    - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+    - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    - ../configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
+
+  hive-server2:
+    image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
     # command: sleep 3600 # schematool -dbType postgres -initSchema
     command: [hive, --service, metastore, --verbose]
     volumes:
     - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
     - ../configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
 
-  minio:
-    image: minio/minio
-    command: [server, /data]
-    environment:
-      MINIO_ACCESS_KEY: admin
-      MINIO_SECRET_KEY: SuperSecr3t
-    ports:
-    - 9000:9000
-    volumes:
-    - minio_data:/data
-
-  jupyter:
-    image: hub.teko.vn/data/pyspark-notebook:2.4.4-hadoop-3.2.1
-    command: [start-notebook.sh, --NotebookApp.token='']
-    environment:
-      GRANT_SUDO: "yes"
-      JUPYTER_ENABLE_LAB: "yes"
-    user: root
-    ports:
-    - 8888:8888
-    - 4040:4040     # spark app
-    volumes:
-    - ./work:/home/jovyan/work
-
 volumes:
   postgres_data:
-  minio_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf
