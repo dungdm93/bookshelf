@@ -14,20 +14,29 @@ services:
 
   hive-metastore:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
-    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
-    command: [hive, --service, metastore, --verbose]
+    # HOTFIX: Illegal character in hostname at index 13: thrift://hive_hive-metastore_1.bookshelf:9083
+    # Caused at org.apache.hadoop.hive.metastore.HiveMetaStoreClient.resolveUris(HiveMetaStoreClient.java:267)
+    container_name: hive-metastore
+    entrypoint: ["/usr/local/bin/metastore-entrypoint.sh"]
+    environment:
+      HADOOP_OPTIONAL_TOOLS: hadoop-aws
     volumes:
-    - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+    - ./scripts/:/usr/local/bin/
+    - ../configs/hive/:/opt/hive/conf/
     - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
-    - ../configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
 
   hive-server2:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
-    # command: sleep 3600 # schematool -dbType postgres -initSchema
-    command: [hive, --service, metastore, --verbose]
+    entrypoint: ["/usr/local/bin/hiveserver2-entrypoint.sh"]
+    environment:
+      HADOOP_OPTIONAL_TOOLS: hadoop-aws
+    ports:
+    - 10000:10000
+    - 10002:10002 # WebUI
     volumes:
+    - ./scripts/:/usr/local/bin/
+    - ../configs/hive/:/opt/hive/conf/
     - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
-    - ../configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
 
 volumes:
   postgres_data:
