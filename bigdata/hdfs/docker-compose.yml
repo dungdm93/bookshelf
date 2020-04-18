@@ -7,6 +7,7 @@ services:
     ports:
     - 9870:9870
     volumes:
+    - ./datasets/:/datasets/
     - ./scripts/:/usr/local/scripts/
     - ../configs/hadoop/:/opt/hadoop/etc/hadoop:ro
     - namenode_data:/var/lib/hadoop
