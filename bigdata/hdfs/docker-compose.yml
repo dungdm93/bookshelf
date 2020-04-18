@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  hdfs-namenode:
+    image: hub.teko.vn/data/hadoop:3.2.1
+    command: [/usr/local/scripts/hadoop-start.sh, namenode]
+    ports:
+    - 9870:9870
+    volumes:
+    - ./scripts/:/usr/local/scripts/
+    - ../configs/hadoop/:/opt/hadoop/etc/hadoop:ro
+    - namenode_data:/var/lib/hadoop
+
+  hdfs-datanode1:
+    image: hub.teko.vn/data/hadoop:3.2.1
+    command: [/usr/local/scripts/hadoop-start.sh, datanode]
+    volumes:
+    - ./scripts/:/usr/local/scripts/
+    - ../configs/hadoop/:/opt/hadoop/etc/hadoop:ro
+    - namenode_data:/var/lib/hadoop
+
+volumes:
+  namenode_data:
+  datanode1_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf

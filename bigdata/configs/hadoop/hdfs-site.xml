@@ -2,6 +2,29 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
   <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
+  </property>
+
+  <!-- HDFS NameNode -->
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/var/lib/hadoop/hdfs/namenode</value>
+  </property>
+
+  <!-- HDFS DataNode -->
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/var/lib/hadoop/hdfs/datanode</value>
+  </property>
+
+  <!-- S3 -->
+  <property>
     <name>fs.s3a.impl</name>
     <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
   </property>
