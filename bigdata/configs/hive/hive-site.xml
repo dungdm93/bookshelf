@@ -56,6 +56,11 @@
     <value>false</value>
   </property>
 
+  <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>false</value>
+  </property>
+
   <!--
   <property>
     <name>hive.default.fileformat</name>
