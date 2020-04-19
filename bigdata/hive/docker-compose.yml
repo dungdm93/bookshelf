@@ -18,6 +18,8 @@ services:
     # Caused at org.apache.hadoop.hive.metastore.HiveMetaStoreClient.resolveUris(HiveMetaStoreClient.java:267)
     container_name: hive-metastore
     entrypoint: ["/usr/local/scripts/metastore-entrypoint.sh"]
+    depends_on:
+    - postgres
     environment:
       HADOOP_OPTIONAL_TOOLS: hadoop-aws
     volumes:
@@ -28,6 +30,8 @@ services:
   hive-server2:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
     entrypoint: ["/usr/local/scripts/hiveserver2-entrypoint.sh"]
+    depends_on:
+    - hive-metastore
     environment:
       HADOOP_OPTIONAL_TOOLS: hadoop-aws
     ports:
