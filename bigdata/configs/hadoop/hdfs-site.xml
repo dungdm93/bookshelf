@@ -6,9 +6,20 @@
     <value>1</value>
   </property>
 
+  <!-- AuthN/Z -->
   <property>
     <name>dfs.permissions.enabled</name>
-    <value>false</value>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.acls.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.posix.acl.inheritance.enabled</name>
+    <value>true</value>
   </property>
 
   <!-- HDFS NameNode -->
