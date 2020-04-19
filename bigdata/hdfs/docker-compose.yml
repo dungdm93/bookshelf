@@ -17,6 +17,8 @@ services:
   hdfs-datanode1:
     image: hub.teko.vn/data/hadoop:3.2.1
     command: [/usr/local/scripts/hadoop-start.sh, datanode]
+    depends_on:
+    - hdfs-namenode
     environment:
       HADOOP_OPTIONAL_TOOLS: hadoop-aws
     volumes:
