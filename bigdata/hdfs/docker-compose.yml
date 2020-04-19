@@ -4,6 +4,8 @@ services:
   hdfs-namenode:
     image: hub.teko.vn/data/hadoop:3.2.1
     command: [/usr/local/scripts/hadoop-start.sh, namenode]
+    environment:
+      HADOOP_OPTIONAL_TOOLS: hadoop-aws
     ports:
     - 9870:9870
     volumes:
@@ -15,6 +17,8 @@ services:
   hdfs-datanode1:
     image: hub.teko.vn/data/hadoop:3.2.1
     command: [/usr/local/scripts/hadoop-start.sh, datanode]
+    environment:
+      HADOOP_OPTIONAL_TOOLS: hadoop-aws
     volumes:
     - ./scripts/:/usr/local/scripts/
     - ../configs/hadoop/:/opt/hadoop/etc/hadoop:ro
