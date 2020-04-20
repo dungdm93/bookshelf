@@ -20,5 +20,20 @@ COMMENT 'Daily statistics for trending YouTube videos'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
-LOCATION 'hdfs://hdfs-namenode:8020/datasets/youtube/'
+LOCATION 'hdfs://hdfs-namenode:8020/datasets/raw/youtube/'
 TBLPROPERTIES ("skip.header.line.count"="1");
+
+CREATE TABLE youtube_videos_parquet
+  STORED AS PARQUET
+  LOCATION 'hdfs://hdfs-namenode:8020/datasets/parquet/youtube/'
+  AS
+SELECT *
+FROM youtube_videos;
+
+CREATE TABLE youtube_videos_orc
+  STORED AS ORC
+  LOCATION 'hdfs://hdfs-namenode:8020/datasets/orc/youtube/'
+  TBLPROPERTIES ("transactional"="true")
+  AS
+SELECT *
+FROM youtube_videos;

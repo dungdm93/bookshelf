@@ -16,5 +16,5 @@ COMMENT 'Posts of Data is Beautiful, a Reddit community.'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
-LOCATION 'hdfs://hdfs-namenode:8020/datasets/reddit/'
+LOCATION 'hdfs://hdfs-namenode:8020/datasets/raw/reddit/'
 TBLPROPERTIES ("skip.header.line.count"="1");
