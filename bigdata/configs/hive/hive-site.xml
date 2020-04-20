@@ -75,7 +75,7 @@
 
   <!-- Storage Based Authorization -->
   <!-- https://cwiki.apache.org/confluence/display/Hive/Storage+Based+Authorization+in+the+Metastore+Server -->
-  <property>
+  <!-- <property>
     <name>hive.server2.enable.doAs</name>
     <value>true</value>
   </property>
@@ -91,17 +91,40 @@
   </property>
 
   <property>
-    <name>hive.security.metastore.authorization.manager</name>
-    <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
-  </property>
-
-  <property>
     <name>hive.security.metastore.authenticator.manager</name>
     <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
   </property>
 
   <property>
+    <name>hive.security.metastore.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
+  </property>
+
+  <property>
     <name>hive.security.metastore.authorization.auth.reads</name>
     <value>true</value>
+  </property> -->
+
+
+  <!-- SQL Standard Based Authorization -->
+  <!-- https://cwiki.apache.org/confluence/display/Hive/SQL+Standard+Based+Hive+Authorization -->
+  <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>hive.security.authorization.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>hive.security.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory</value>
+  </property>
+
+  <property>
+    <name>hive.security.metastore.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.MetaStoreAuthzAPIAuthorizerEmbedOnly</value>
   </property>
 </configuration>
