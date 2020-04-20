@@ -57,14 +57,51 @@
   </property>
 
   <property>
-    <name>hive.server2.enable.doAs</name>
-    <value>false</value>
-  </property>
-
-  <!--
-  <property>
     <name>hive.default.fileformat</name>
     <value>parquet</value>
   </property>
-  -->
+
+  <!-- Authentication -->
+  <property>
+    <name>hive.server2.authentication</name>
+    <value>NONE</value>
+  </property>
+
+  <property>
+    <name>hive.users.in.admin.role</name>
+    <value>root</value>
+    <note>Run `set role admin;` to switching to `admin` role</note>
+  </property>
+
+  <!-- Storage Based Authorization -->
+  <!-- https://cwiki.apache.org/confluence/display/Hive/Storage+Based+Authorization+in+the+Metastore+Server -->
+  <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>hive.security.authorization.enabled</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>hive.metastore.pre.event.listeners</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener</value>
+  </property>
+
+  <property>
+    <name>hive.security.metastore.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
+  </property>
+
+  <property>
+    <name>hive.security.metastore.authenticator.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
+  </property>
+
+  <property>
+    <name>hive.security.metastore.authorization.auth.reads</name>
+    <value>true</value>
+  </property>
 </configuration>
