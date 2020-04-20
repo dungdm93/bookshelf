@@ -2,42 +2,14 @@ version: "3.7"
 
 services:
   presto:
-    image: prestosql/presto:327
+    image: prestosql/presto:332
     ports:
     - 8080:8080
     volumes:
     - ./catalog:/etc/presto/catalog
-    - ./configs/presto:/etc/presto
+    - ../configs/presto:/etc/presto
 
-  postgres:
-    image: postgres:11-alpine
-    environment:
-      POSTGRES_PASSWORD: Secr3t
-      POSTGRES_DB:       metastore
-    volumes:
-    - ../../database/sample/postgres:/docker-entrypoint-initdb.d/
-    - postgres_data:/var/lib/postgresql/data
-
-  hive-metastore:
-    image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
-    # command: sleep 3600
-    command: [hive, --service, metastore, --verbose]
-    volumes:
-    - ./configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
-    - ./configs/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
-
-  minio:
-    image: minio/minio
-    command: [server, /data]
-    environment:
-      MINIO_ACCESS_KEY: admin
-      MINIO_SECRET_KEY: SuperSecr3t
-    ports:
-    - 9000:9000
-    volumes:
-    - minio_data:/data
-
-volumes:
-  mysql_data:
-  postgres_data:
-  minio_data:
+networks:
+  default:
+    external:
+      name: bookshelf
