@@ -11,7 +11,7 @@ services:
     - database_data:/var/lib/postgresql/data
 
   keycloak:
-    image: jboss/keycloak:7.0.0
+    image: jboss/keycloak:9.0.3
     environment:
       DB_VENDOR:    postgres
       DB_ADDR:      database
