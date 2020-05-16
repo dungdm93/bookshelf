@@ -25,12 +25,14 @@ services:
   #     MCS_MINIO_SERVER: http://minio:9000
   #   ports:
   #   - 9090:9090
-  #
-  # mc:
-  #   image: minio/mc
-  #   entrypoint: [/bin/sh]
-  #   stdin_open: true
-  #   tty: true
+
+  mc:
+    image: minio/mc
+    entrypoint: [/bin/sh]
+    stdin_open: true
+    tty: true
+    environment:
+      MC_HOST_local: http://admin:SuperSecr3t@minio:9000
 
 volumes:
   minio_data:
