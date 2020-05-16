@@ -12,6 +12,26 @@ services:
     volumes:
     - minio_data:/data
 
+  # mcs:
+  #   image: minio/mcs:v0.0.3
+  #   command: [server, --host=0.0.0.0, --port=9090]
+  #   environment:
+  #     MCS_HMAC_JWT_SECRET:  YOURJWTSIGNINGSECRET
+  #     MCS_PBKDF_PASSPHRASE: SECRET
+  #     MCS_PBKDF_SALT:       SECRET
+  #
+  #     MCS_ACCESS_KEY: admin
+  #     MCS_SECRET_KEY: SuperSecr3t
+  #     MCS_MINIO_SERVER: http://minio:9000
+  #   ports:
+  #   - 9090:9090
+  #
+  # mc:
+  #   image: minio/mc
+  #   entrypoint: [/bin/sh]
+  #   stdin_open: true
+  #   tty: true
+
 volumes:
   minio_data:
 
