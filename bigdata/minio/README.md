@@ -1,0 +1,22 @@
+1. Prepare mc buckets & objects
+```bash
+mc mb local/first
+mc mb local/second
+
+echo "Hello world" | mc pipe local/first/hello/world.txt
+echo "My name is dungdm93" | mc pipe local/first/i_am/dungdm93.txt
+echo "farewell" | mc pipe local/second/farewell.txt
+```
+
+2. Create users
+```bash
+mc admin user add local dungdm93 dungdm93
+mc admin user add local trangpth trangpth
+
+mc config host add dungdm93 http://minio:9000 dungdm93 dungdm93
+mc config host add trangpth http://minio:9000 trangpth trangpth
+
+mc config host list
+```
+
+3. Policy
