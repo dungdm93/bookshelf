@@ -20,3 +20,17 @@ mc config host list
 ```
 
 3. Policy
+```bash
+mc admin policy list --json local
+
+# Create policy
+mc admin policy add  local/ dungdm93-policy dungdm93.json
+mc admin policy info local/ dungdm93-policy
+
+# Policy binding
+mc admin policy set local dungdm93-policy user=dungdm93
+
+# Test
+mc cat dungdm93/first/hello/world.txt
+echo "Hello there" | mc pipe dungdm93/first/hello/there.txt
+```
