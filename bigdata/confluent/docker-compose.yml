@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.4.0
+    image: confluentinc/cp-zookeeper:5.5.0
     hostname: zookeeper
     container_name: zookeeper
     environment:
@@ -12,7 +12,7 @@ services:
     - 2181:2181
 
   broker:
-    image: confluentinc/cp-server:5.4.0
+    image: confluentinc/cp-server:5.5.0
     hostname: broker
     container_name: broker
     environment:
@@ -35,7 +35,7 @@ services:
     - 9092:9092
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.4.0
+    image: confluentinc/cp-schema-registry:5.5.0
     hostname: schema-registry
     container_name: schema-registry
     environment:
@@ -48,7 +48,7 @@ services:
     - 8081:8081
 
   connect:
-    image: hub.teko.vn/data/kafka/connector:5.4.0
+    image: hub.teko.vn/data/kafka/connector:5.5.0
     hostname: connect
     container_name: connect
     environment:
@@ -79,7 +79,7 @@ services:
     - 8083:8083
 
   control-center:
-    image: confluentinc/cp-enterprise-control-center:5.4.0
+    image: confluentinc/cp-enterprise-control-center:5.5.0
     hostname: control-center
     container_name: control-center
     environment:
