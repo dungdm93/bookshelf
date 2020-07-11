@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   presto:
-    image: prestosql/presto:332
+    image: prestosql/presto:338
     ports:
     - 8080:8080
     volumes:
