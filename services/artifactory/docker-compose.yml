@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  artifactory:
+    image: docker.bintray.io/jfrog/artifactory-oss:6.20.1
+    ports:
+    - 8081:8081
+    volumes:
+    - artifactory_data:/var/opt/jfrog/artifactory
+    environment:
+      EXTRA_JAVA_OPTIONS: -Xms512m -Xmx4g
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+
+volumes:
+  artifactory_data:
