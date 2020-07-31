@@ -11,7 +11,7 @@ services:
     - database_data:/var/lib/postgresql/data
 
   keycloak:
-    image: jboss/keycloak:9.0.3
+    image: jboss/keycloak:11.0.0
     environment:
       DB_VENDOR:    postgres
       DB_ADDR:      database
@@ -29,6 +29,11 @@ services:
 volumes:
   database_data:
     driver: local
+
+networks:
+  default:
+    external:
+      name: bookshelf
 
 ##### References #####
 # https://www.keycloak.org/2019/05/keycloak-cluster-setup.html
