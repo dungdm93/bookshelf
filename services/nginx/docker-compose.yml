@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx:1.18-alpine
+    ports:
+    - 1080:80
+    volumes:
+    - ./conf.d:/etc/nginx/conf.d
