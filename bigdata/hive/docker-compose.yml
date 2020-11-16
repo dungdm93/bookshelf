@@ -22,6 +22,8 @@ services:
     - postgres
     environment:
       HADOOP_OPTIONAL_TOOLS: hadoop-aws
+    ports:
+    - 9083:9083
     volumes:
     - ./scripts/:/usr/local/scripts/
     - ../configs/hive/:/opt/hive/conf/
