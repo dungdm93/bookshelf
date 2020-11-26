@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  ##### PostgreSQL #####
+  # https://hub.docker.com/_/postgres
+  # Help:
+  # > psql -U postgres [-W]
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+    ports:
+    - 5432:5432
+    volumes:
+    - ./sample/:/docker-entrypoint-initdb.d/
+    - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf

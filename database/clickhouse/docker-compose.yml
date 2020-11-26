@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  clickhouse:
+    image: yandex/clickhouse-server:20.1
+    ports:
+    - 8123:8123  # HTTP interface
+    - 9000:9000  # native TCP interface
+    volumes:
+    - ./sample/:/docker-entrypoint-initdb.d/
+    - clickhouse_data:/var/lib/clickhouse
+    ulimits:
+      nofile: 262144
+
+volumes:
+  clickhouse_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf

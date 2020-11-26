@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo:4.2
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: SuperSecr3t
+    ports:
+    - 27017:27017
+    volumes:
+    - ./sample/:/docker-entrypoint-initdb.d/
+    - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf

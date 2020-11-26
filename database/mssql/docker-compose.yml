@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  ##### Microsoft SQL Server #####
+  # https://hub.docker.com/_/microsoft-mssql-server
+  # https://docs.microsoft.com/sql/linux/sql-server-linux-configure-environment-variables
+  # Help:
+  # > /opt/mssql-tools/bin/sqlcmd -?
+  # > /opt/mssql-tools/bin/sqlcmd -U sa [-P <pass>]
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: SuperSecr3t
+    ports:
+    - 1433:1433
+    volumes:
+    - ./sample/:/docker-entrypoint-initdb.d/
+    - mssql_data:/var/opt/mssql/data
+
+volumes:
+  mssql_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf
