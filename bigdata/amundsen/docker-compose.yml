@@ -1,0 +1,64 @@
+version: "3.7"
+
+services:
+  neo4j:
+    image: neo4j:4.2
+    environment:
+      NEO4J_AUTH: neo4j/test
+    ports:
+    - 7474:7474
+    - 7687:7687
+    volumes:
+    - ./conf/neo4j:/conf
+    - neo4j_data:/neo4j/data
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    environment:
+      discovery.type: single-node
+    ports:
+    - 9200:9200
+    volumes:
+    - es_data:/usr/share/elasticsearch/data
+
+  amundsensearch:
+    image: amundsendev/amundsen-search:2.4.1
+    command: [gunicorn, --workers=2, --bind=:5000, search_service.search_wsgi]
+    depends_on:
+    - elasticsearch
+    ports:
+    - 5001:5000
+    environment:
+      PROXY_ENDPOINT: elasticsearch
+
+  amundsenmetadata:
+    image: amundsendev/amundsen-metadata:3.0.0
+    command: [gunicorn, --workers=2, --bind=:5000, metadata_service.metadata_wsgi]
+    depends_on:
+    - neo4j
+    ports:
+    - 5002:5000
+    environment:
+      PROXY_HOST: bolt://neo4j
+
+  amundsenfrontend:
+    image: amundsendev/amundsen-frontend:3.0.0
+    command: [gunicorn, --workers=2, --bind=:5000, amundsen_application.wsgi]
+    depends_on:
+    - amundsenmetadata
+    - amundsensearch
+    ports:
+    - 5000:5000
+    environment:
+      SEARCHSERVICE_BASE: http://amundsensearch:5000
+      METADATASERVICE_BASE: http://amundsenmetadata:5000
+      FRONTEND_SVC_CONFIG_MODULE_CLASS: amundsen_application.config.TestConfig
+
+volumes:
+  es_data:
+  neo4j_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf
