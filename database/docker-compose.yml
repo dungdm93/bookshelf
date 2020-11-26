@@ -70,6 +70,16 @@ services:
     ulimits:
       nofile: 262144
 
+  neo4j:
+    image: neo4j:4.2
+    environment:
+      # default neo4j/neo4j
+      NEO4J_AUTH: none # disable authentication
+    ports:
+    # https://neo4j.com/docs/operations-manual/current/configuration/ports/
+    - 7474:7474 # HTTP
+    - 7687:7687 # Bolt
+
 volumes:
   mysql_data:
   postgres_data:
