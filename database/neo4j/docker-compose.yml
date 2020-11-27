@@ -10,8 +10,11 @@ services:
     # https://neo4j.com/docs/operations-manual/current/configuration/ports/
     - 7474:7474 # HTTP
     - 7687:7687 # Bolt
+    volumes:
+    - neo4j_data:/data
 
 volumes:
+  # https://neo4j.com/developer/example-data/
   neo4j_data:
 
 networks:
