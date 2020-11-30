@@ -2,18 +2,17 @@ version: "3.7"
 
 services:
   neo4j:
-    image: neo4j:4.2
+    image: neo4j:3.5
     environment:
-      NEO4J_AUTH: neo4j/test
+      NEO4J_AUTH: neo4j/SuperSecr3t
     ports:
-    - 7474:7474
-    - 7687:7687
+    - 7474:7474 # HTTP
+    - 7687:7687 # Bolt
     volumes:
-    - ./conf/neo4j:/conf
-    - neo4j_data:/neo4j/data
+    - neo4j_data:/data
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.13
     environment:
       discovery.type: single-node
     ports:
@@ -21,17 +20,18 @@ services:
     volumes:
     - es_data:/usr/share/elasticsearch/data
 
-  amundsensearch:
-    image: amundsendev/amundsen-search:2.4.1
-    command: [gunicorn, --workers=2, --bind=:5000, search_service.search_wsgi]
+  # Just a WebUI for elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.8.13
     depends_on:
     - elasticsearch
     ports:
-    - 5001:5000
+    - 5601:5601
     environment:
-      PROXY_ENDPOINT: elasticsearch
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
 
-  amundsenmetadata:
+  # http://localhost:5002/apidocs/
+  amundsen-metadata:
     image: amundsendev/amundsen-metadata:3.0.0
     command: [gunicorn, --workers=2, --bind=:5000, metadata_service.metadata_wsgi]
     depends_on:
@@ -40,18 +40,34 @@ services:
     - 5002:5000
     environment:
       PROXY_HOST: bolt://neo4j
+      PROXY_PORT: 7687
+      CREDENTIALS_PROXY_USER: neo4j
+      CREDENTIALS_PROXY_PASSWORD: SuperSecr3t
 
-  amundsenfrontend:
+  # http://localhost:5001/apidocs/
+  amundsen-search:
+    image: amundsendev/amundsen-search:2.4.1
+    command: [gunicorn, --workers=2, --bind=:5000, search_service.search_wsgi]
+    depends_on:
+    - elasticsearch
+    ports:
+    - 5001:5000
+    environment:
+      PROXY_ENDPOINT: http://elasticsearch:9200
+      # CREDENTIALS_PROXY_USER:
+      # CREDENTIALS_PROXY_PASSWORD:
+
+  amundsen-frontend:
     image: amundsendev/amundsen-frontend:3.0.0
     command: [gunicorn, --workers=2, --bind=:5000, amundsen_application.wsgi]
     depends_on:
-    - amundsenmetadata
-    - amundsensearch
+    - amundsen-metadata
+    - amundsen-search
     ports:
     - 5000:5000
     environment:
-      SEARCHSERVICE_BASE: http://amundsensearch:5000
-      METADATASERVICE_BASE: http://amundsenmetadata:5000
+      SEARCHSERVICE_BASE: http://amundsen-search:5000
+      METADATASERVICE_BASE: http://amundsen-metadata:5000
       FRONTEND_SVC_CONFIG_MODULE_CLASS: amundsen_application.config.TestConfig
 
 volumes:
