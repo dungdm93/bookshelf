@@ -9,7 +9,7 @@ services:
     ports:
     - 5432:5432
     volumes:
-    - ../../database/sample/postgres:/docker-entrypoint-initdb.d/
+    - ../../database/postgres/sample:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
 
   hive-metastore:
