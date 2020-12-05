@@ -63,7 +63,7 @@
 
   <!-- Transactions -->
   <!-- https://cwiki.apache.org/confluence/display/Hive/Hive+Transactions -->
-  <property>
+  <!-- <property>
     <name>hive.support.concurrency</name>
     <value>true</value>
   </property>
@@ -91,10 +91,10 @@
   <property>
     <name>hive.compactor.worker.threads</name>
     <value>2</value>
-  </property>
+  </property> -->
 
   <!-- Authentication -->
-  <property>
+  <!-- <property>
     <name>hive.server2.authentication</name>
     <value>NONE</value>
     <note>NONE | LDAP | KERBEROS | PAM | CUSTOM | NOSASL</note>
@@ -104,7 +104,7 @@
     <name>hive.users.in.admin.role</name>
     <value>root</value>
     <note>Run `set role admin;` to switching to `admin` role</note>
-  </property>
+  </property> -->
 
   <!-- Storage Based Authorization -->
   <!-- https://cwiki.apache.org/confluence/display/Hive/Storage+Based+Authorization+in+the+Metastore+Server -->
@@ -141,7 +141,7 @@
 
   <!-- SQL Standard Based Authorization -->
   <!-- https://cwiki.apache.org/confluence/display/Hive/SQL+Standard+Based+Hive+Authorization -->
-  <property>
+  <!-- <property>
     <name>hive.server2.enable.doAs</name>
     <value>false</value>
   </property>
@@ -159,5 +159,5 @@
   <property>
     <name>hive.security.metastore.authorization.manager</name>
     <value>org.apache.hadoop.hive.ql.security.authorization.MetaStoreAuthzAPIAuthorizerEmbedOnly</value>
-  </property>
+  </property> -->
 </configuration>

@@ -26,8 +26,8 @@ services:
     - 9083:9083
     volumes:
     - ./scripts/:/usr/local/scripts/
-    - ../configs/hive/:/opt/hive/conf/
-    - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    - ./configs/hive/:/opt/hive/conf/
+    - ./configs/hadoop/:/opt/hadoop/etc/hadoop/
 
   hive-server2:
     image: hub.teko.vn/data/hive:3.1.2-hadoop-3.1.0
@@ -41,8 +41,8 @@ services:
     - 10002:10002 # WebUI
     volumes:
     - ./scripts/:/usr/local/scripts/
-    - ../configs/hive/:/opt/hive/conf/
-    - ../configs/hadoop/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    - ./configs/hive/:/opt/hive/conf/
+    - ./configs/hadoop/:/opt/hadoop/etc/hadoop/
 
 volumes:
   postgres_data:
