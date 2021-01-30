@@ -11,7 +11,7 @@ services:
     volumes:
     - ./datasets/:/datasets/
     - ./scripts/:/usr/local/scripts/
-    - ../configs/hadoop/:/opt/hadoop/etc/hadoop:ro
+    - ./configs/:/opt/hadoop/etc/hadoop:ro
     - namenode_data:/var/lib/hadoop
 
   hdfs-datanode1:
@@ -23,7 +23,7 @@ services:
       HADOOP_OPTIONAL_TOOLS: hadoop-aws
     volumes:
     - ./scripts/:/usr/local/scripts/
-    - ../configs/hadoop/:/opt/hadoop/etc/hadoop:ro
+    - ./configs/:/opt/hadoop/etc/hadoop:ro
     - namenode_data:/var/lib/hadoop
 
 volumes:
