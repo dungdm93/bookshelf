@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  trino:
+    image: trinodb/trino:351
+    ports:
+    - 8080:8080
+    volumes:
+    - ./configs:/etc/trino
+
+networks:
+  default:
+    external:
+      name: bookshelf
