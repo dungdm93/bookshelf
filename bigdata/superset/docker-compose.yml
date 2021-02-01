@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB:       superset
+    ports:
+    - 5432:5432
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+    ports:
+    - 6379:6379
+    volumes:
+    - redis_data:/data
+
+  superset-webserver:
+    image: hub.teko.vn/dataops/superset:1.0
+    command: [webserver]
+    environment:
+      SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+    ports:
+    - 8088:8088
+    volumes:
+    - ./configs:/etc/superset
+
+  superset-worker:
+    image: hub.teko.vn/dataops/superset:1.0
+    command: [worker]
+    environment:
+      SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+    volumes:
+    - ./configs:/etc/superset
+
+  superset-flower:
+    image: hub.teko.vn/dataops/superset:1.0
+    command: [flower]
+    environment:
+      SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+    ports:
+    - 5555:5555
+    volumes:
+    - ./configs:/etc/superset
+
+volumes:
+  postgres_data:
+  redis_data:
