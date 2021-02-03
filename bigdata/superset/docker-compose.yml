@@ -23,6 +23,7 @@ services:
     command: [webserver]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+      GUNICORN_CMD_ARGS: --config=/etc/superset/gunicorn.conf.py
     ports:
     - 8088:8088
     volumes:
