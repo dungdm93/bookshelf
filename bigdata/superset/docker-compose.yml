@@ -32,8 +32,19 @@ services:
   superset-worker:
     image: hub.teko.vn/dataops/superset:1.0
     command: [worker]
+    hostname: superset-worker
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+      CELERY_CMD_ARGS: --config=/etc/superset/celeryconfig.py --autoscale=9,3
+    volumes:
+    - ./configs:/etc/superset
+
+  superset-beat:
+    image: hub.teko.vn/dataops/superset:1.0
+    command: [beat]
+    environment:
+      SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+      CELERY_CMD_ARGS: --config=/etc/superset/celeryconfig.py --pidfile=
     volumes:
     - ./configs:/etc/superset
 
@@ -42,6 +53,7 @@ services:
     command: [flower]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
+      CELERY_CMD_ARGS: --config=/etc/superset/celeryconfig.py
     ports:
     - 5555:5555
     volumes:
