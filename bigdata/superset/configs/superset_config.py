@@ -1,7 +1,8 @@
+import logging
 from cachelib.redis import RedisCache
 from celery.schedules import crontab
 
-LOG_LEVEL = 'DEBUG'
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)-5s] %(name)-15s:%(lineno)d: %(message)s')
 
 SUPERSET_WEBSERVER_PROTOCOL = 'http'
 SUPERSET_WEBSERVER_ADDRESS = '0.0.0.0'

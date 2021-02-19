@@ -23,7 +23,7 @@ services:
     command: [webserver]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
-      GUNICORN_CMD_ARGS: --config=/etc/superset/gunicorn.conf.py
+      GUNICORN_CONFIG_PATH: /etc/superset/gunicorn.conf.py
     ports:
     - 8088:8088
     volumes:
@@ -35,7 +35,8 @@ services:
     hostname: superset-worker
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
-      CELERY_CMD_ARGS: --config=/etc/superset/celeryconfig.py --autoscale=9,3
+      CELERY_CONFIG_PATH: /etc/superset/celeryconfig.py
+      CELERY_CMD_ARGS: --autoscale=9,3
     volumes:
     - ./configs:/etc/superset
 
@@ -44,7 +45,8 @@ services:
     command: [beat]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
-      CELERY_CMD_ARGS: --config=/etc/superset/celeryconfig.py --pidfile=
+      CELERY_CONFIG_PATH: /etc/superset/celeryconfig.py
+      CELERY_CMD_ARGS: --pidfile=
     volumes:
     - ./configs:/etc/superset
 
@@ -53,7 +55,7 @@ services:
     command: [flower]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
-      CELERY_CMD_ARGS: --config=/etc/superset/celeryconfig.py
+      CELERY_CONFIG_PATH: /etc/superset/celeryconfig.py
     ports:
     - 5555:5555
     volumes:
