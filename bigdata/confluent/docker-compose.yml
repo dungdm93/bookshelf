@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.5.0
+    image: confluentinc/cp-zookeeper:6.1.0
     hostname: zookeeper
     container_name: zookeeper
     environment:
@@ -12,7 +12,7 @@ services:
     - 2181:2181
 
   broker:
-    image: confluentinc/cp-server:5.5.0
+    image: confluentinc/cp-server:6.1.0
     hostname: broker
     container_name: broker
     environment:
@@ -20,13 +20,19 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
-      # Enable Confluent Metrics Reporter
+      ## JMX
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_JMX_PORT: 9101
+      ## Enable Confluent Metrics Reporter
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:9092
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
-      # License for Enterprise features
+      ## License for Enterprise features
+      # KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      # KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      # KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
       CONFLUENT_SUPPORT_CUSTOMER_ID: anonymous
     depends_on:
@@ -35,12 +41,13 @@ services:
     - 9092:9092
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.5.0
+    image: confluentinc/cp-schema-registry:6.1.0
     hostname: schema-registry
     container_name: schema-registry
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: broker:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
     depends_on:
     - zookeeper
     - broker
@@ -48,7 +55,7 @@ services:
     - 8081:8081
 
   connect:
-    image: hub.teko.vn/data/kafka/connector:5.5.0
+    image: cnfldemos/cp-server-connect-datagen:0.4.0-6.1.0
     hostname: connect
     container_name: connect
     environment:
@@ -79,7 +86,7 @@ services:
     - 8083:8083
 
   control-center:
-    image: confluentinc/cp-enterprise-control-center:5.5.0
+    image: confluentinc/cp-enterprise-control-center:6.1.0
     hostname: control-center
     container_name: control-center
     environment:
@@ -87,8 +94,8 @@ services:
       # CONTROL_CENTER_ZOOKEEPER_CONNECT:   zookeeper:2181
       CONTROL_CENTER_CONNECT_CLUSTER:     connect:8083
       CONTROL_CENTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      # CONTROL_CENTER_KSQL_URL:            http://ksql-server:8088
-      # CONTROL_CENTER_KSQL_ADVERTISED_URL: http://localhost:8088
+      # CONTROL_CENTER_KSQL_KSQLDB1_URL:            http://ksqldb-server:8088
+      # CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: http://localhost:8088
       CONTROL_CENTER_REPLICATION_FACTOR: 1
     depends_on:
     - zookeeper
