@@ -45,6 +45,16 @@ services:
     - ./dags:/opt/airflow/dags
     - /var/run/docker.sock:/var/run/docker.sock
 
+  airflow-flower:
+    image: hub.teko.vn/dataops/airflow:2.0
+    command: [celery, flower]
+    ports:
+    - 5555:5555
+    volumes:
+    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
+    - ./dags:/opt/airflow/dags
+    - /var/run/docker.sock:/var/run/docker.sock
+
 volumes:
   postgres_data:
   rabbitmq_data:
