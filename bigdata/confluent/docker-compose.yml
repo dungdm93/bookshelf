@@ -3,8 +3,8 @@ version: '3.7'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.1.0
-    hostname: zookeeper
     container_name: zookeeper
+    hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME:   2000
@@ -13,8 +13,8 @@ services:
 
   broker:
     image: confluentinc/cp-server:6.1.0
-    hostname: broker
     container_name: broker
+    hostname: broker
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -42,8 +42,8 @@ services:
 
   schema-registry:
     image: confluentinc/cp-schema-registry:6.1.0
-    hostname: schema-registry
     container_name: schema-registry
+    hostname: schema-registry
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: broker:9092
@@ -56,8 +56,8 @@ services:
 
   connect:
     image: cnfldemos/cp-server-connect-datagen:0.4.0-6.1.0
-    hostname: connect
     container_name: connect
+    hostname: connect
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:9092
       # CONNECT_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -87,8 +87,8 @@ services:
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:6.1.0
-    hostname: control-center
     container_name: control-center
+    hostname: control-center
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS:   broker:9092
       # CONTROL_CENTER_ZOOKEEPER_CONNECT:   zookeeper:2181
@@ -104,6 +104,21 @@ services:
     - connect
     ports:
     - 9021:9021
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest:6.1.0
+    container_name: rest-proxy
+    hostname: rest-proxy
+    depends_on:
+    - broker
+    - schema-registry
+    ports:
+    - 8082:8082
+    environment:
+      KAFKA_REST_HOST_NAME: rest-proxy
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+      KAFKA_REST_BOOTSTRAP_SERVERS: broker:9092
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://schema-registry:8081
 
 networks:
   default:
