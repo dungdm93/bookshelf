@@ -8,12 +8,6 @@
 -->
 <configuration>
   <property>
-    <name>hive.metastore.db.type</name>
-    <value>postgres</value>
-    <!-- Expects one of [derby, oracle, mysql, mssql, postgres]. -->
-  </property>
-
-  <property>
     <name>javax.jdo.option.ConnectionURL</name>
     <value>jdbc:postgresql://postgres:5432/metastore</value>
     <!-- MySQL: jdbc:mysql://mysql:3306/metastore?createDatabaseIfNotExist=true -->
@@ -43,7 +37,7 @@
 
   <property>
     <name>hive.metastore.warehouse.dir</name>
-    <value>s3a://metastore/</value>
+    <value>s3a://warehouse/</value>
   </property>
 
   <property>
@@ -60,104 +54,4 @@
     <name>hive.default.fileformat</name>
     <value>parquet</value>
   </property>
-
-  <!-- Transactions -->
-  <!-- https://cwiki.apache.org/confluence/display/Hive/Hive+Transactions -->
-  <!-- <property>
-    <name>hive.support.concurrency</name>
-    <value>true</value>
-  </property>
-
-  <property>
-    <name>hive.txn.manager</name>
-    <value>org.apache.hadoop.hive.ql.lockmgr.DbTxnManager</value>
-  </property>
-
-  <property>
-    <name>hive.txn.strict.locking.mode</name>
-    <value>false</value>
-  </property>
-
-  <property>
-    <name>hive.exec.dynamic.partition.mode</name>
-    <value>nonstrict</value>
-  </property>
-
-  <property>
-    <name>hive.compactor.initiator.on</name>
-    <value>true</value>
-  </property>
-
-  <property>
-    <name>hive.compactor.worker.threads</name>
-    <value>2</value>
-  </property> -->
-
-  <!-- Authentication -->
-  <!-- <property>
-    <name>hive.server2.authentication</name>
-    <value>NONE</value>
-    <note>NONE | LDAP | KERBEROS | PAM | CUSTOM | NOSASL</note>
-  </property>
-
-  <property>
-    <name>hive.users.in.admin.role</name>
-    <value>root</value>
-    <note>Run `set role admin;` to switching to `admin` role</note>
-  </property> -->
-
-  <!-- Storage Based Authorization -->
-  <!-- https://cwiki.apache.org/confluence/display/Hive/Storage+Based+Authorization+in+the+Metastore+Server -->
-  <!-- <property>
-    <name>hive.server2.enable.doAs</name>
-    <value>true</value>
-  </property>
-
-  <property>
-    <name>hive.security.authorization.enabled</name>
-    <value>false</value>
-  </property>
-
-  <property>
-    <name>hive.metastore.pre.event.listeners</name>
-    <value>org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener</value>
-  </property>
-
-  <property>
-    <name>hive.security.metastore.authenticator.manager</name>
-    <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
-  </property>
-
-  <property>
-    <name>hive.security.metastore.authorization.manager</name>
-    <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
-  </property>
-
-  <property>
-    <name>hive.security.metastore.authorization.auth.reads</name>
-    <value>true</value>
-  </property> -->
-
-
-  <!-- SQL Standard Based Authorization -->
-  <!-- https://cwiki.apache.org/confluence/display/Hive/SQL+Standard+Based+Hive+Authorization -->
-  <!-- <property>
-    <name>hive.server2.enable.doAs</name>
-    <value>false</value>
-  </property>
-
-  <property>
-    <name>hive.security.authorization.enabled</name>
-    <value>true</value>
-  </property>
-
-  <property>
-    <name>hive.security.authorization.manager</name>
-    <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory</value>
-  </property>
-
-  <property>
-    <name>hive.security.metastore.authorization.manager</name>
-    <value>org.apache.hadoop.hive.ql.security.authorization.MetaStoreAuthzAPIAuthorizerEmbedOnly</value>
-  </property> -->
 </configuration>
