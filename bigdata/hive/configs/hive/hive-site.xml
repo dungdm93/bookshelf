@@ -54,4 +54,9 @@
     <name>hive.default.fileformat</name>
     <value>parquet</value>
   </property>
+
+  <property>
+    <name>hive.users.in.admin.role</name>
+    <value>root</value>
+  </property>
 </configuration>
