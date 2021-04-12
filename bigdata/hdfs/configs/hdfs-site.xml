@@ -9,12 +9,12 @@
   <!-- AuthN/Z -->
   <property>
     <name>dfs.permissions.enabled</name>
-    <value>true</value>
+    <value>false</value>
   </property>
 
   <property>
     <name>dfs.namenode.acls.enabled</name>
-    <value>true</value>
+    <value>false</value>
   </property>
 
   <property>
