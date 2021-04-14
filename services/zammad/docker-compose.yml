@@ -15,7 +15,7 @@ services:
     image: postgres:9.6-alpine
     environment:
       POSTGRES_USER: zammad
-      POSTGRES_PASSWORD: secr3t
+      POSTGRES_PASSWORD: SuperSecr3t
       POSTGRES_DB: zammad-db
     volumes:
     - postgresql-data:/var/lib/postgresql/data
