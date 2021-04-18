@@ -1,0 +1,106 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB:       druid
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+
+  zookeeper:
+    image: zookeeper:3.7
+    environment:
+      ZOO_MY_ID: "1"
+
+  druid-coordinator:
+    image: apache/druid:0.20.2
+    command:
+    - coordinator
+    depends_on:
+    - postgres
+    - zookeeper
+    env_file:
+    - druid.env
+    volumes:
+    - druid_data:/opt/data
+    - druid_coordinator_var:/opt/druid/var
+    ports:
+    - 8081:8081
+
+  druid-broker:
+    image: apache/druid:0.20.2
+    command:
+    - broker
+    depends_on:
+    - postgres
+    - zookeeper
+    - druid-coordinator
+    env_file:
+    - druid.env
+    ports:
+    - 8082:8082
+    volumes:
+    - druid_broker_var:/opt/druid/var
+
+  druid-historical:
+    image: apache/druid:0.20.2
+    command:
+    - historical
+    depends_on:
+    - postgres
+    - zookeeper
+    - druid-coordinator
+    env_file:
+    - druid.env
+    ports:
+    - 8083:8083
+    volumes:
+    - druid_data:/opt/data
+    - druid_historical_var:/opt/druid/var
+
+  druid-middlemanager:
+    image: apache/druid:0.20.2
+    command:
+    - middleManager
+    depends_on:
+    - postgres
+    - zookeeper
+    - druid-coordinator
+    env_file:
+    - druid.env
+    ports:
+    - 8091:8091
+    volumes:
+    - druid_data:/opt/data
+    - druid_middle_var:/opt/druid/var
+
+  druid-router:
+    image: apache/druid:0.20.2
+    depends_on:
+    - postgres
+    - zookeeper
+    - druid-coordinator
+    command:
+      - router
+    env_file:
+    - druid.env
+    ports:
+    - 8888:8888
+    volumes:
+    - druid_router_var:/opt/druid/var
+
+volumes:
+  postgres_data:
+  druid_data:
+  druid_coordinator_var:
+  druid_broker_var:
+  druid_historical_var:
+  druid_middle_var:
+  druid_router_var:
+
+networks:
+  default:
+    external:
+      name: bookshelf
