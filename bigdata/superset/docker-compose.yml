@@ -19,7 +19,7 @@ services:
     - redis_data:/data
 
   superset-webserver:
-    image: hub.teko.vn/dataops/superset:1.0
+    image: hub.teko.vn/dataops/superset:1.1
     command: [webserver]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
@@ -30,7 +30,7 @@ services:
     - ./configs:/etc/superset
 
   superset-worker:
-    image: hub.teko.vn/dataops/superset:1.0
+    image: hub.teko.vn/dataops/superset:1.1
     command: [worker]
     hostname: superset-worker
     environment:
@@ -41,7 +41,7 @@ services:
     - ./configs:/etc/superset
 
   superset-beat:
-    image: hub.teko.vn/dataops/superset:1.0
+    image: hub.teko.vn/dataops/superset:1.1
     command: [beat]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
@@ -51,7 +51,7 @@ services:
     - ./configs:/etc/superset
 
   superset-flower:
-    image: hub.teko.vn/dataops/superset:1.0
+    image: hub.teko.vn/dataops/superset:1.1
     command: [flower]
     environment:
       SUPERSET_CONFIG_PATH: /etc/superset/superset_config.py
