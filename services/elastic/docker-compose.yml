@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
     environment:
     - discovery.type=single-node
     volumes:
@@ -11,7 +11,7 @@ services:
     - 9200:9200
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.1.0
+    image: docker.elastic.co/kibana/kibana:7.13.3
     # environment:
     #   SERVER_NAME: kibana
     #   ELASTICSEARCH_HOSTS: http://elasticsearch:9200
