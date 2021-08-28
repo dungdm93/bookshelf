@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  scylla:
+    image: scylladb/scylla:4.4.4
+    container_name: scylla
+
+  scylla2:
+    image: scylladb/scylla:4.4.4
+    container_name: scylla2
+    command: --seeds=scylla
+
+  scylla3:
+    image: scylladb/scylla:4.4.4
+    container_name: scylla3
+    command: --seeds=scylla
