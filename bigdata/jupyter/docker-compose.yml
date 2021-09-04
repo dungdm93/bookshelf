@@ -14,6 +14,7 @@ services:
     - 4040:4040     # spark app
     volumes:
     - ../workspace:/home/jovyan/work
+    - ./configs/spark/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf
 
 networks:
   default:
