@@ -1,0 +1,35 @@
+version: '3.7'
+
+# depend-on:
+# * bigdata/confluent
+# * database/elastic
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+    volumes:
+    - ./etc/database-init.sql:/docker-entrypoint-initdb.d/initdb.sql
+    - postgres_data:/var/lib/postgresql/data
+
+  datahub-gms:
+    image: linkedin/datahub-gms:v0.8.14
+    env_file:
+    - ./etc/datahub-gms.env
+
+  datahub-frontend:
+    image: linkedin/datahub-frontend-react:v0.8.14
+    env_file:
+    - ./etc/datahub-frontend.env
+    ports:
+    - 9002:9002
+    # volumes:
+    # - ./etc/datahub-frontend.conf:/datahub-frontend/conf/application.conf
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    external:
+      name: bookshelf
