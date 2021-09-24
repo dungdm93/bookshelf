@@ -15,7 +15,7 @@ services:
       ZOO_MY_ID: "1"
 
   druid-coordinator:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     command:
     - coordinator
     depends_on:
@@ -30,7 +30,7 @@ services:
     - 8081:8081
 
   druid-broker:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     command:
     - broker
     depends_on:
@@ -45,7 +45,7 @@ services:
     - druid_broker_var:/opt/druid/var
 
   druid-historical:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     command:
     - historical
     depends_on:
@@ -61,7 +61,7 @@ services:
     - druid_historical_var:/opt/druid/var
 
   druid-middlemanager:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     command:
     - middleManager
     depends_on:
@@ -77,7 +77,7 @@ services:
     - druid_middle_var:/opt/druid/var
 
   druid-router:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     depends_on:
     - postgres
     - zookeeper
