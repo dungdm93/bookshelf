@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   vault:
-    image: vault:1.2.3
+    image: vault:1.8.3
     command: server -dev
     # entrypoint: vault # default entrypoint is for -dev only
     # command: server -config=/vault/config/vault-config.hcl
