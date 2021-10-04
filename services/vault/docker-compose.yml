@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   vault:
@@ -8,54 +8,18 @@ services:
     # command: server -config=/vault/config/vault-config.hcl
     ports:
     - 8200:8200
+    environment:
+      VAULT_ADDR: http://localhost:8200
     volumes:
     # - ./config:/vault/config
     - vault_data:/vault/file
     cap_add:
     - IPC_LOCK
 
-  shell:
-    image: vault:1.2.3
-    init: true
-    entrypoint: sleep 3600
-    environment:
-      VAULT_ADDR:  http://vault:8200
-
-  mysql:
-    image: mysql:5.7
-    ports:
-    - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD:  classified
-    volumes:
-    - mysql_data:/var/lib/mysql
-
-  postgres:
-    image: postgres:11-alpine
-    ports:
-    - 5432:5432
-    environment:
-      POSTGRES_PASSWORD:  unbreakable
-    volumes:
-    - postgres_data:/var/lib/postgresql/data/
-
-  rabbitmq:
-    image: rabbitmq:3.7-management-alpine
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: nobodyknows
-    ports:
-    - 5671:5671
-    - 5672:5672
-    - 15672:15672
-    volumes:
-    - rabbitmq_data:/var/lib/rabbitmq
-
 volumes:
   vault_data:
-  mysql_data:
-  postgres_data:
-  rabbitmq_data:
 
-###########################################################
-# ref: https://github.com/testdrivenio/vault-consul-docker
+networks:
+  default:
+    external:
+      name: bookshelf
