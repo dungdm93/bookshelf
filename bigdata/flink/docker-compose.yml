@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  flink-jobmanager:
+    image: apache/flink:1.14-scala_2.12-java8
+    command: [jobmanager]
+    environment:
+      JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
+    ports:
+    - 8081:8081
+
+  flink-taskmanager:
+    image: apache/flink:1.14-scala_2.12-java8
+    command: [taskmanager]
+    environment:
+      JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
+    depends_on:
+    - flink-jobmanager
