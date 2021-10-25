@@ -2,17 +2,26 @@ version: "3.7"
 
 services:
   flink-jobmanager:
-    image: apache/flink:1.14-scala_2.12-java8
+    image: apache/flink:1.13-scala_2.12-java8
     command: [jobmanager]
     environment:
       JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
+      FLINK_PROPERTIES: |
+        rest.flamegraph.enabled: true
     ports:
     - 8081:8081
 
   flink-taskmanager:
-    image: apache/flink:1.14-scala_2.12-java8
+    image: apache/flink:1.13-scala_2.12-java8
     command: [taskmanager]
     environment:
       JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
+      FLINK_PROPERTIES: |
+        rest.flamegraph.enabled: true
     depends_on:
     - flink-jobmanager
+
+networks:
+  default:
+    external:
+      name: bookshelf
