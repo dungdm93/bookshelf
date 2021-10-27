@@ -2,7 +2,7 @@ version: '3'
 
 services:
   database:
-    image: postgres:12-alpine
+    image: postgres:13-alpine
     environment:
       POSTGRES_DB:        keycloak
       POSTGRES_USER:      keycloak
@@ -11,7 +11,7 @@ services:
     - database_data:/var/lib/postgresql/data
 
   keycloak:
-    image: jboss/keycloak:11.0.0
+    image: quay.io/keycloak/keycloak:15.0.2
     environment:
       DB_VENDOR:    postgres
       DB_ADDR:      database
