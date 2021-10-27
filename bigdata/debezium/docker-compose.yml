@@ -2,14 +2,14 @@ version: '2'
 
 services:
   zookeeper:
-    image: debezium/zookeeper:1.0
+    image: debezium/zookeeper:1.7
     ports:
     - 2181:2181 # client connections
     - 2888:2888 # peers connections
     - 3888:3888 # leader election
 
   kafka:
-    image: debezium/kafka:1.0
+    image: debezium/kafka:1.7
     environment:
       ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
@@ -18,7 +18,7 @@ services:
     - 9092:9092
 
   debezium:
-    image: debezium/connect:1.0
+    image: debezium/connect:1.7
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
       GROUP_ID: 1
@@ -26,7 +26,7 @@ services:
       OFFSET_STORAGE_TOPIC: debezium.offsets
       STATUS_STORAGE_TOPIC: debezium.statuses
     depends_on:
-    - broker
+    - kafka
     ports:
     - 8083:8083
 
