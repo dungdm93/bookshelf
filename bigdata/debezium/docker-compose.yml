@@ -30,6 +30,15 @@ services:
     ports:
     - 8083:8083
 
+  debezium-ui:
+    image: debezium/debezium-ui:1.7
+    depends_on:
+    - debezium
+    environment:
+      KAFKA_CONNECT_URI: http://debezium:8083
+    ports:
+    - 8080:8080
+
 volumes:
   mysql_data:
 
