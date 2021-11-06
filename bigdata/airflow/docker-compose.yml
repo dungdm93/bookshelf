@@ -11,53 +11,20 @@ services:
     volumes:
     - postgres_data:/var/lib/postgresql/data
 
-  rabbitmq:
-    image: rabbitmq:3.8-management-alpine
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: SuperSecr3t
-    ports:
-    - 15672:15672
-    volumes:
-    - rabbitmq_data:/var/lib/rabbitmq
+  redis:
+    image: redis:6.2-alpine
 
-  airflow-webserver:
-    image: hub.teko.vn/dataops/airflow:2.0
-    command: [webserver]
+  airflow:
+    image: hub.teko.vn/dataops/airflow:2.2-b1
+    command: [standalone]
     ports:
     - 8080:8080
     volumes:
     - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
     - ./dags:/opt/airflow/dags
 
-  airflow-scheduler:
-    image: hub.teko.vn/dataops/airflow:2.0
-    command: [scheduler]
-    volumes:
-    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
-    - ./dags:/opt/airflow/dags
-
-  airflow-worker:
-    image: hub.teko.vn/dataops/airflow:2.0
-    command: [celery, worker]
-    volumes:
-    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
-    - ./dags:/opt/airflow/dags
-    - /var/run/docker.sock:/var/run/docker.sock
-
-  airflow-flower:
-    image: hub.teko.vn/dataops/airflow:2.0
-    command: [celery, flower]
-    ports:
-    - 5555:5555
-    volumes:
-    - ./configs/airflow.cfg:/opt/airflow/airflow.cfg
-    - ./dags:/opt/airflow/dags
-    - /var/run/docker.sock:/var/run/docker.sock
-
 volumes:
   postgres_data:
-  rabbitmq_data:
 
 ######### REFERENCES #########
 # $ airflow users create --username admin \
