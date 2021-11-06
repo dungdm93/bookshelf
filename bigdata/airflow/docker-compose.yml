@@ -26,6 +26,11 @@ services:
 volumes:
   postgres_data:
 
+networks:
+  default:
+    external:
+      name: bookshelf
+
 ######### REFERENCES #########
 # $ airflow users create --username admin \
 #     --firstname FIRST_NAME --lastname LAST_NAME \
