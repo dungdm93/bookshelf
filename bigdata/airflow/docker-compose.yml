@@ -13,6 +13,8 @@ services:
 
   redis:
     image: redis:6.2-alpine
+    ports:
+    - 6379:6379
 
   airflow:
     image: hub.teko.vn/dataops/airflow:2.2-b1
