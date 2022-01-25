@@ -30,8 +30,8 @@ volumes:
 
 networks:
   default:
-    external:
-      name: bookshelf
+    name: bookshelf
+    external: true
 
 ######### REFERENCES #########
 # $ airflow users create --username admin \

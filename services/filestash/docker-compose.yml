@@ -12,5 +12,5 @@ services:
 
 networks:
   default:
-    external:
-      name: bookshelf
+    name: bookshelf
+    external: true

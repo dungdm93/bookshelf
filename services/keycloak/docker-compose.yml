@@ -32,8 +32,8 @@ volumes:
 
 networks:
   default:
-    external:
-      name: bookshelf
+    name: bookshelf
+    external: true
 
 ##### References #####
 # https://www.keycloak.org/2019/05/keycloak-cluster-setup.html
