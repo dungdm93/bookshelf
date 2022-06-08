@@ -17,7 +17,7 @@ services:
     - 6379:6379
 
   airflow:
-    image: hub.teko.vn/dataops/airflow:2.2-b1
+    image: hub.teko.vn/dataops/airflow:2.3-b1
     command: [standalone]
     ports:
     - 8080:8080
