@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   postgres:
-    image: postgres:11-alpine
+    image: postgres:14-alpine
     environment:
       POSTGRES_PASSWORD: SuperSecr3t
       POSTGRES_DB:       metastore
@@ -13,7 +13,7 @@ services:
     - postgres_data:/var/lib/postgresql/data
 
   hive-metastore:
-    image: hub.teko.vn/dataops/hive:3.1.2
+    image: hub.teko.vn/dataops/hive:3.1.3
     # HOTFIX: Illegal character in hostname at index 13: thrift://hive_hive-metastore_1.bookshelf:9083
     # Caused at org.apache.hadoop.hive.metastore.HiveMetaStoreClient.resolveUris(HiveMetaStoreClient.java:267)
     container_name: hive-metastore
@@ -30,7 +30,7 @@ services:
     - ./configs/hadoop/:/opt/hadoop/etc/hadoop/
 
   hive-server2:
-    image: hub.teko.vn/dataops/hive:3.1.2
+    image: hub.teko.vn/dataops/hive:3.1.3
     entrypoint: ["/usr/local/scripts/hiveserver2-entrypoint.sh"]
     depends_on:
     - hive-metastore
@@ -45,7 +45,7 @@ services:
     - ./configs/hadoop/:/opt/hadoop/etc/hadoop/
 
   beeline:
-    image: hub.teko.vn/dataops/hive:3.1.2
+    image: hub.teko.vn/dataops/hive:3.1.3
     entrypoint: ["/bin/bash"]
     tty: true
 
