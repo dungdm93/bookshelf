@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   trino:
-    image: trinodb/trino:390
+    image: trinodb/trino:392
     ports:
     - 8080:8080
     volumes:
