@@ -10,6 +10,7 @@ SUPERSET_WEBSERVER_PORT = 8088
 ENABLE_PROXY_FIX = True
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:SuperSecr3t@postgres:5432/superset'
 WEBDRIVER_BASEURL = 'http://superset-webserver:8088/'
+SECRET_KEY = "xP8llKiKd0+oAw/w/cks1BXQ+6L1Y5Pe2x1+GleYkj/9Fl2QkGJ7nMc5" # openssl rand -base64 42
 
 # ===== Celery =====
 
@@ -38,7 +39,7 @@ class CeleryConfig:
     CELERYBEAT_SCHEDULE = {
         'email_reports.schedule_hourly': {
             'task': 'email_reports.schedule_hourly',
-            'schedule': crontab(minute=1, hour='*'),
+            'schedule': crontab(minute=1, hour='*'),  # hourly
         },
         'cache-warmup-hourly': {
             'task': 'cache-warmup',
@@ -48,6 +49,14 @@ class CeleryConfig:
                 'top_n': 5,
                 'since': '7 days ago',
             },
+        },
+        "reports.scheduler": {
+            "task": "reports.scheduler",
+            "schedule": crontab(minute="*", hour="*"),  # every minute
+        },
+        "reports.prune_log": {
+            "task": "reports.prune_log",
+            "schedule": crontab(minute=0, hour=0),  # daily
         },
     }
 
@@ -79,6 +88,22 @@ THUMBNAIL_CACHE_CONFIG = {
     'CACHE_DEFAULT_TIMEOUT': 60 * 60 * 24,  # 1 day
     'CACHE_KEY_PREFIX': 'superset.thumbnail.',
     'CACHE_REDIS_URL': 'redis://redis:6379/5',
+}
+
+FILTER_STATE_CACHE_CONFIG = {
+    'CACHE_TYPE': 'redis',
+    'CACHE_DEFAULT_TIMEOUT': 60 * 60 * 24,  # 1 day
+    'CACHE_KEY_PREFIX': 'superset.filter_state.',
+    'CACHE_REDIS_URL': 'redis://redis:6379/6',
+    'REFRESH_TIMEOUT_ON_RETRIEVAL': True,
+}
+
+EXPLORE_FORM_DATA_CACHE_CONFIG = {
+    'CACHE_TYPE': 'redis',
+    'CACHE_DEFAULT_TIMEOUT': 60 * 60 * 24,  # 1 day
+    'CACHE_KEY_PREFIX': 'superset.explore_form_data.',
+    'CACHE_REDIS_URL': 'redis://redis:6379/7',
+    'REFRESH_TIMEOUT_ON_RETRIEVAL': True,
 }
 
 # ===== Optional Feature =====
