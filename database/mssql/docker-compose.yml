@@ -8,10 +8,10 @@ services:
   # > /opt/mssql-tools/bin/sqlcmd -?
   # > /opt/mssql-tools/bin/sqlcmd -U sa [-P <pass>]
   mssql:
-    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: Y
-      MSSQL_SA_PASSWORD: SuperSecr3t
+      SA_PASSWORD: SuperSecr3t
     ports:
     - 1433:1433
     volumes:
