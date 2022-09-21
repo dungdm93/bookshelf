@@ -37,7 +37,7 @@
 
   <property>
     <name>hive.metastore.warehouse.dir</name>
-    <value>s3a://warehouse/</value>
+    <value>hdfs://hdfs-namenode:8020/warehouse/</value>
   </property>
 
   <property>
