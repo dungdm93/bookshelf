@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  agent:
+    image: grafana/agent:v0.27.1
+    command:
+    - -config.file=/etc/agent/agent.yaml
+    volumes:
+    - ./configs:/etc/agent
+    - agent_data:/var/lib/agent/
+
+volumes:
+  agent_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
