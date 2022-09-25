@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.37.1
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    - --storage.tsdb.path=/prometheus/
+    - --web.enable-remote-write-receiver # the remote write receiver endpoint is /api/v1/write
+    ports:
+    - 9090:9090
+    volumes:
+    - ./configs:/etc/prometheus
+    - prometheus_data:/prometheus
+
+volumes:
+  prometheus_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
