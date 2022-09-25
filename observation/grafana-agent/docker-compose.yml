@@ -9,6 +9,16 @@ services:
     - ./configs:/etc/agent
     - agent_data:/var/lib/agent/
 
+  avalanche:
+    profiles: [example]
+    image: quay.io/freshtracks.io/avalanche:latest
+    command:
+    - --metric-count=3000
+    - --series-interval=3600
+    - --metric-interval=7200
+    ports:
+    - 9001:9001
+
 volumes:
   agent_data:
 

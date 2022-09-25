@@ -12,3 +12,15 @@ logs:
         labels:
           job: varlogs
           __path__: /var/log/*log
+
+metrics:
+  global:
+    scrape_interval: 60s
+    remote_write:
+    - url: http://prometheus:9090/api/v1/write
+  configs:
+  - name: default
+    scrape_configs:
+    - job_name: avalanche
+      static_configs:
+      - targets: [avalanche:9001]
