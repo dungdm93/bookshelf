@@ -24,3 +24,14 @@ metrics:
     - job_name: avalanche
       static_configs:
       - targets: [avalanche:9001]
+
+traces:
+  configs:
+  - name: default
+    remote_write:
+    - endpoint: tempo:4317  # OTLP/gRPC
+      insecure: true
+    receivers:
+      otlp:
+        protocols:
+          grpc:
