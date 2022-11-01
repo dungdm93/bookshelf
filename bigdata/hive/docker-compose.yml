@@ -6,8 +6,8 @@ services:
     environment:
       POSTGRES_PASSWORD: SuperSecr3t
       POSTGRES_DB:       metastore
-    ports:
-    - 5432:5432
+    # ports:
+    # - 5432:5432
     volumes:
     - ../../database/postgres/sample:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
@@ -48,6 +48,7 @@ services:
     image: hub.teko.vn/dataops/hive:3.1.3
     entrypoint: ["/bin/bash"]
     tty: true
+    profiles: [cli]
 
 volumes:
   postgres_data:
