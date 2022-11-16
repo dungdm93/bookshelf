@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: chatwoot
+    # ports:
+    # - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.0-alpine
+    # ports:
+    # - 6379:6379
+
+  chatwoot-worker:
+    image: chatwoot/chatwoot:v2.11.0
+    command: [bundle, exec, sidekiq, -C, config/sidekiq.yml]
+    depends_on: [postgres, redis]
+    env_file: [.env]
+
+  chatwoot-web:
+    image: chatwoot/chatwoot:v2.11.0
+    command: [bundle, exec, rails, server, --port=3000, --binding=0.0.0.0]
+    depends_on: [postgres, redis]
+    env_file: [.env]
+    ports:
+      - 3000:3000
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
+
+######### REFERENCES #########
+# $ bundle exec rails db:chatwoot_prepare
