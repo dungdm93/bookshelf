@@ -1,7 +1,0 @@
-<configuration>
-    <property>
-        <name>fs.defaultFS</name>
-        <value>hdfs://localhost:8020</value>
-        <final>true</final>
-    </property>
-</configuration>

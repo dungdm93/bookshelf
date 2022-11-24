@@ -1,9 +1,0 @@
-#!/bin/sh -eux
-
-apt-get update
-apt-get install -y zsh
-
-chsh -s "$(which zsh)" vagrant
-
-##### Documentation #####
-# https://www.howtoforge.com/tutorial/how-to-setup-zsh-and-oh-my-zsh-on-linux/

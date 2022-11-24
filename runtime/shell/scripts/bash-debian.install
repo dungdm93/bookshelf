@@ -1,6 +1,0 @@
-#!/bin/sh -eux
-
-# apt-get update
-# apt-get install -y bash
-
-chsh -s "$(which bash)" vagrant
