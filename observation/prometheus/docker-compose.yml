@@ -1,8 +1,8 @@
-version: '3.7'
+version: "3.7"
 
 services:
   prometheus:
-    image: prom/prometheus:v2.37.1
+    image: quay.io/prometheus/prometheus:v2.40.7
     command:
     - --config.file=/etc/prometheus/prometheus.yml
     - --storage.tsdb.path=/prometheus/
@@ -13,8 +13,20 @@ services:
     - ./configs:/etc/prometheus
     - prometheus_data:/prometheus
 
+  alertmanager:
+    profiles: [alertmanager]
+    image: quay.io/prometheus/alertmanager:v0.24.0
+    command:
+    - --config.file=/etc/alertmanager/alertmanager.yml
+    - --storage.path=/alertmanager
+    ports:
+    - 9093:9093
+    volumes:
+    - alertmanager_data:/alertmanager
+
 volumes:
   prometheus_data:
+  alertmanager_data:
 
 networks:
   default:
