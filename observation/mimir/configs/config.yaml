@@ -1,0 +1,44 @@
+target: all
+multitenancy_enabled: false
+
+server:
+  http_listen_address: 0.0.0.0
+  http_listen_port: 9009
+  grpc_listen_address: 0.0.0.0
+  grpc_listen_port: 9095
+  log_format: logfmt
+  log_level: info
+
+blocks_storage:
+  backend: filesystem
+  filesystem:
+    dir: /var/lib/mimir/data/tsdb
+  bucket_store:
+    sync_dir: /var/lib/mimir/tsdb-sync
+  tsdb:
+    dir: /var/lib/mimir/tsdb
+    wal_compression_enabled: true
+
+ingester:
+  ring:
+    replication_factor: 1
+
+store_gateway:
+  sharding_ring:
+    replication_factor: 1
+
+ruler_storage:
+  backend: filesystem
+  filesystem:
+    dir: /var/lib/mimir/rules
+
+alertmanager:
+  data_dir: /var/lib/mimir/alertmanager
+
+alertmanager_storage:
+  backend: filesystem
+  filesystem:
+    dir: /var/lib/mimir/alertmanager
+
+compactor:
+  data_dir: /var/lib/mimir/compactor
