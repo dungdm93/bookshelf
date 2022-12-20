@@ -111,3 +111,87 @@ FEATURE_FLAGS = {
     'THUMBNAILS': True,
     'THUMBNAILS_SQLA_LISTENERS': True,
 }
+
+# ===== Trino Authentication =====
+from authlib.integrations.requests_client import OAuth2Session
+from authlib.oauth2.rfc6749 import OAuth2Token
+from trino.auth import Authentication
+
+
+def extract_timeout_from_token(token: OAuth2Token) -> int:
+    if "expires_at" in token:
+        from time import time
+        return int(token.get("expires_at") - time())
+    elif "expires_in" in token:
+        return token.get("expires_in")
+    else:
+        return 600  # 10min
+
+
+class OAuth2ClientCredentialAuthentication(Authentication):
+    """
+    See:
+    * :class:`authlib.integrations.requests_client.oauth2_session.OAuth2Auth`
+    * :class:`authlib.oauth2.client.OAuth2Client`
+    """
+
+    def __init__(
+        self,
+        client_id: str,
+        client_secret: str,
+        token_endpoint: str,
+        **kwargs
+    ) -> None:
+        self.client = OAuth2Session(
+            client_id=client_id,
+            client_secret=client_secret,
+            token_endpoint=token_endpoint,
+            update_token=self._update_token(),
+            **kwargs
+        )
+
+        param_hash = hash(
+            frozenset({
+                ("client_id", client_id),
+                ("client_secret", client_secret),
+                ("token_endpoint", token_endpoint),
+                *kwargs.items()
+            })
+        )
+        self._cache_key = f"trino.oauth2.client_credentials.{param_hash}"
+
+    def set_http_session(self, http_session):
+        if not self.client.token:
+            self._initialize_token()
+        http_session.auth = self.client.token_auth
+        return http_session
+
+    def _update_token(self):
+        from superset.extensions import cache_manager
+
+        def func(token: OAuth2Token,
+                 refresh_token: str = None,
+                 access_token: str = None):
+            timeout = extract_timeout_from_token(token)
+            cache_manager.cache.set(key=self._cache_key, value=token, timeout=timeout)
+
+            self.client.token = token
+
+        return func
+
+    def _initialize_token(self):
+        from superset.extensions import cache_manager
+
+        token: OAuth2Token = cache_manager.cache.get(self._cache_key)
+        if token is None:
+            token = self.client.fetch_token(grant_type="client_credentials")
+            self.client.update_token(token)
+
+        self.client.token = token
+
+
+ALLOWED_EXTRA_AUTHENTICATIONS = {
+    "trino": {
+        "oauth2_client_credential": OAuth2ClientCredentialAuthentication,
+    },
+}
