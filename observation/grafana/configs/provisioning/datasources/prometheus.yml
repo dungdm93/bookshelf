@@ -7,4 +7,6 @@ datasources:
     access: proxy
     url: http://prometheus:9090
     jsonData:
+      manageAlerts: true
+      alertmanagerUid: alertmanager
       prometheusType: Prometheus
