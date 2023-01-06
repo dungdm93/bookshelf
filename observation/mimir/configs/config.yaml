@@ -9,14 +9,22 @@ server:
   log_format: logfmt
   log_level: info
 
+api:
+  prometheus_http_prefix: /prometheus
+  alertmanager_http_prefix: /alertmanager
+
+common:
+  storage:
+    backend: filesystem
+    filesystem:
+      dir: /mimir_data
+
 blocks_storage:
-  backend: filesystem
-  filesystem:
-    dir: /var/lib/mimir/data/tsdb
+  storage_prefix: blocks
   bucket_store:
-    sync_dir: /var/lib/mimir/tsdb-sync
+    sync_dir: /mimir_local/tsdb-sync
   tsdb:
-    dir: /var/lib/mimir/tsdb
+    dir: /mimir_local/tsdb
     wal_compression_enabled: true
 
 ingester:
@@ -27,18 +35,18 @@ store_gateway:
   sharding_ring:
     replication_factor: 1
 
+ruler:
+  rule_path: /mimir_local/rules
+
 ruler_storage:
-  backend: filesystem
-  filesystem:
-    dir: /var/lib/mimir/rules
+  storage_prefix: rules
 
 alertmanager:
-  data_dir: /var/lib/mimir/alertmanager
+  data_dir: /mimir_local/alerts
+  fallback_config_file: /etc/mimir/alertmanager-fallback.yaml
 
 alertmanager_storage:
-  backend: filesystem
-  filesystem:
-    dir: /var/lib/mimir/alertmanager
+  storage_prefix: alerts
 
 compactor:
-  data_dir: /var/lib/mimir/compactor
+  data_dir: /mimir_local/compactor

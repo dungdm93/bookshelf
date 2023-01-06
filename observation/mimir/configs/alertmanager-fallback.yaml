@@ -1,0 +1,6 @@
+route:
+  group_wait: 0s
+  receiver: empty
+
+receivers:
+  - name: empty
