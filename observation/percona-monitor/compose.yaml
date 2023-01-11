@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  pmm-server:
+    image: percona/pmm-server:2.33
+    ports:
+    - 8080:80
+    - 8443:443
+    volumes:
+    - pmm_data:/srv
+
+volumes:
+  pmm_data:
