@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  asterisk:
+    image: andrius/asterisk:alpine-18.15.0
+
+# volumes:
+#   jaeger_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
+
+# https://github.com/andrius/asterisk
