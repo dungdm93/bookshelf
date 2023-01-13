@@ -1,0 +1,33 @@
+---
+id: pmm-client
+listen-address: 0.0.0.0
+listen-port: 7777
+server:
+  address: pmm-server:443
+  username: admin
+  password: admin
+  insecure-tls: true
+paths:
+  paths_base: /usr/local/percona/pmm2
+  exporters_base: /usr/local/percona/pmm2/exporters
+  node_exporter: /usr/local/percona/pmm2/exporters/node_exporter
+  mysqld_exporter: /usr/local/percona/pmm2/exporters/mysqld_exporter
+  mongodb_exporter: /usr/local/percona/pmm2/exporters/mongodb_exporter
+  postgres_exporter: /usr/local/percona/pmm2/exporters/postgres_exporter
+  proxysql_exporter: /usr/local/percona/pmm2/exporters/proxysql_exporter
+  rds_exporter: /usr/local/percona/pmm2/exporters/rds_exporter
+  azure_exporter: /usr/local/percona/pmm2/exporters/azure_exporter
+  vmagent: /usr/local/percona/pmm2/exporters/vmagent
+  tempdir: /tmp
+  pt_summary: /usr/local/percona/pmm2/tools/pt-summary
+  pt_pg_summary: /usr/local/percona/pmm2/tools/pt-pg-summary
+  pt_mysql_summary: /usr/local/percona/pmm2/tools/pt-mysql-summary
+  pt_mongodb_summary: /usr/local/percona/pmm2/tools/pt-mongodb-summary
+ports:
+  min: 42000
+  max: 51999
+log-level: warn
+debug: false
+trace: false
+loglinescount: 1024
+window-connected-time: 1h0m0s

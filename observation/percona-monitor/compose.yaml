@@ -7,7 +7,26 @@ services:
     - 8080:80
     - 8443:443
     volumes:
-    - pmm_data:/srv
+    - pmm_server_data:/srv
+
+  pmm-client:
+    profiles: [client]
+    image: percona/pmm-client:2.33
+    environment:
+      PMM_AGENT_CONFIG_FILE: config/pmm-agent.yaml
+      PMM_AGENT_SERVER_ADDRESS: pmm-server:443
+      PMM_AGENT_SERVER_USERNAME: admin
+      PMM_AGENT_SERVER_PASSWORD: admin
+      PMM_AGENT_SERVER_INSECURE_TLS: yes
+    volumes:
+    - ./config-agent:/usr/local/percona/pmm2/config/
+    - pmm_client_data:/srv
 
 volumes:
-  pmm_data:
+  pmm_server_data:
+  pmm_client_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
