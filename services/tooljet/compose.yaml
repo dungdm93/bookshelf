@@ -1,0 +1,67 @@
+version: "3.7"
+
+services:
+  tooljet:
+    image: tooljet/tooljet-ce:v2.0.0
+    command: [npm, run, start:prod]
+    environment:
+      PORT: 8082
+      SERVE_CLIENT: "true"
+      TOOLJET_HOST: http://localhost:8082
+      LOCKBOX_MASTER_KEY: 36735900e8e1102d596154a713442d7835636a27e850afb0ac5ebea6dcdc7cc7
+      SECRET_KEY_BASE: 817bad80ca7e53fda4d40226f2fe053cc3fa587f9c1295e3c483d16347449c9d1bb9527e47b7e1ebc2445523643eaaec3fb62e35382de1018cc23fffe6b7e7c3
+
+      # ToolJet metadata
+      PG_HOST: postgres
+      PG_PORT: 5432
+      PG_DB: tooljet
+      PG_USER: postgres
+      PG_PASS: SuperSecr3t
+
+      # ToolJet-managed db
+      ENABLE_TOOLJET_DB: true
+      TOOLJET_DB: tooljet_db
+      TOOLJET_DB_HOST: postgres
+      TOOLJET_DB_PORT: 5432
+      TOOLJET_DB_USER: postgres
+      TOOLJET_DB_PASS: SuperSecr3t
+      PGRST_HOST: postgrest:8080
+      PGRST_JWT_SECRET: 796f4b22113a9599b80c58c4234b3d33a167e25a8a6f30e1f5337bfa95e3c366
+    depends_on:
+      - postgres
+      - postgrest
+    ports:
+      - 8082:8082
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: tooljet
+    # ports:
+    #   - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  postgrest:
+    image: postgrest/postgrest:v10.1.1
+    environment:
+      PGRST_SERVER_PORT: 8080
+      PGRST_DB_URI: postgres://postgres:SuperSecr3t@postgres:5432/tooljet_db
+      PGRST_JWT_SECRET: 796f4b22113a9599b80c58c4234b3d33a167e25a8a6f30e1f5337bfa95e3c366
+    depends_on:
+      - postgres
+    # ports:
+    #   - 8080:8080
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
+
+# https://docs.tooljet.com/docs/setup/docker/
+# https://docs.tooljet.com/docs/setup/env-vars/
+# https://docs.tooljet.com/docs/tooljet-database
