@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.4.1
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+    ports:
+      - 9200:9200 # REST API
+      - 9600:9600 # Performance Analyzer
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.4.1
+    environment:
+      OPENSEARCH_HOSTS: https://opensearch:9200
+    ports:
+      - 5601:5601
+
+volumes:
+  opensearch_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
+
+# https://opensearch.org/docs/latest/install-and-configure/install-opensearch/plugins/
+# https://opensearch.org/docs/latest/install-and-configure/install-dashboards/plugins/
+# https://opensearch.org/docs/latest/security-plugin/index/
