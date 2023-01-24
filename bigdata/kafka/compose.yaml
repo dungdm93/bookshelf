@@ -28,13 +28,33 @@ services:
       - kafka_data:/kafka/data
       - kafka_logs:/kafka/logs
       - kafka_config:/kafka/config
+    depends_on:
+    - zookeeper
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.3.1
+    container_name: schema-registry
+    hostname: schema-registry
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    ports:
+    - 8081:8081
+    depends_on:
+    - kafka
 
   console:
     image: docker.redpanda.com/vectorized/console:v2.1.1
     environment:
       KAFKA_BROKERS: kafka:9092
+      KAFKA_SCHEMAREGISTRY_ENABLED: true
+      KAFKA_SCHEMAREGISTRY_URLS: http://schema-registry:8081
     ports:
       - 8080:8080
+    depends_on:
+    - kafka
+    - schema-registry
 
 volumes:
   zookeeper_data:
