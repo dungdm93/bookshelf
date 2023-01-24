@@ -1,26 +1,56 @@
-version: '2'
+version: "2"
 
 services:
   zookeeper:
-    image: debezium/zookeeper:1.0
+    image: debezium/zookeeper:2.1
     # Other images:
     # * zookeeper:3.5
     # * confluentinc/cp-zookeeper:5.4
     ports:
-    - 2181:2181 # client connections
-    - 2888:2888 # peers connections
-    - 3888:3888 # leader election
+      - 2181:2181 # client connections
+      - 2888:2888 # peers connections
+      - 3888:3888 # leader election
+    volumes:
+      - zookeeper_data:/zookeeper/data
+      - zookeeper_txns:/zookeeper/txns
+      - zookeeper_conf:/zookeeper/conf
 
   kafka:
-    image: debezium/kafka:1.0
+    image: debezium/kafka:2.1
     # Other images:
     # * confluentinc/cp-kafka:5.4
     # * strimzi/kafka:0.16.2-kafka-2.4.0
-    ports:
-    - 9092:9092
     environment:
       ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 9092:9092
+    volumes:
+      - kafka_data:/kafka/data
+      - kafka_logs:/kafka/logs
+      - kafka_config:/kafka/config
 
-# TODO
+  console:
+    image: docker.redpanda.com/vectorized/console:v2.1.1
+    environment:
+      KAFKA_BROKERS: kafka:9092
+    ports:
+      - 8080:8080
+
+volumes:
+  zookeeper_data:
+  zookeeper_txns:
+  zookeeper_conf:
+  kafka_data:
+  kafka_logs:
+  kafka_config:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
+
+## TODO
 # linkedin/cruise-control + ui
 # strimzi.io
+## References:
+# * https://github.com/debezium/container-images
