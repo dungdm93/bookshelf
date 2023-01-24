@@ -1,30 +1,42 @@
-version: '3.7'
+version: "3.7"
 
 # depend-on:
 # * bigdata/confluent
 # * database/elastic
 services:
   postgres:
-    image: postgres:11-alpine
+    image: postgres:15-alpine
     environment:
       POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: datahub
     volumes:
-    - ./etc/database-init.sql:/docker-entrypoint-initdb.d/initdb.sql
-    - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+      - ./etc/database-init.sql:/docker-entrypoint-initdb.d/initdb.sql
 
   datahub-gms:
-    image: linkedin/datahub-gms:v0.8.14
+    image: linkedin/datahub-gms:v0.9.6.1
     env_file:
-    - ./etc/datahub-gms.env
+      - ./etc/datahub-gms.env
+    depends_on:
+      - postgres
 
+  # account: datahub/datahub
   datahub-frontend:
-    image: linkedin/datahub-frontend-react:v0.8.14
+    image: linkedin/datahub-frontend-react:v0.9.6.1
     env_file:
-    - ./etc/datahub-frontend.env
+      - ./etc/datahub-frontend.env
     ports:
-    - 9002:9002
-    # volumes:
-    # - ./etc/datahub-frontend.conf:/datahub-frontend/conf/application.conf
+      - 9002:9002
+    depends_on:
+      - datahub-gms
+
+  datahub-actions:
+    # image: acryldata/datahub-actions:v0.0.10
+    image: hub.teko.vn/dataops/datahub/actions:0.0.10
+    env_file:
+      - ./etc/datahub-actions.env
+    depends_on:
+      - datahub-gms
 
 volumes:
   postgres_data:
@@ -33,3 +45,8 @@ networks:
   default:
     name: bookshelf
     external: true
+
+## References:
+# * Kafka Topic:
+#     https://github.com/datahub-project/datahub/blob/master/metadata-events/mxe-registration/src/main/java/com/linkedin/mxe/Topics.java
+#     https://github.com/datahub-project/datahub/blob/master/docs/deploy/confluent-cloud.md
