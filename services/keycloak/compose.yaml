@@ -2,7 +2,7 @@ version: '3'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:19.0
+    image: quay.io/keycloak/keycloak:20.0
     command: [start-dev]
     environment:
       # https://www.keycloak.org/server/all-config
