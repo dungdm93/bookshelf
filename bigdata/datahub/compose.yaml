@@ -16,6 +16,7 @@ services:
   datahub-gms:
     image: linkedin/datahub-gms:v0.9.6.1
     env_file:
+      - ./etc/datahub.env
       - ./etc/datahub-gms.env
     depends_on:
       - postgres
@@ -24,6 +25,7 @@ services:
   datahub-frontend:
     image: linkedin/datahub-frontend-react:v0.9.6.1
     env_file:
+      - ./etc/datahub.env
       - ./etc/datahub-frontend.env
     ports:
       - 9002:9002
@@ -34,6 +36,7 @@ services:
     # image: acryldata/datahub-actions:v0.0.10
     image: hub.teko.vn/dataops/datahub/actions:0.0.10
     env_file:
+      - ./etc/datahub.env
       - ./etc/datahub-actions.env
     depends_on:
       - datahub-gms
@@ -48,5 +51,6 @@ networks:
 
 ## References:
 # * Kafka Topic:
-#     https://github.com/datahub-project/datahub/blob/master/metadata-events/mxe-registration/src/main/java/com/linkedin/mxe/Topics.java
 #     https://github.com/datahub-project/datahub/blob/master/docs/deploy/confluent-cloud.md
+#     https://github.com/datahub-project/datahub/blob/master/metadata-events/mxe-registration/src/main/java/com/linkedin/mxe/Topics.java
+#     https://github.com/datahub-project/datahub/blob/master/metadata-service/factories/src/main/java/com/linkedin/gms/factory/common/TopicConventionFactory.java
