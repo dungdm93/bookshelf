@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   opensearch:
-    image: opensearchproject/opensearch:2.4.1
+    image: opensearchproject/opensearch:2.6.0
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -14,7 +14,7 @@ services:
       - 9600:9600 # Performance Analyzer
 
   opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:2.4.1
+    image: opensearchproject/opensearch-dashboards:2.6.0
     environment:
       OPENSEARCH_HOSTS: https://opensearch:9200
     ports:
