@@ -6,6 +6,7 @@ services:
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
+      - plugins.security.ssl.http.enabled=false
       - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
     volumes:
       - opensearch_data:/usr/share/opensearch/data
@@ -16,7 +17,7 @@ services:
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.6.0
     environment:
-      OPENSEARCH_HOSTS: https://opensearch:9200
+      OPENSEARCH_HOSTS: http://opensearch:9200
     ports:
       - 5601:5601
 
