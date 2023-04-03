@@ -1,0 +1,57 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgis/postgis:15-3.3-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: directus
+    # ports:
+    # - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2-alpine
+    # ports:
+    # - 6379:6379
+
+  directus:
+    image: directus/directus:9.23
+    ports:
+      - 8055:8055
+    volumes:
+      # - directus_uploads:/directus/uploads # when using local driver
+      # - directus_database:/directus/database # when using SQLite
+      - directus_extensions:/directus/extensions
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      KEY: 255d861b-5ea1-5996-9aa3-922530ec40b1
+      SECRET: 6116487b-cda1-52c2-b5b5-c8022c45e263
+
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD: SuperSecr3t
+
+      DB_CLIENT: pg
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: directus
+      DB_USER: postgres
+      DB_PASSWORD: SuperSecr3t
+
+      CACHE_ENABLED: true
+      CACHE_STORE: redis
+      CACHE_REDIS: redis://redis:6379
+
+volumes:
+  postgres_data:
+  directus_uploads:
+  directus_database:
+  directus_extensions:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
