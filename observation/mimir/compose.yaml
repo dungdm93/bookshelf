@@ -2,12 +2,13 @@ version: "3.7"
 
 services:
   mimir:
-    image: grafana/mimir:2.5.0
+    image: grafana/mimir:2.6.0
     command:
     - -target=all,alertmanager
     - -config.file=/etc/mimir/config.yaml
     ports:
     - 9009:9009
+    - 9095:9095
     volumes:
     - ./configs:/etc/mimir
     - mimir_data:/mimir_data
