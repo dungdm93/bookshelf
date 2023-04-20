@@ -15,6 +15,19 @@ services:
     - ./sample/:/docker-entrypoint-initdb.d/
     - postgres_data:/var/lib/postgresql/data
 
+  # > psql -U postgres -p 6432 [pgbouncer]
+  pgbouncer:
+    image: bitnami/pgbouncer:1.18.0
+    profiles: [pgbouncer]
+    ports:
+    - 6432:6432
+    environment:
+      POSTGRESQL_HOST: postgres
+      POSTGRESQL_PASSWORD: SuperSecr3t
+      PGBOUNCER_DATABASE: "*"
+    depends_on:
+    - postgres
+
 volumes:
   postgres_data:
 
