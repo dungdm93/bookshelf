@@ -23,8 +23,10 @@ services:
     - 6432:6432
     environment:
       POSTGRESQL_HOST: postgres
+      POSTGRESQL_USERNAME: postgres
       POSTGRESQL_PASSWORD: SuperSecr3t
       PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_AUTH_USER: postgres
     depends_on:
     - postgres
 
