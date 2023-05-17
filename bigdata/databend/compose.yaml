@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  databend:
+    image: datafuselabs/databend:v1.1.38-nightly
+    environment:
+      QUERY_DEFAULT_USER: databend
+      QUERY_DEFAULT_PASSWORD: SuperSecr3t
+    ports:
+    - 8000:8000
+    - 3307:3307
+    volumes:
+    - databend_data:/var/lib/databend/
+
+volumes:
+  databend_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
