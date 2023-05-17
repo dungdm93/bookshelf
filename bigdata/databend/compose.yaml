@@ -7,8 +7,8 @@ services:
       QUERY_DEFAULT_USER: databend
       QUERY_DEFAULT_PASSWORD: SuperSecr3t
     ports:
-    - 8000:8000
-    - 3307:3307
+    - 8000:8000 # databend
+    - 3307:3307 # MySQL
     volumes:
     - databend_data:/var/lib/databend/
 

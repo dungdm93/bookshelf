@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  risingwave:
+    image: risingwavelabs/risingwave:v0.18.0
+    command: [ playground ]
+    ports:
+    - 4566:4566 # psql
+    - 5691:5691 # UI
+
+networks:
+  default:
+    name: bookshelf
+    external: true
