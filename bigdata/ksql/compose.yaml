@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  ksqldb-server:
+    image: confluentinc/ksqldb-server:0.28.2
+    environment:
+      KSQL_BOOTSTRAP_SERVERS: kafka:9092
+      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: true
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: true
+    ports:
+    - 8088:8088
+
+  ksqldb-cli:
+    image: confluentinc/ksqldb-cli:0.28.2
+    entrypoint: /bin/bash
+    tty: true
+    depends_on:
+    - ksqldb-server
+
+networks:
+  default:
+    name: bookshelf
+    external: true
