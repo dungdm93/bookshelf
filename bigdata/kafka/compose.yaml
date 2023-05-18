@@ -1,35 +1,15 @@
-version: "2"
+version: "3.7"
 
 services:
-  zookeeper:
-    image: debezium/zookeeper:2.1
-    # Other images:
-    # * zookeeper:3.5
-    # * confluentinc/cp-zookeeper:5.4
-    ports:
-      - 2181:2181 # client connections
-      - 2888:2888 # peers connections
-      - 3888:3888 # leader election
-    volumes:
-      - zookeeper_data:/zookeeper/data
-      - zookeeper_txns:/zookeeper/txns
-      - zookeeper_conf:/zookeeper/conf
-
   kafka:
-    image: debezium/kafka:2.1
-    # Other images:
-    # * confluentinc/cp-kafka:5.4
-    # * strimzi/kafka:0.16.2-kafka-2.4.0
+    image: bitnami/kafka:3.3.2
     environment:
-      ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_ENABLE_KRAFT: yes
     ports:
-      - 9092:9092
+    - 9092:9092
     volumes:
-      - kafka_data:/kafka/data
-      - kafka_logs:/kafka/logs
-      - kafka_config:/kafka/config
-    depends_on:
-    - zookeeper
+    - kafka_data:/bitnami/kafka
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.3.1
@@ -45,24 +25,19 @@ services:
     - kafka
 
   console:
-    image: docker.redpanda.com/vectorized/console:v2.1.1
+    image: docker.redpanda.com/vectorized/console:v2.2.3
     environment:
       KAFKA_BROKERS: kafka:9092
       KAFKA_SCHEMAREGISTRY_ENABLED: true
       KAFKA_SCHEMAREGISTRY_URLS: http://schema-registry:8081
     ports:
-      - 8080:8080
+    - 8080:8080
     depends_on:
     - kafka
     - schema-registry
 
 volumes:
-  zookeeper_data:
-  zookeeper_txns:
-  zookeeper_conf:
   kafka_data:
-  kafka_logs:
-  kafka_config:
 
 networks:
   default:
