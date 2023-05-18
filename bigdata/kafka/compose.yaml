@@ -11,6 +11,17 @@ services:
     volumes:
     - kafka_data:/bitnami/kafka
 
+  console:
+    image: docker.redpanda.com/vectorized/console:v2.2.3
+    environment:
+      CONFIG_FILEPATH: /etc/kafka-console/config.yml
+    ports:
+    - 8080:8080
+    volumes:
+    - ./configs/console/:/etc/kafka-console/
+    depends_on:
+    - kafka
+
   schema-registry:
     image: confluentinc/cp-schema-registry:7.3.1
     container_name: schema-registry
@@ -24,18 +35,6 @@ services:
     depends_on:
     - kafka
 
-  console:
-    image: docker.redpanda.com/vectorized/console:v2.2.3
-    environment:
-      KAFKA_BROKERS: kafka:9092
-      KAFKA_SCHEMAREGISTRY_ENABLED: true
-      KAFKA_SCHEMAREGISTRY_URLS: http://schema-registry:8081
-    ports:
-    - 8080:8080
-    depends_on:
-    - kafka
-    - schema-registry
-
   rest-proxy:
     image: confluentinc/cp-kafka-rest:7.3.1
     profiles: [ rest-proxy ]
@@ -46,6 +45,30 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: http://schema-registry:8081
     ports:
     - 8082:8082
+    depends_on:
+    - kafka
+    - schema-registry
+
+  datagen:
+    image: cnfldemos/kafka-connect-datagen:0.6.0-7.3.0
+    profiles: [ datagen ]
+    container_name: datagen
+    hostname: datagen
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_REST_ADVERTISED_HOST_NAME: datagen
+      CONNECT_GROUP_ID: datagen
+      CONNECT_CONFIG_STORAGE_TOPIC: _datagen.configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_TOPIC: _datagen.offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: _datagen.status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER:   org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+    ports:
+    - 8083:8083
     depends_on:
     - kafka
     - schema-registry

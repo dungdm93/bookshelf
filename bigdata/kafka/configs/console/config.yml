@@ -1,0 +1,12 @@
+kafka:
+  brokers:
+    - kafka:9092
+  schemaRegistry:
+    enabled: true
+    urls:
+      - http://schema-registry:8081
+connect:
+  enabled: true
+  clusters:
+    - name: datagen
+      url: http://datagen:8083
