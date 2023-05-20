@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: mattermost
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+
+  mattermost:
+    image: mattermost/mattermost-team-edition:7.10
+    environment:
+      MM_SQLSETTINGS_DRIVERNAME: postgres
+      MM_SQLSETTINGS_DATASOURCE: postgres://postgres:SuperSecr3t@postgres:5432/mattermost?sslmode=disable
+    ports:
+    - 8065:8065     # App port
+    - 8443:8443/udp # Calls port
+    volumes:
+    - mattermost_data:/mattermost/data
+
+volumes:
+  postgres_data:
+  mattermost_data:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
