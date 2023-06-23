@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly
+    ports:
+    - 6379:6379
+    volumes:
+    - dragonflydata:/data
+    ulimits:
+      memlock: -1
+
+volumes:
+  dragonflydata:
+
+networks:
+  default:
+    name: bookshelf
+    external: true
