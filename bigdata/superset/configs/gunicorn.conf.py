@@ -1,6 +1,6 @@
-accesslog = '-' # stdout
-errorlog = '-'  # stderr
+#accesslog = '-' # stdout
+#errorlog = '-'  # stderr
 
 workers = 4
-worker_class = 'gevent'
+#worker_class = 'gevent'
 worker_connections = 1000
