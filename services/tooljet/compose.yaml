@@ -60,7 +60,6 @@ volumes:
 networks:
   default:
     name: bookshelf
-    external: true
 
 # https://docs.tooljet.com/docs/setup/docker/
 # https://docs.tooljet.com/docs/setup/env-vars/

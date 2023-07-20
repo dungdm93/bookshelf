@@ -103,4 +103,3 @@ volumes:
 networks:
   default:
     name: bookshelf
-    external: true

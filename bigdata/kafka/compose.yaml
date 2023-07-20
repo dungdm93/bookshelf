@@ -79,7 +79,6 @@ volumes:
 networks:
   default:
     name: bookshelf
-    external: true
 
 ## TODO
 # linkedin/cruise-control + ui

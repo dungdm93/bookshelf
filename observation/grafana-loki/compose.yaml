@@ -13,4 +13,3 @@ services:
 networks:
   default:
     name: bookshelf
-    external: true

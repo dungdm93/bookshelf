@@ -10,6 +10,5 @@ services:
 networks:
   default:
     name: bookshelf
-    external: true
 
 # https://github.com/andrius/asterisk

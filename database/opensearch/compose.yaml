@@ -27,7 +27,6 @@ volumes:
 networks:
   default:
     name: bookshelf
-    external: true
 
 # https://opensearch.org/docs/latest/install-and-configure/install-opensearch/plugins/
 # https://opensearch.org/docs/latest/install-and-configure/install-dashboards/plugins/
