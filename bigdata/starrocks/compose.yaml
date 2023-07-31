@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  starrocks:
+    image: registry.starrocks.io/starrocks/allin1-ubuntu:3.0.4
+    ports:
+    - 9030:9030 # query_port   - FE MySQL server port
+    - 8030:8030 # http_port    - FE HTTP server port
+    - 8040:8040 # be_http_port - BE HTTP server port
+    volumes:
+    - fe_meta:/data/deploy/starrocks/fe/meta
+    - be_data:/data/deploy/starrocks/be/storage
+
+volumes:
+  fe_meta:
+  be_data:
+
+networks:
+  default:
+    name: bookshelf
