@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  spark-master:
+    image: apache/spark:3.5.0-python3
+    command: [/opt/spark/sbin/start-master.sh]
+    environment:
+      SPARK_NO_DAEMONIZE: true
+    ports:
+    - 7077:7077
+    - 8080:8080 # WebUI
+    volumes:
+    - ./configs:/opt/spark/conf:ro
+    - ./work:/opt/spark/work-dir:ro
+
+  spark-worker:
+    image: apache/spark:3.5.0-python3
+    command: [/opt/spark/sbin/start-worker.sh, spark://spark-master:7077]
+    environment:
+      SPARK_NO_DAEMONIZE: true
+    ports:
+    - 8081:8081 # WebUI
+    volumes:
+    - ./configs:/opt/spark/conf:ro
+
+networks:
+  default:
+    name: bookshelf
