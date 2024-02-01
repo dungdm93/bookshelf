@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  server:
+    image: gitea/gitea:1.21.4
+    volumes:
+      - server_data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 3000:3000
+      - 222:22
+
+  runner:
+    image: gitea/act_runner:0.2.6
+    environment:
+      CONFIG_FILE: /config.yaml
+      GITEA_INSTANCE_URL: "${INSTANCE_URL}"
+      GITEA_RUNNER_REGISTRATION_TOKEN: "${REGISTRATION_TOKEN}"
+      GITEA_RUNNER_NAME: "${RUNNER_NAME}"
+      GITEA_RUNNER_LABELS: "${RUNNER_LABELS}"
+    volumes:
+      - ./config.yaml:/config.yaml
+      - runner_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  server_data:
+  runner_data:
+
+networks:
+  default:
+    name: bookshelf
