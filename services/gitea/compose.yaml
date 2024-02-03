@@ -14,13 +14,12 @@ services:
   runner:
     image: gitea/act_runner:0.2.6
     environment:
-      CONFIG_FILE: /config.yaml
-      GITEA_INSTANCE_URL: "${INSTANCE_URL}"
-      GITEA_RUNNER_REGISTRATION_TOKEN: "${REGISTRATION_TOKEN}"
-      GITEA_RUNNER_NAME: "${RUNNER_NAME}"
-      GITEA_RUNNER_LABELS: "${RUNNER_LABELS}"
+      CONFIG_FILE: /etc/gitea-runner/runner.yaml
+      GITEA_INSTANCE_URL: http://server:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: oZW8L7BF7j4oL5UAJmOZjKG0LeSN6cMGUuty9NYZ
+      GITEA_RUNNER_NAME: runner
     volumes:
-      - ./config.yaml:/config.yaml
+      - ./configs/runner/:/etc/gitea-runner/
       - runner_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
 
