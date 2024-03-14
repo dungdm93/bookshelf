@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   nexus:
-    image: sonatype/nexus3:3.21.1
+    image: sonatype/nexus3:3.65.0
     environment:
       NEXUS_SECURITY_RANDOMPASSWORD: "false"
     ports:
