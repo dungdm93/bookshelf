@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  graphql:
+    image: ghcr.io/guacsec/guac:v0.5.1
+    command: [/opt/guac/guacgql, --gql-debug]
+    ports:
+      - 8080:8080
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080"]
+      interval: 15s
+      timeout: 10s
+
+  collectsub:
+    image: ghcr.io/guacsec/guac:v0.5.1
+    command: [/opt/guac/guaccsub]
+    ports:
+      - 2782:2782
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:2782"]
+      interval: 15s
+      timeout: 10s
+
+  depsdev-collector:
+    image: ghcr.io/guacsec/guac:v0.5.1
+    command:
+      - /opt/guac/guacone
+      - collect
+      - deps_dev
+      - --poll
+      - --csub-addr=collectsub:2782
+      - --gql-addr=http://graphql:8080/query
+    # environment:
+    #   - DEPS_DEV_APIKEY
+    depends_on:
+      collectsub:
+        condition: service_healthy
+      graphql:
+        condition: service_healthy
+
+  osv-certifier:
+    image: ghcr.io/guacsec/guac:v0.5.1
+    command:
+      - /opt/guac/guacone
+      - certifier
+      - osv
+      - --poll
+      - --csub-addr=collectsub:2782
+      - --gql-addr=http://graphql:8080/query
+    depends_on:
+      collectsub:
+        condition: service_healthy
+      graphql:
+        condition: service_healthy
+
+networks:
+  default:
+    name: bookshelf
