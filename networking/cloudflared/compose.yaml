@@ -1,0 +1,9 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:2024.8.3
+    command:
+    - tunnel
+    - --no-autoupdate
+    - run
+    - --token=<token>
+    network_mode: host
