@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   graphql:
     image: ghcr.io/guacsec/guac:v0.5.1

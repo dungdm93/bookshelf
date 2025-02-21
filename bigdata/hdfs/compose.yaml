@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   hdfs-namenode:
     image: hub.teko.vn/dataops/hadoop:3.3.1

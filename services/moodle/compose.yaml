@@ -1,5 +1,3 @@
-version: '2'
-
 services:
   mariadb:
     image: bitnami/mariadb:10.1

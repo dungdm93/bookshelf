@@ -1,5 +1,3 @@
-version: "3.7"
-
 # depend-on:
 # * bigdata/confluent
 # * database/elastic

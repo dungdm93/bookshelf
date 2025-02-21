@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   ##### Microsoft SQL Server #####
   # https://hub.docker.com/_/microsoft-mssql-server

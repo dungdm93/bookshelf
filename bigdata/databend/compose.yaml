@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   databend:
     image: datafuselabs/databend:v1.1.38-nightly

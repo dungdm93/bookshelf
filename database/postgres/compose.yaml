@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   ##### PostgreSQL #####
   # https://hub.docker.com/_/postgres

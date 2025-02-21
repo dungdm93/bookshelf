@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   msf:
     image: metasploitframework/metasploit-framework:latest

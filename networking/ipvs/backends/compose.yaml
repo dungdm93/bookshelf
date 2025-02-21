@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   a:
     image: nginx:1.15-alpine

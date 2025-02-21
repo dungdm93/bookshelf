@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   risingwave:
     image: risingwavelabs/risingwave:v0.18.0

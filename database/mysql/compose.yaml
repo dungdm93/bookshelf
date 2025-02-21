@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   ##### MySQL #####
   # https://hub.docker.com/_/mysql

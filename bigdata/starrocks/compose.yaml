@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   starrocks:
     image: registry.starrocks.io/starrocks/allin1-ubuntu:3.0.4

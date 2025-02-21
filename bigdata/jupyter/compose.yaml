@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   jupyter:
     image: hub.teko.vn/dataops/jupyter/pyspark-notebook:3.4.1

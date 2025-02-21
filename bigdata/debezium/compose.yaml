@@ -1,5 +1,3 @@
-version: '2'
-
 services:
   zookeeper:
     image: debezium/zookeeper:1.7

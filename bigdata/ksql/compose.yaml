@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   ksqldb-server:
     image: confluentinc/ksqldb-server:0.28.2

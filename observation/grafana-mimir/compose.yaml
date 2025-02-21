@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   mimir:
     image: grafana/mimir:2.5.0
