@@ -1,10 +1,9 @@
-version: '3.7'
-
 services:
   tempo:
-    image: grafana/tempo:2.1.1
+    image: grafana/tempo:2.7.1
     command:
     - --config.file=/etc/tempo/tempo.yml
+    user: root
     ports:
     - 4317:4317     # OTLP/gRPC
     - 4318:4318     # OTLP/HTTP
