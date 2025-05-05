@@ -1,6 +1,6 @@
 services:
   nexus:
-    image: sonatype/nexus3:3.65.0
+    image: sonatype/nexus3:3.79.1-alpine
     environment:
       NEXUS_SECURITY_RANDOMPASSWORD: "false"
     ports:
