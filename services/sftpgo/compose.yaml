@@ -1,0 +1,17 @@
+services:
+  sftpgo:
+    image: drakkan/sftpgo:2.6.x-alpine
+    ports:
+      - 2022:2022  # SFTP
+      - 8080:8080  # Web UI
+    volumes:
+      - sftpgo_data:/srv/sftpgo
+      - sftpgo_home:/var/lib/sftpgo
+
+volumes:
+  sftpgo_data:
+  sftpgo_home:
+
+networks:
+  default:
+    name: bookshelf
