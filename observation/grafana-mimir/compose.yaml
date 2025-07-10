@@ -1,6 +1,6 @@
 services:
   mimir:
-    image: grafana/mimir:2.5.0
+    image: grafana/mimir:2.16.0
     command:
     - -target=all,alertmanager
     - -config.file=/etc/mimir/config.yaml

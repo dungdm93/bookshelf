@@ -9,6 +9,15 @@ datasources:
     jsonData:
       derivedFields:
         - datasourceUid: tempo
-          matcherRegex: tid=(\w+)
+          matcherRegex: trace_id
+          matcherType: label
           name: TraceID
           url: $${__value.raw}
+          urlDisplayLabel: View Trace
+        - datasourceUid: tempo
+          matcherRegex: span_id
+          matcherType: label
+          name: SpanID
+          url: |-
+            { span:id="$${__value.raw}" }
+          urlDisplayLabel: View Span

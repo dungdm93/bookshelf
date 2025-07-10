@@ -1,0 +1,98 @@
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+livedebugging {
+  enabled = true
+}
+
+otelcol.receiver.otlp "otlp" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  output {
+    metrics = [otelcol.exporter.prometheus.mimir.input]
+    logs    = [otelcol.exporter.loki.loki.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+// otelcol.exporter.otlp "mimir" {
+//   client {
+//     endpoint = "mimir:9009/otlp"
+//     tls {
+//       insecure             = true
+//       insecure_skip_verify = true
+//     }
+//   }
+// }
+
+otelcol.exporter.prometheus "mimir" {
+  forward_to = [prometheus.remote_write.demo.receiver]
+}
+
+prometheus.remote_write "demo" {
+  endpoint {
+    url = "http://mimir:9009/api/v1/push"
+  }
+
+  external_labels = {
+    cluster = "demo",
+  }
+}
+
+// otelcol.exporter.otlp "loki" {
+//   client {
+//     endpoint = "http://loki:3100/otlp"
+//   }
+// }
+
+otelcol.exporter.loki "loki" {
+  forward_to = [loki.write.demo.receiver]
+}
+
+loki.write "demo" {
+  endpoint {
+    url       = "http://loki:3100/loki/api/v1/push"
+  }
+
+  external_labels = {
+    cluster = "demo",
+  }
+}
+
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = "tempo:4317"
+
+    tls {
+      insecure             = true
+      insecure_skip_verify = true
+    }
+  }
+}
+
+
+discovery.docker "linux" {
+  host = "unix:///var/run/docker.sock"
+}
+
+loki.source.docker "default" {
+  host       = "unix:///var/run/docker.sock"
+  targets    = discovery.docker.linux.targets
+  forward_to = [loki.write.demo.receiver]
+}

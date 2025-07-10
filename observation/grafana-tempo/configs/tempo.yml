@@ -12,15 +12,21 @@ storage:
 
 distributor:
   receivers:
+    # https://github.com/open-telemetry/opentelemetry-collector/blob/main/receiver/otlpreceiver/config.md
     otlp:
       protocols:
         grpc:
+          endpoint: 0.0.0.0:4317
         http:
+          endpoint: 0.0.0.0:4318
+    # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/jaegerreceiver
     jaeger:
       protocols:
         grpc:
         thrift_http:
         thrift_binary:
         thrift_compact:
+    # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/zipkinreceiver
     zipkin:
+    # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/opencensusreceiver
     opencensus:

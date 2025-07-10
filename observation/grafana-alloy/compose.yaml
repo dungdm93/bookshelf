@@ -1,0 +1,32 @@
+services:
+  alloy:
+    image: grafana/alloy:v1.9.2
+    command:
+    - run
+    - --server.http.listen-addr=0.0.0.0:12345
+    - --storage.path=/var/lib/alloy/
+    - --disable-reporting=true
+    - /etc/alloy/config.alloy
+    ports:
+    - 12345:12345
+    volumes:
+    - ./configs:/etc/alloy
+    - alloy_data:/var/lib/alloy/
+    - /var/run/docker.sock:/var/run/docker.sock
+
+  avalanche:
+    profiles: [example]
+    image: quay.io/prometheuscommunity/avalanche
+    command:
+    - --metric-count=3000
+    - --series-interval=3600
+    - --metric-interval=7200
+    ports:
+    - 9001:9001
+
+volumes:
+  alloy_data:
+
+networks:
+  default:
+    name: bookshelf
