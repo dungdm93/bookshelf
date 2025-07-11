@@ -17,6 +17,63 @@ otelcol.receiver.otlp "otlp" {
   }
 
   output {
+    metrics = [otelcol.processor.tail_sampling.default.input]
+    logs    = [otelcol.processor.tail_sampling.default.input]
+    traces  = [otelcol.processor.tail_sampling.default.input]
+  }
+}
+
+otelcol.processor.tail_sampling "default" {
+  // Sample error traces
+  policy {
+    name = "status_code"
+    type = "status_code"
+
+    status_code {
+      status_codes = ["ERROR"]
+    }
+  }
+
+  // Sample long running traces
+  policy {
+    name = "latency"
+    type = "latency"
+
+    latency {
+      threshold_ms = 3000 // 3s
+    }
+  }
+
+  // Sample complex traces
+  policy {
+    name = "span_count"
+    type = "span_count"
+
+    span_count {
+      min_spans = 20
+    }
+  }
+
+  // Limits the number of sampled spans per second to prevent overload in high-traffic environments.
+  policy {
+    name = "rate_limit"
+    type = "rate_limiting"
+
+    rate_limiting {
+      spans_per_second = 1000
+    }
+  }
+
+  policy {
+    name = "probabilistic"
+    type = "probabilistic"
+
+    probabilistic {
+      sampling_percentage = 10
+    }
+  }
+
+  output {
     metrics = [otelcol.processor.batch.default.input]
     logs    = [otelcol.processor.batch.default.input]
     traces  = [otelcol.processor.batch.default.input]
@@ -25,53 +82,21 @@ otelcol.receiver.otlp "otlp" {
 
 otelcol.processor.batch "default" {
   output {
-    metrics = [otelcol.exporter.prometheus.mimir.input]
-    logs    = [otelcol.exporter.loki.loki.input]
+    logs    = [otelcol.exporter.otlphttp.loki.input]
+    metrics = [otelcol.exporter.otlphttp.mimir.input]
     traces  = [otelcol.exporter.otlp.tempo.input]
   }
 }
 
-// otelcol.exporter.otlp "mimir" {
-//   client {
-//     endpoint = "mimir:9009/otlp"
-//     tls {
-//       insecure             = true
-//       insecure_skip_verify = true
-//     }
-//   }
-// }
-
-otelcol.exporter.prometheus "mimir" {
-  forward_to = [prometheus.remote_write.demo.receiver]
-}
-
-prometheus.remote_write "demo" {
-  endpoint {
-    url = "http://mimir:9009/api/v1/push"
-  }
-
-  external_labels = {
-    cluster = "demo",
+otelcol.exporter.otlphttp "loki" {
+  client {
+    endpoint = "http://loki:3100/otlp"
   }
 }
 
-// otelcol.exporter.otlp "loki" {
-//   client {
-//     endpoint = "http://loki:3100/otlp"
-//   }
-// }
-
-otelcol.exporter.loki "loki" {
-  forward_to = [loki.write.demo.receiver]
-}
-
-loki.write "demo" {
-  endpoint {
-    url       = "http://loki:3100/loki/api/v1/push"
-  }
-
-  external_labels = {
-    cluster = "demo",
+otelcol.exporter.otlphttp "mimir" {
+  client {
+    endpoint = "http://mimir:9009/otlp"
   }
 }
 
@@ -95,4 +120,14 @@ loki.source.docker "default" {
   host       = "unix:///var/run/docker.sock"
   targets    = discovery.docker.linux.targets
   forward_to = [loki.write.demo.receiver]
+}
+
+loki.write "demo" {
+  endpoint {
+    url       = "http://loki:3100/loki/api/v1/push"
+  }
+
+  external_labels = {
+    cluster = "demo",
+  }
 }
