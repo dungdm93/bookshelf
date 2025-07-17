@@ -13,6 +13,19 @@ services:
       - 8848:8848
       - 9848:9848
 
+  dubbo-admin:
+    image: apache/dubbo-admin:0.6.0
+    environment:
+      admin.registry.address: nacos://nacos:8848?username=nacos&password=nacos
+      admin.config-center: nacos://nacos:8848?username=nacos&password=nacos
+      admin.metadata-report.address: nacos://nacos:8848?username=nacos&password=nacos
+
+      # admin.registry.address: zookeeper://zookeeper:2181
+      # admin.config-center: zookeeper://zookeeper:2181
+      # admin.metadata-report.address: zookeeper://zookeeper:2181
+    ports:
+      - 9090:38080
+
 networks:
   default:
     name: bookshelf
