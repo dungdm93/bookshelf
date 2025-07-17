@@ -1,0 +1,18 @@
+services:
+  nacos:
+    image: nacos/nacos-server:v3.0.2
+    environment:
+      MODE: standalone
+      PREFER_HOST_MODE: hostname
+      NACOS_AUTH_ADMIN_ENABLE: false
+      NACOS_AUTH_IDENTITY_KEY: serverIdentity
+      NACOS_AUTH_IDENTITY_VALUE: security
+      NACOS_AUTH_TOKEN: VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+    ports:
+      - 8088:8080
+      - 8848:8848
+      - 9848:9848
+
+networks:
+  default:
+    name: bookshelf
