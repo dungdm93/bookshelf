@@ -19,7 +19,7 @@ datasources:
         queries:
           - name: Request rate
             query: |-
-              sum by(client, server)(rate(traces_service_graph_request_total($__tags)[$__rate_interval]))
+              sum by(client, server)(rate(traces_service_graph_request_total{$$__tags}[$$__rate_interval]))
           - name: Error rate
             query: |-
-              sum by(client, server)(rate(traces_service_graph_request_errors_total($__tags)[$__rate_interval]))
+              sum by(client, server)(rate(traces_service_graph_request_errors_total{$$__tags}[$$__rate_interval]))
