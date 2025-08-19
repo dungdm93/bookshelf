@@ -1,6 +1,6 @@
 services:
   server:
-    image: gitea/gitea:1.21.4
+    image: gitea/gitea:1.24.5
     volumes:
       - server_data:/data
       - /etc/timezone:/etc/timezone:ro
@@ -10,7 +10,7 @@ services:
       - 222:22
 
   runner:
-    image: gitea/act_runner:0.2.6
+    image: gitea/act_runner:0.2.12
     environment:
       CONFIG_FILE: /etc/gitea-runner/runner.yaml
       GITEA_INSTANCE_URL: http://server:3000
