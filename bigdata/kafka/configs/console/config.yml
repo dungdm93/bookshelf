@@ -6,6 +6,8 @@ schemaRegistry:
   enabled: true
   urls:
     - http://schema-registry:8081
+  tls:
+    enabled: false
 
 kafkaConnect:
   enabled: true
