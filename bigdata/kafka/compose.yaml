@@ -10,7 +10,7 @@ services:
     - kafka_data:/bitnami/kafka
 
   console:
-    image: docker.redpanda.com/vectorized/console:v2.2.3
+    image: docker.redpanda.com/redpandadata/console:v3.2.1
     environment:
       CONFIG_FILEPATH: /etc/kafka-console/config.yml
     ports:
