@@ -1,0 +1,41 @@
+services:
+  unleash:
+    image: unleashorg/unleash-server:7.2
+    environment:
+      # https://docs.getunleash.io/using-unleash/deploy/configuring-unleash#configure-the-database
+      DATABASE_HOST: postgres
+      DATABASE_NAME: unleash
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: SuperSecr3t
+      DATABASE_SSL: false
+      # https://docs.getunleash.io/using-unleash/deploy/getting-started#log-in-to-the-unleash-admin-ui
+      UNLEASH_DEFAULT_ADMIN_USERNAME: admin
+      UNLEASH_DEFAULT_ADMIN_PASSWORD: SuperSecr3t # default `unleash4all`
+    ports:
+    - 4242:4242
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: unleash
+    ports:
+    - 5432:5432
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, "pg_isready", "--host=127.0.0.1", "--port=5432", "--username=postgres"]
+      start_interval: 3s
+      start_period: 1s
+      interval: 10s
+      timeout: 1s
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: bookshelf
