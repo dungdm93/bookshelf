@@ -1,0 +1,24 @@
+services:
+  growthbook:
+    image: growthbook/growthbook:4.1.0
+    ports:
+      - 3000:3000
+      - 3100:3100
+    environment:
+      MONGODB_URI: mongodb://root:SuperSecr3t@mongo:27017/growthbook?authSource=admin
+    volumes:
+      - growthbook_uploads:/usr/local/src/app/packages/back-end/uploads
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:8
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: SuperSecr3t
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+  growthbook_uploads:
