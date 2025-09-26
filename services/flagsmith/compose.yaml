@@ -1,0 +1,39 @@
+services:
+  flagsmith:
+    image: flagsmith/flagsmith:2.196
+    environment:
+      # All environments variables are available here:
+      # API: https://docs.flagsmith.com/deployment/locally-api#environment-variables
+      # UI:  https://docs.flagsmith.com/deployment/locally-frontend#environment-variables
+
+      DATABASE_URL: postgresql://postgres:SuperSecr3t@postgres:5432/flagsmith
+      USE_POSTGRES_FOR_ANALYTICS: true
+      FLAGSMITH_DOMAIN: localhost:8000
+      DJANGO_ALLOWED_HOSTS: '*'
+      DJANGO_SECRET_KEY: SuperSecr3t
+    ports:
+      - 8000:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_PASSWORD: SuperSecr3t
+      POSTGRES_DB: flagsmith
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, --username=postgres, --dbname=flagsmith]
+      start_interval: 1s
+      start_period: 20s
+      interval: 10s
+      timeout: 1s
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: bookshelf
