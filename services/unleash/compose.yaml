@@ -22,14 +22,12 @@ services:
     environment:
       POSTGRES_PASSWORD: SuperSecr3t
       POSTGRES_DB: unleash
-    ports:
-    - 5432:5432
     volumes:
     - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: [CMD, "pg_isready", "--host=127.0.0.1", "--port=5432", "--username=postgres"]
-      start_interval: 3s
-      start_period: 1s
+      test: [CMD, pg_isready, --username=postgres, --dbname=unleash]
+      start_interval: 1s
+      start_period: 20s
       interval: 10s
       timeout: 1s
 
