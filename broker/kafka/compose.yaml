@@ -1,6 +1,6 @@
 services:
   kafka:
-    image: apache/kafka-native:4.0.0
+    image: apache/kafka-native:4.1.0
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
@@ -13,11 +13,16 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_COORDINATOR_REBALANCE_PROTOCOLS: classic,consumer,share
+      KAFKA_UNSTABLE_API_VERSIONS_ENABLE: true
       KAFKA_NUM_PARTITIONS: 3
+      KAFKA_LOG_DIR: /opt/kafka/data
+    user: root
+    hostname: kafka
     ports:
     - 9092:9092
     volumes:
-    - kafka_data:/bitnami/kafka
+    - kafka_data:/opt/kafka/data
 
   console:
     image: docker.redpanda.com/redpandadata/console:v3.2.1
