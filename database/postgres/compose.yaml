@@ -4,7 +4,7 @@ services:
   # Help:
   # > psql -U postgres [-W]
   postgres:
-    image: postgres:11-alpine
+    image: postgres:17-alpine
     environment:
       POSTGRES_PASSWORD: SuperSecr3t
     ports:
