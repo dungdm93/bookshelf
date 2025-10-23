@@ -1,19 +1,15 @@
 services:
   vault:
     image: hashicorp/vault:1.20
-    command: server -dev
-    # entrypoint: vault # default entrypoint is for -dev only
-    # command: server -config=/vault/config/vault-config.hcl
     ports:
     - 8200:8200
-    volumes:
-    # - ./config:/vault/config
-    - vault_data:/vault/file
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: SuperSecr3t
+
+      VAULT_TOKEN: SuperSecr3t
+      VAULT_ADDR: http://localhost:8200
     cap_add:
     - IPC_LOCK
-
-volumes:
-  vault_data:
 
 networks:
   default:
