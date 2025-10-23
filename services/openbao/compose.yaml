@@ -1,0 +1,16 @@
+services:
+  openbao:
+    image: openbao/openbao:2.4
+    ports:
+    - 8200:8200
+    environment:
+      BAO_DEV_ROOT_TOKEN_ID: SuperSecr3t
+
+      BAO_TOKEN: SuperSecr3t
+      BAO_ADDR: http://localhost:8200
+    cap_add:
+    - IPC_LOCK
+
+networks:
+  default:
+    name: bookshelf
