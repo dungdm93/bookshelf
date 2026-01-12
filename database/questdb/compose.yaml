@@ -1,0 +1,17 @@
+services:
+  questdb:
+    image: questdb/questdb:9.3.0
+    ports:
+    - 9000:9000 # Web Console and REST API
+    # - 9003:9003 # Health check and metrics
+    # - 9009:9009 # InfluxDB Line Protocol (TCP)
+    - 8812:8812 # PostgreSQL Wire Protocol
+    volumes:
+    - questdb_data:/var/lib/questdb
+
+volumes:
+  questdb_data:
+
+networks:
+  default:
+    name: bookshelf
