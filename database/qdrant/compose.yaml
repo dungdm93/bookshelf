@@ -1,0 +1,15 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.16
+    ports:
+    - 6333:6333 # REST API (Web UI: localhost:6333/dashboard)
+    - 6334:6334 # gRPC API
+    volumes:
+    - qdrant_data:/qdrant/storage
+
+volumes:
+  qdrant_data:
+
+networks:
+  default:
+    name: bookshelf
