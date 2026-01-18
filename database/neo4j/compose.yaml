@@ -1,9 +1,15 @@
 services:
   neo4j:
-    image: neo4j:4.2
+    image: neo4j:2025.12.1
     environment:
       # default neo4j/neo4j
       NEO4J_AUTH: none # disable authentication
+      # Awesome Procedures On Cypher (APOC):
+      #   * https://neo4j.com/labs/apoc/
+      #   * https://neo4j.com/docs/apoc/current/
+      # Graph Data Science (GDS): https://neo4j.com/docs/graph-data-science/current/
+      # GraphQL Library: https://neo4j.com/docs/graphql/current/
+      NEO4J_PLUGINS: '["apoc", "apoc-extended", "graph-data-science"]'
     ports:
     # https://neo4j.com/docs/operations-manual/current/configuration/ports/
     - 7474:7474 # HTTP
