@@ -1,0 +1,41 @@
+services:
+  # https://docs.gitlab.com/install/docker/installation/
+  # gitlab-ctl status
+  # gitlab-ctl show-config
+  # gitlab-ctl tail <component>
+  gitlab:
+    image: gitlab/gitlab-ce:18.8.2-ce.0
+    container_name: gitlab
+    hostname: gitlab.dungdm93.me
+    environment:
+      # or check root password at /etc/gitlab/initial_root_password
+      GITLAB_ROOT_PASSWORD: SuperSecret
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'http://gitlab.dungdm93.me'
+        # gitlab_rails['gitlab_shell_ssh_port'] = 2424
+
+        # Disable Prometheus, Alertmanager and its exporters
+        prometheus['enable'] = false
+        prometheus_monitoring['enable'] = false
+        alertmanager['enable'] = false
+        node_exporter['enable'] = false
+        redis_exporter['enable'] = false
+        postgres_exporter['enable'] = false
+        gitlab_exporter['enable'] = false
+
+        # Disable KAS (Kubernetes Agent Server)
+        gitlab_kas['enable'] = false
+    ports:
+      - 80:80
+      # - 2424:22
+    volumes:
+      - gitlab_config:/etc/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_data:/var/opt/gitlab
+    shm_size: 256m
+
+volumes:
+  gitlab_config:
+  gitlab_logs:
+  gitlab_data:
