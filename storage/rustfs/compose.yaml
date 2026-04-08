@@ -1,0 +1,18 @@
+services:
+  rustfs:
+    image: rustfs/rustfs:1.0.0-alpha.76
+    environment:
+      RUSTFS_ACCESS_KEY: admin
+      RUSTFS_SECRET_KEY: SuperSecr3t
+    ports:
+    - 9000:9000
+    - 9001:9001 # WebUI
+    volumes:
+    - rustfs_data:/data
+
+volumes:
+  rustfs_data:
+
+networks:
+  default:
+    name: bookshelf
