@@ -1,6 +1,6 @@
 services:
   starrocks:
-    image: registry.starrocks.io/starrocks/allin1-ubuntu:3.0.4
+    image: starrocks/allin1-ubuntu:4.0-latest
     ports:
     - 9030:9030 # query_port   - FE MySQL server port
     - 8030:8030 # http_port    - FE HTTP server port
