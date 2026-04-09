@@ -1,6 +1,7 @@
 services:
   debezium:
-    image: quay.io/debezium/connect:3.5.0.Final
+    image: dungdm93/debezium-connect:3.5.0.Final
+    build: .
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
       GROUP_ID: debezium
