@@ -1,6 +1,6 @@
 services:
   kafka:
-    image: apache/kafka-native:4.1.0
+    image: apache/kafka-native:4.2.0
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
@@ -25,7 +25,7 @@ services:
     - kafka_data:/opt/kafka/data
 
   console:
-    image: docker.redpanda.com/redpandadata/console:v3.2.1
+    image: docker.redpanda.com/redpandadata/console:v3.7.1
     environment:
       CONFIG_FILEPATH: /etc/kafka-console/config.yml
     ports:
