@@ -1,44 +1,24 @@
 services:
-  zookeeper:
-    image: debezium/zookeeper:1.7
-    ports:
-    - 2181:2181 # client connections
-    - 2888:2888 # peers connections
-    - 3888:3888 # leader election
-
-  kafka:
-    image: debezium/kafka:1.7
-    environment:
-      ZOOKEEPER_CONNECT: zookeeper:2181
-    depends_on:
-    - zookeeper
-    ports:
-    - 9092:9092
-
   debezium:
-    image: debezium/connect:1.7
+    image: quay.io/debezium/connect:3.5.0.Final
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
-      GROUP_ID: 1
+      GROUP_ID: debezium
       CONFIG_STORAGE_TOPIC: debezium.configs
       OFFSET_STORAGE_TOPIC: debezium.offsets
       STATUS_STORAGE_TOPIC: debezium.statuses
-    depends_on:
-    - kafka
     ports:
     - 8083:8083
 
   debezium-ui:
-    image: debezium/debezium-ui:1.7
+    image: quay.io/debezium/debezium-ui:2.5
+    profiles: [ ui ]
     depends_on:
     - debezium
     environment:
       KAFKA_CONNECT_URI: http://debezium:8083
     ports:
     - 8080:8080
-
-volumes:
-  mysql_data:
 
 networks:
   default:
