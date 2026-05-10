@@ -1,0 +1,30 @@
+services:
+  # https://github.com/blakeblackshear/frigate/releases
+  # https://docs.frigate.video/frigate/installation/#docker
+  frigate:
+    image: ghcr.io/blakeblackshear/frigate:0.17.1
+    environment:
+      FRIGATE_RTSP_PASSWORD: SuperSecr3t
+    ports:
+      - "8971:8971" # HTTPS
+      # - "5000:5000" # Internal unauthenticated access. Expose carefully.
+      - "8554:8554" # RTSP feeds
+      - "8555:8555/tcp" # WebRTC over tcp
+      - "8555:8555/udp" # WebRTC over udp
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      # - /dev/apex_0:/dev/apex_0
+      # - /dev/video11:/dev/video11
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      # - /dev/accel:/dev/accel
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /path/to/your/config:/config
+      - frigate_data:/media/frigate
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 1_000_000_000
+
+volumes:
+  frigate_data:
