@@ -40,6 +40,21 @@ services:
       - ./data/downloads:/downloads
 
   ###############################################
+  # WHISPARR - X Videos
+  ###############################################
+  # whisparr:
+  #   <<: *common
+  #   image: ghcr.io/hotio/whisparr:v3
+  #   container_name: whisparr
+  #   environment:
+  #     - WEBUI_PORTS=6969/tcp
+  #   ports:
+  #     - "6969:6969"
+  #   volumes:
+  #     - whisparr_config:/config
+  #     - media_data:/data
+
+  ###############################################
   # QBITTORRENT - Downloader
   ###############################################
   qbittorrent:
@@ -81,5 +96,6 @@ services:
       - 8096:8096 # HTTP WebUI
 
 volumes:
+  # whisparr_config:
   jellyfin_config:
   jellyfin_cache:
