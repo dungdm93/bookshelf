@@ -10,6 +10,7 @@ x-common: &common
 
 # https://wiki.servarr.com/
 # https://github.com/automation-avenue/arr-new/blob/main/docker-compose.yml
+# https://youtu.be/ho4NUoyU6tM
 services:
   ###############################################
   # RADARR - Movies
@@ -23,6 +24,19 @@ services:
     volumes:
       - ./config/radarr:/config
       - ./data/movies:/movies
+      - ./data/downloads:/downloads
+
+  ###############################################
+  # SONARR - TV Shows
+  ###############################################
+  sonarr:
+    <<: *common
+    image: lscr.io/linuxserver/sonarr:4.0.17
+    container_name: sonarr
+    ports:
+      - 8989:8989
+    volumes:
+      - /docker/appdata/sonarr:/config
       - ./data/downloads:/downloads
 
   ###############################################
