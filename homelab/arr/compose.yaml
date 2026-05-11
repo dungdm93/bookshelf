@@ -22,5 +22,45 @@ services:
       - 7878:7878
     volumes:
       - ./config/radarr:/config
-      - ./data/movies:/movies #optional
-      - ./data/downloads:/downloads #optional
+      - ./data/movies:/movies
+      - ./data/downloads:/downloads
+
+  ###############################################
+  # QBITTORRENT - Downloader
+  ###############################################
+  qbittorrent:
+    <<: *common
+    image: lscr.io/linuxserver/qbittorrent:5.2.0
+    container_name: qbittorrent
+    environment:
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    ports:
+      - 8080:8080
+      - 6881:6881/tcp
+      - 6881:6881/udp
+    volumes:
+      - ./config/qbittorrent:/config
+      - ./data/downloads:/downloads
+
+  ###############################################
+  # JELLYFIN - Media Server
+  ###############################################
+  jellyfin:
+    <<: *common
+    image: lscr.io/linuxserver/jellyfin:10.11.8
+    container_name: jellyfin
+    environment:
+      DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - jellyfin_config:/config
+      - jellyfin_cache:/cache
+      - ./data/downloads:/data
+    ports:
+      - 8096:8096 # HTTP WebUI
+
+volumes:
+  jellyfin_config:
+  jellyfin_cache:
