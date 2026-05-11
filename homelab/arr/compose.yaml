@@ -58,6 +58,11 @@ services:
       - jellyfin_config:/config
       - jellyfin_cache:/cache
       - ./data/downloads:/data
+      # Using OCI image: https://github.com/moby/moby/pull/48798
+      # - type: image
+      #   source: lscr.io/linuxserver/mods:jellyfin-opencl-intel
+      #   target: /foobar
+      #   read_only: true
     ports:
       - 8096:8096 # HTTP WebUI
 
