@@ -98,14 +98,14 @@ services:
   ###############################################
   bazarr:
     <<: *common
-    image: ghcr.io/hotio/bazarr:latest
+    # image: lscr.io/linuxserver/bazarr:1.5.6
+    image: ghcr.io/lavx/bazarr:2.1.0
     container_name: bazarr
     ports:
       - 6767:6767
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /docker/appdata/bazarr:/config
-      - /data/media:/data/media
+      - bazarr_config:/config
+      - media_data:/data
 
   ###############################################
   # SEERR - Media request and discovery manager
@@ -180,6 +180,7 @@ volumes:
   lidarr_config:
   kapowarr_db:
   prowlarr_config:
+  bazarr_config:
   seerr_config:
   qbittorrent_config:
   flaresolver_config:
