@@ -97,6 +97,19 @@ services:
       - /data/media:/data/media
 
   ###############################################
+  # SEERR - Media request and discovery manager
+  ###############################################
+  seerr:
+    <<: *common
+    image: ghcr.io/seerr-team/seerr:v3.2
+    container_name: seerr
+    init: true
+    ports:
+      - 5055:5055
+    volumes:
+      - seerr_config:/app/config
+
+  ###############################################
   # QBITTORRENT - Downloader
   ###############################################
   qbittorrent:
@@ -131,7 +144,7 @@ services:
     volumes:
       - jellyfin_config:/config
       - jellyfin_cache:/cache
-      - ./data/downloads:/data
+      - media_data:/data
       # Using OCI image: https://github.com/moby/moby/pull/48798
       - type: image
         source: lscr.io/linuxserver/mods:jellyfin-opencl-intel
@@ -146,5 +159,6 @@ volumes:
   # whisparr_config:
   lidarr_config:
   prowlarr_config:
+  seerr_config:
   jellyfin_config:
   jellyfin_cache:
