@@ -177,3 +177,7 @@ volumes:
   qbittorrent_config:
   jellyfin_config:
   jellyfin_cache:
+
+networks:
+  default:
+    name: arrstack
