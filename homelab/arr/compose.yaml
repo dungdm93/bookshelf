@@ -10,6 +10,8 @@ x-common: &common
 
 # https://wiki.servarr.com/
 # https://trash-guides.info/
+# https://locatarr.github.io/
+# https://lavx.github.io/arrstack/
 # https://github.com/automation-avenue/arr-new/blob/main/docker-compose.yml
 # https://youtu.be/ho4NUoyU6tM
 services:
@@ -54,6 +56,21 @@ services:
   #   volumes:
   #     - whisparr_config:/config
   #     - media_data:/data
+
+  ###############################################
+  # BAZARR - Subtitles
+  # Bazarr+: Enhanced subtitle management w/ AI translation
+  ###############################################
+  bazarr:
+    <<: *common
+    image: ghcr.io/hotio/bazarr:latest
+    container_name: bazarr
+    ports:
+      - 6767:6767
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/appdata/bazarr:/config
+      - /data/media:/data/media
 
   ###############################################
   # QBITTORRENT - Downloader
