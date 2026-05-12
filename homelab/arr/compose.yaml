@@ -25,9 +25,8 @@ services:
     ports:
       - 7878:7878
     volumes:
-      - ./config/radarr:/config
-      - ./data/movies:/movies
-      - ./data/downloads:/downloads
+      - radarr_config:/config
+      - media_data:/data
 
   ###############################################
   # SONARR - TV Shows
@@ -116,6 +115,8 @@ services:
       - 8096:8096 # HTTP WebUI
 
 volumes:
+  media_data:
+  radarr_config:
   # whisparr_config:
   jellyfin_config:
   jellyfin_cache:
