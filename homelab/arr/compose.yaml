@@ -1,12 +1,12 @@
 x-common: &common
-    restart: unless-stopped
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: Asia/Ho_Chi_Minh
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
+  restart: unless-stopped
+  environment:
+    PUID: 1000
+    PGID: 1000
+    TZ: Asia/Ho_Chi_Minh
+  dns:
+    - 1.1.1.1
+    - 1.0.0.1
 
 # https://wiki.servarr.com/
 # https://trash-guides.info/
@@ -68,6 +68,19 @@ services:
     volumes:
       - lidarr_config:/config
       - media_data:/data
+
+  ###############################################
+  # KAPOWARR - Comic
+  ###############################################
+  kapowarr:
+    <<: *common
+    image: mrcas/kapowarr:v1.3.1
+    container_name: kapowarr
+    volumes:
+      - kapowarr_db:/app/db
+      - media_data:/data
+    ports:
+      - 5656:5656
 
   ###############################################
   # PROWLARR - Index Manager
@@ -158,6 +171,7 @@ volumes:
   sonarr_config:
   # whisparr_config:
   lidarr_config:
+  kapowarr_db:
   prowlarr_config:
   seerr_config:
   jellyfin_config:
