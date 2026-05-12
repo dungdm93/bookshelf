@@ -57,6 +57,19 @@ services:
   #     - media_data:/data
 
   ###############################################
+  # LIDARR - Music
+  ###############################################
+  lidarr:
+    <<: *common
+    image: lscr.io/linuxserver/lidarr:3.1.0
+    container_name: lidarr
+    ports:
+      - 8686:8686
+    volumes:
+      - lidarr_config:/config
+      - media_data:/data
+
+  ###############################################
   # BAZARR - Subtitles
   # Bazarr+: Enhanced subtitle management w/ AI translation
   ###############################################
@@ -119,5 +132,6 @@ volumes:
   radarr_config:
   sonarr_config:
   # whisparr_config:
+  lidarr_config:
   jellyfin_config:
   jellyfin_cache:
