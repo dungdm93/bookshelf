@@ -9,6 +9,7 @@ x-common: &common
       - 1.0.0.1
 
 # https://wiki.servarr.com/
+# https://trash-guides.info/
 # https://github.com/automation-avenue/arr-new/blob/main/docker-compose.yml
 # https://youtu.be/ho4NUoyU6tM
 services:
@@ -80,7 +81,10 @@ services:
     image: lscr.io/linuxserver/jellyfin:10.11.8
     container_name: jellyfin
     environment:
-      DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
+      # Sideload DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
+      DOCKER_MODS: jellyfin-opencl-intel
+      DOCKER_MODS_SIDELOAD: true
+      DOCKER_MODS_DEBUG: true
     devices:
       - /dev/dri:/dev/dri
     volumes:
@@ -88,10 +92,9 @@ services:
       - jellyfin_cache:/cache
       - ./data/downloads:/data
       # Using OCI image: https://github.com/moby/moby/pull/48798
-      # - type: image
-      #   source: lscr.io/linuxserver/mods:jellyfin-opencl-intel
-      #   target: /foobar
-      #   read_only: true
+      - type: image
+        source: lscr.io/linuxserver/mods:jellyfin-opencl-intel
+        target: /mods/jellyfin-opencl-intel
     ports:
       - 8096:8096 # HTTP WebUI
 
