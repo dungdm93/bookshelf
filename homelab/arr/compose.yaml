@@ -137,8 +137,8 @@ services:
       - 6881:6881/tcp
       - 6881:6881/udp
     volumes:
-      - ./config/qbittorrent:/config
-      - ./data/downloads:/downloads
+      - qbittorrent_config:/config
+      - media_data:/data
 
   ###############################################
   # JELLYFIN - Media Server
@@ -174,5 +174,6 @@ volumes:
   kapowarr_db:
   prowlarr_config:
   seerr_config:
+  qbittorrent_config:
   jellyfin_config:
   jellyfin_cache:
