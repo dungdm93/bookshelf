@@ -140,6 +140,15 @@ services:
       - qbittorrent_config:/config
       - media_data:/data
 
+  flaresolverr:
+    <<: *common
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
+    container_name: flaresolverr
+    ports:
+      - 8191:8191
+    volumes:
+      - flaresolver_config:/config
+
   ###############################################
   # JELLYFIN - Media Server
   ###############################################
@@ -175,6 +184,7 @@ volumes:
   prowlarr_config:
   seerr_config:
   qbittorrent_config:
+  flaresolver_config:
   jellyfin_config:
   jellyfin_cache:
 
