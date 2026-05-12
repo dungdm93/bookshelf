@@ -70,6 +70,18 @@ services:
       - media_data:/data
 
   ###############################################
+  # PROWLARR - Index Manager
+  ###############################################
+  prowlarr:
+    <<: *common
+    image: lscr.io/linuxserver/prowlarr:2.3.5
+    container_name: prowlarr
+    ports:
+      - 9696:9696
+    volumes:
+      - prowlarr_config:/config
+
+  ###############################################
   # BAZARR - Subtitles
   # Bazarr+: Enhanced subtitle management w/ AI translation
   ###############################################
@@ -133,5 +145,6 @@ volumes:
   sonarr_config:
   # whisparr_config:
   lidarr_config:
+  prowlarr_config:
   jellyfin_config:
   jellyfin_cache:
