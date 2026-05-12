@@ -1,9 +1,7 @@
 x-common: &common
   restart: unless-stopped
-  environment:
-    PUID: 1000
-    PGID: 1000
-    TZ: Asia/Ho_Chi_Minh
+  env_file:
+    - common.env
   dns:
     - 1.1.1.1
     - 1.0.0.1
