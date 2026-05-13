@@ -132,8 +132,8 @@ services:
       - TORRENTING_PORT=6881
     ports:
       - 8080:8080
-      - 6881:6881/tcp
-      - 6881:6881/udp
+      # - 6881:6881/tcp
+      # - 6881:6881/udp
     volumes:
       - qbittorrent_config:/config
       - media_data:/data
