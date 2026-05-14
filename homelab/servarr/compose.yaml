@@ -10,7 +10,6 @@ x-common: &common
 # https://trash-guides.info/
 # https://locatarr.github.io/
 # https://lavx.github.io/arrstack/
-# https://github.com/automation-avenue/arr-new/blob/main/docker-compose.yml
 # https://youtu.be/ho4NUoyU6tM
 services:
   ###############################################
