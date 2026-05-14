@@ -122,6 +122,16 @@ services:
       - seerr_config:/app/config
 
   ###############################################
+  # RECYCLARR - Automatically synchronize TRaSH Guides
+  ###############################################
+  recyclarr:
+    <<: *common
+    image: ghcr.io/recyclarr/recyclarr:8
+    container_name: recyclarr
+    volumes:
+      - recyclarr_config:/config
+
+  ###############################################
   # QBITTORRENT - Downloader
   ###############################################
   qbittorrent:
@@ -183,6 +193,7 @@ volumes:
   prowlarr_config:
   bazarr_config:
   seerr_config:
+  recyclarr_config:
   qbittorrent_config:
   flaresolver_config:
   jellyfin_config:
