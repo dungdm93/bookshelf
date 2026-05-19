@@ -109,6 +109,7 @@ services:
 
   ###############################################
   # SEERR - Media request and discovery manager
+  # MusicSeerr: Seerr for Music
   ###############################################
   seerr:
     <<: *common
