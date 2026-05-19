@@ -124,7 +124,8 @@ services:
   # PROFILARR - Automatically synchronize TRaSH Guides
   ###############################################
   profilarr:
-    image: santiagosayshey/profilarr:v1.1.4
+    <<: *common
+    image: ghcr.io/dictionarry-hub/profilarr:2.0.0
     container_name: profilarr
     ports:
       - 6868:6868
