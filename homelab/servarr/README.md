@@ -36,11 +36,13 @@
 
 * Music:
   * [Navidrome](https://github.com/navidrome/navidrome/): [clients](https://www.navidrome.org/apps/)
+  * API: Subsonic / [OpenSubsonic](https://opensubsonic.netlify.app/)
 * Book:
   * [Komga](https://github.com/gotson/komga): [clients](https://komga.org/docs/category/readers)
   * [Kavita](https://github.com/Kareadita/Kavita): [clients](https://wiki.kavitareader.com/guides/3rdparty/tachi-like/)
   * [BookLore](https://github.com/booklore-app/booklore) -> [Grimmory](https://github.com/grimmory-tools/grimmory)
   * client [Mihon](https://mihon.app/) & [forks](https://mihon.app/forks/)
+  * API: [OPDS](https://opds.io/): [OPDS-PSE](https://github.com/anansi-project/opds-pse) (Page Streaming Extension) - unofficial extension
 
 ## Metadata
 * Inspect from file:
