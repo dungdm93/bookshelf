@@ -39,6 +39,7 @@
 * Book:
   * [Komga](https://github.com/gotson/komga): [clients](https://komga.org/docs/category/readers)
   * [Kavita](https://github.com/Kareadita/Kavita): [clients](https://wiki.kavitareader.com/guides/3rdparty/tachi-like/)
+  * [BookLore](https://github.com/booklore-app/booklore) -> [Grimmory](https://github.com/grimmory-tools/grimmory)
   * client [Mihon](https://mihon.app/) & [forks](https://mihon.app/forks/)
 
 ## Metadata

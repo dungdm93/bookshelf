@@ -67,7 +67,23 @@ services:
       - media_data:/data
 
   ###############################################
-  # KAPOWARR - Comic
+  # BINDERY - Books
+  # Replace Readarr which is retirement
+  ###############################################
+  bindery:
+    image: ghcr.io/vavallee/bindery:v1.13.1
+    container_name: bindery
+    user: root:root
+    environment:
+      - BINDERY_LOG_LEVEL=info
+    ports:
+      - 8787:8787
+    volumes:
+      - bindery_config:/config
+      - media_data:/data
+
+  ###############################################
+  # KAPOWARR - Comics
   ###############################################
   kapowarr:
     <<: *common
@@ -191,6 +207,7 @@ volumes:
   sonarr_config:
   # whisparr_config:
   lidarr_config:
+  bindery_config:
   kapowarr_db:
   prowlarr_config:
   bazarr_config:
